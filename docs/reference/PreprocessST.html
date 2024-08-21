@@ -18,7 +18,7 @@ spatial coordinates (X and Y)."><!-- mathjax --><script src="https://cdnjs.cloud
     
     <a class="navbar-brand me-2" href="../index.html">SpatialEcoTyper</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,7 +38,7 @@ spatial coordinates (X and Y)."><!-- mathjax --><script src="https://cdnjs.cloud
   </div>
 </li>
 <li class="active nav-item">
-  <a class="nav-link" href="../reference/index.html">Functions</a>
+  <a class="nav-link" href="../reference/index.html">R functions</a>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
@@ -54,7 +54,7 @@ spatial coordinates (X and Y)."><!-- mathjax --><script src="https://cdnjs.cloud
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Preprocess Spatial Transcriptomics Data</h1>
-      
+      <small class="dont-index">Source: <a href="https://digitalcytometry.github/SpatialEcoTyperR/PreprocessST.R" class="external-link"><code>R/PreprocessST.R</code></a></small>
       <div class="d-none name"><code>PreprocessST.Rd</code></div>
     </div>
 
@@ -126,7 +126,7 @@ represents the Y spatial coordinate (default is "Y").</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SpatialEcoTyper</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://digitalcytometry.github/SpatialEcoTyper" class="external-link">SpatialEcoTyper</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-datatable.com" class="external-link">data.table</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://googledrive.tidyverse.org" class="external-link">googledrive</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_deauth.html" class="external-link">drive_deauth</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># no Google sign-in is required</span></span></span>
@@ -152,7 +152,7 @@ represents the Y spatial coordinate (default is "Y").</p></dd>
 <span class="r-in"><span>                     sep <span class="op">=</span> <span class="st">"\t"</span>, header <span class="op">=</span> <span class="cn">TRUE</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">processed</span> <span class="op">&lt;-</span> <span class="fu">PreprocessST</span><span class="op">(</span>expdat <span class="op">=</span> <span class="va">scdata</span>, <span class="va">scmeta</span>, X <span class="op">=</span> <span class="st">"X"</span>, Y <span class="op">=</span> <span class="st">"Y"</span>,</span></span>
 <span class="r-in"><span>                          min.cells <span class="op">=</span> <span class="fl">3</span>, min.features <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-21 02:04:52 Remove 87 genes expressed in fewer than 3 cells</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-21 14:37:10 Remove 87 genes expressed in fewer than 3 cells</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">processed</span><span class="op">$</span><span class="va">metadata</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                         X         Y   CellType CellTypeName</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3655 1894.706 -6367.766 Fibroblast  Fibroblasts</span>

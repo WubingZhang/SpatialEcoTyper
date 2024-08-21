@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">SpatialEcoTyper</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Recovery of SEs Using Pretrained NMF Models</h1>
-      
+      <small class="dont-index">Source: <a href="https://digitalcytometry.github/SpatialEcoTyperR/RecoverSE.R" class="external-link"><code>R/RecoverSE.R</code></a></small>
       <div class="d-none name"><code>RecoverSE.Rd</code></div>
     </div>
 
@@ -71,8 +71,9 @@ transcriptomics, scRNA-seq or spot-resolution spatial transcriptomics data.</p><
 
 
 <dt>Ws</dt>
-<dd><p>A list of W matrices with cell types as names. Each W matrix is a
-cell-type-specific W matrix for recovering SE-specific cell states.</p></dd>
+<dd><p>A list of cell-type-specific W matrices used to recover SE-specific
+cell states. Each element in the list should be named after the corresponding
+cell type and contain a W matrix from an NMF model.</p></dd>
 
 
 <dt>celltypes</dt>
@@ -90,8 +91,9 @@ should be single cell gene expression data used for the SpatialEcoTyper analysis
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A vector of predicted SEs of single cells (from single cell data) or
-a matrix of SE abundances across spots from spatial transcriptomics data (e.g. Visium data).</p>
+<p>Depending on the input data:
+- For single-cell data: A vector of predicted SEs for each cell.
+- For spot-resolution data (e.g., Visium): A matrix of SE abundances across spots.</p>
     </div>
 
     <div class="section level2">

@@ -8,5 +8,8 @@ articles:
   Recovery_Spatial: Recovery_Spatial.html
   SingleSample: SingleSample.html
   TrainRecoveryModels: TrainRecoveryModels.html
-last_built: 2024-08-21T09:03Z
+last_built: 2024-08-21T21:35Z
+urls:
+  reference: https://digitalcytometry.github.io/SpatialEcoTyper/reference
+  article: https://digitalcytometry.github.io/SpatialEcoTyper/articles
 

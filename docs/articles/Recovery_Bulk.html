@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">SpatialEcoTyper</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -72,7 +72,7 @@
       <img src="" class="logo" alt=""><h1>Recovery of Spatial Ecotypes from Bulk Gene Expression Data</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://digitalcytometry.github/SpatialEcoTypervignettes/Recovery_Bulk.Rmd" class="external-link"><code>vignettes/Recovery_Bulk.Rmd</code></a></small>
       <div class="d-none name"><code>Recovery_Bulk.Rmd</code></div>
     </div>
 
@@ -89,7 +89,7 @@ which is a Transcripts Per Million (TPM) matrix obtained from the <a href="https
 <p><strong>First load required packages for this vignette</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://googledrive.tidyverse.org" class="external-link">googledrive</a></span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SpatialEcoTyper</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://digitalcytometry.github/SpatialEcoTyper" class="external-link">SpatialEcoTyper</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat" class="external-link">Seurat</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -173,9 +173,7 @@ create pseudo-bulk mixtures from single-cell RNA-seq data of a melanoma
 sample, which is also used in the tutorial <a href="Recovery_scRNA.html">Recovery of Spatial Ecotypes from Single-Cell
 Gene Expression Data</a>. The raw count data is available at <a href="https://drive.google.com/open?id=15n9zlXed74oeGaO1pythOOM_iWIfuMn2&amp;usp=drive_fs" class="external-link">Melanoma_WU2161_counts.rds</a>
 and SE recovery results are available at <a href="https://drive.google.com/open?id=15apmSDhcANjx3i05LIFIm01gelbP7etA&amp;usp=drive_fs" class="external-link">Melanoma_WU2161_RecoveredSEs.rds</a>.</p>
-<div class="section level4">
-<h4 id="loading-data">Loading data<a class="anchor" aria-label="anchor" href="#loading-data"></a>
-</h4>
+<p><strong>Loading data</strong></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Download single-cell gene expression matrix and SE recovery results.</span></span>
 <span><span class="co"># The downloads should be finished within 1min.</span></span>
@@ -201,10 +199,7 @@ and SE recovery results are available at <a href="https://drive.google.com/open?
 <span><span class="co">##             "SE10"            "NonSE"             "SE01"             "SE10" </span></span>
 <span><span class="co">## AAACCTGTCTAACGGT-1 AAACGGGCACTTAAGC-1 </span></span>
 <span><span class="co">##            "NonSE"             "SE03"</span></span></code></pre>
-</div>
-<div class="section level4">
-<h4 id="creating-pseudobulk-data">Creating pseudobulk data<a class="anchor" aria-label="anchor" href="#creating-pseudobulk-data"></a>
-</h4>
+<p><strong>Creating pseudobulk data</strong></p>
 <p>The <code>CreatePseudobulks</code> function will be used to create
 pseudo-bulk mixtures from single-cell (spatial) transcriptomics data
 with all cells grouped into SEs. It samples cell fractions from a
@@ -241,10 +236,7 @@ the resulting mixture to logarithm CPM using Seurat’s
 <span><span class="co">## Pseudobulk4 0.06384581 0.06932315 0.02105041 0.09074042 0.10213406 0.07280364</span></span>
 <span><span class="co">## Pseudobulk5 0.10306946 0.03836312 0.08145100 0.11321193 0.04679763 0.07939680</span></span>
 <span><span class="co">## Pseudobulk6 0.11000033 0.08445375 0.09840190 0.08880690 0.10736759 0.06152594</span></span></code></pre>
-</div>
-<div class="section level4">
-<h4 id="training">Training<a class="anchor" aria-label="anchor" href="#training"></a>
-</h4>
+<p><strong>Training</strong></p>
 <p>The <code>NMFGenerateW</code> function will be used to train an NMF
 model for SE deconvolution based on the provided SE fractions and gene
 expression matrix. Before applying NMF, each gene’s expression is scaled
@@ -283,8 +275,7 @@ NMF model.</p>
 <p>The resulting W matrix can be used to infer SE sbundances from bulk
 gene expression profiles by using the <code>DeconvoluteSE</code>
 function.</p>
-
-<p>An example model is available at <a href="https://drive.google.com/open?id=1mRyABC3NtLIlZtQ1UqtUIr7MhF62Vs3e&amp;usp=drive_fs" class="external-link">SE_Deconvolution_W.rds</a>.</p>
+</details><p>An example model is available at <a href="https://drive.google.com/open?id=1mRyABC3NtLIlZtQ1UqtUIr7MhF62Vs3e&amp;usp=drive_fs" class="external-link">SE_Deconvolution_W.rds</a>.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_download.html" class="external-link">drive_download</a></span><span class="op">(</span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_id.html" class="external-link">as_id</a></span><span class="op">(</span><span class="st">"1mRyABC3NtLIlZtQ1UqtUIr7MhF62Vs3e"</span><span class="op">)</span>, <span class="st">"SE_Deconvolution_W.rds"</span><span class="op">)</span></span>
 <span><span class="va">W</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"SE_Deconvolution_W.rds"</span><span class="op">)</span></span></code></pre></div>
@@ -293,8 +284,6 @@ function.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sefracs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/DeconvoluteSE.html">DeconvoluteSE</a></span><span class="op">(</span><span class="va">bulkdata</span>, W <span class="op">=</span> <span class="va">W</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sefracs</span><span class="op">)</span></span></code></pre></div>
-</div>
-</details>
 </div>
 </div>
 <div class="section level2">
@@ -331,7 +320,7 @@ causing problems.</p>
 <span><span class="co">## [8] methods   base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">##  [1] SpatialEcoTyper_0.0.3 NMF_0.27              Biobase_2.56.0       </span></span>
+<span><span class="co">##  [1] SpatialEcoTyper_0.0.4 NMF_0.27              Biobase_2.56.0       </span></span>
 <span><span class="co">##  [4] BiocGenerics_0.42.0   cluster_2.1.4         rngtools_1.5.2       </span></span>
 <span><span class="co">##  [7] registry_0.5-1        dplyr_1.1.0           RANN_2.6.1           </span></span>
 <span><span class="co">## [10] Matrix_1.5-3          SeuratObject_4.1.3    Seurat_4.3.0         </span></span>

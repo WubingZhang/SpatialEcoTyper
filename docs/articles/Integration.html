@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">SpatialEcoTyper</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@
   </div>
 </li>
 <li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Functions</a>
+  <a class="nav-link" href="../reference/index.html">R functions</a>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">News</a>
@@ -72,7 +72,7 @@
       <img src="" class="logo" alt=""><h1>Discovery of Spatial Ecotypes from Multiple Samples</h1>
             
       
-      
+      <small class="dont-index">Source: <a href="https://digitalcytometry.github/SpatialEcoTypervignettes/Integration.Rmd" class="external-link"><code>vignettes/Integration.Rmd</code></a></small>
       <div class="d-none name"><code>Integration.Rmd</code></div>
     </div>
 
@@ -96,7 +96,7 @@ profile and associated single-cell metadata.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://googledrive.tidyverse.org" class="external-link">googledrive</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://renozao.github.io/NMF/" class="external-link">NMF</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jokergoo/ComplexHeatmap" class="external-link">ComplexHeatmap</a></span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SpatialEcoTyper</span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://digitalcytometry.github/SpatialEcoTyper" class="external-link">SpatialEcoTyper</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="loading-data">Loading data<a class="anchor" aria-label="anchor" href="#loading-data"></a>
@@ -201,12 +201,11 @@ normalization. For faster computation, it is recommended to install the
 <span>  <span class="va">normdata1</span> <span class="op">&lt;-</span> <span class="va">tmpobj1</span><span class="op">[[</span><span class="st">"SCT"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">data</span></span>
 <span>  <span class="va">normdata2</span> <span class="op">&lt;-</span> <span class="va">tmpobj2</span><span class="op">[[</span><span class="st">"SCT"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">data</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<details><summary><strong>To use <code>NormalizeData</code> for the
-normalization:</strong>
+<summary>
+To use <code>NormalizeData</code> for the normalization:
 </summary><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">normdata1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html" class="external-link">NormalizeData</a></span><span class="op">(</span><span class="va">scdata1</span><span class="op">)</span></span>
 <span><span class="va">normdata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html" class="external-link">NormalizeData</a></span><span class="op">(</span><span class="va">scdata2</span><span class="op">)</span></span></code></pre></div>
-</details>
 </div>
 <div class="section level2">
 <h2 id="preview-of-the-samples">Preview of the samples<a class="anchor" aria-label="anchor" href="#preview-of-the-samples"></a>
@@ -274,16 +273,22 @@ function:</p>
 <p>The <code>MultiSpatialEcoTyper</code> function enables the
 integration of single-cell spatial transcriptomics data across multiple
 samples, facilitating the identification of SEs shared across samples or
-cancer types. The analysis is performed in three stages: -
-<strong>Independent SpatialEcoTyper Analysis</strong>: SpatialEcoTyper
-is run on each sample independently to identify spatial clusters and
-construct cell-type-specific gene expression profiles for all spatial
-clusters. - <strong>Integration via Similarity Network Fusion</strong>:
-Spatial clusters from different samples are integrated to learn a
-unified embedding using Similarity Network Fusion (Wang et al., 2014). -
-<strong>NMF Clustering</strong>: Non-negative Matrix Factorization (NMF)
-is applied to the unified embedding to identify conserved SEs across
-samples.</p>
+cancer types. The analysis is performed in three stages:</p>
+<ul>
+<li>
+<strong>Independent SpatialEcoTyper Analysis</strong>:
+SpatialEcoTyper is run on each sample independently to identify spatial
+clusters and construct cell-type-specific gene expression profiles for
+all spatial clusters.</li>
+<li>
+<strong>Integration via Similarity Network Fusion</strong>: Spatial
+clusters from different samples are integrated to learn a unified
+embedding using Similarity Network Fusion (Wang et al., 2014).</li>
+<li>
+<strong>NMF Clustering</strong>: Non-negative Matrix Factorization
+(NMF) is applied to the unified embedding to identify conserved SEs
+across samples.</li>
+</ul>
 <details open><summary><strong>Key arguments for <code>MultiSpatialEcoTyper</code></strong>
 </summary><ul>
 <li>
@@ -403,8 +408,9 @@ you can integrate the results directly using
 <code>SpatialEcoTyper_results_</code> followed by the current date. The
 output files include:</p>
 <ul>
-<li>**{SampleName}_SpatialEcoTyper_results.rds** Contains the
-<code>SpatialEcoTyper</code> results for each sample.</li>
+<li>
+<strong><code>(SampleName)_SpatialEcoTyper_results.rds</code></strong>
+<code>SpatialEcoTyper</code> result for each sample.</li>
 <li>
 <strong>MultiSE_integrated_final.rds</strong> A matrix representing
 the fused similarity matrix of spatial clusters across all samples.</li>
@@ -470,666 +476,6 @@ downloaded via:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">integrated</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] 376 376</span></span></code></pre>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">integrated</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                 SKCM..InitSE6 SKCM..InitSE111 SKCM..InitSE42 SKCM..InitSE55</span></span>
-<span><span class="co">## SKCM..InitSE6       2.0447538      0.99167217      0.9880337      1.5250877</span></span>
-<span><span class="co">## SKCM..InitSE111     0.9865852      1.60202235      1.3644368     -1.1892531</span></span>
-<span><span class="co">## SKCM..InitSE42      0.9765806      1.27602346      1.7474007      1.0338111</span></span>
-<span><span class="co">## SKCM..InitSE55      1.5146425     -1.16041105      1.0424169      1.8449934</span></span>
-<span><span class="co">## SKCM..InitSE13      1.6362625      0.06487046      1.1509302      1.6798517</span></span>
-<span><span class="co">## SKCM..InitSE50      1.6389801      1.89546165      0.1521341      0.9578651</span></span>
-<span><span class="co">##                 SKCM..InitSE13 SKCM..InitSE50 SKCM..InitSE110 SKCM..InitSE124</span></span>
-<span><span class="co">## SKCM..InitSE6       1.67070324      1.6929349       1.3763488      -0.8503188</span></span>
-<span><span class="co">## SKCM..InitSE111     0.07809987      1.9253443       0.4461594      -1.1772473</span></span>
-<span><span class="co">## SKCM..InitSE42      1.09062161      0.1367765       0.4752441       0.4362581</span></span>
-<span><span class="co">## SKCM..InitSE55      1.65660756      0.9783080       1.3150863       1.4145300</span></span>
-<span><span class="co">## SKCM..InitSE13      1.52407998      1.3403715       0.8254406      -0.5334410</span></span>
-<span><span class="co">## SKCM..InitSE50      1.39036628      2.4200233       0.1318742       0.3832252</span></span>
-<span><span class="co">##                 SKCM..InitSE87 SKCM..InitSE43 SKCM..InitSE38 SKCM..InitSE10</span></span>
-<span><span class="co">## SKCM..InitSE6        1.4277558      1.4703727     1.23099933      0.2061672</span></span>
-<span><span class="co">## SKCM..InitSE111      0.8939488      0.3902353     1.14345222      0.6487060</span></span>
-<span><span class="co">## SKCM..InitSE42       0.8618012      0.8542857     1.15468489      0.3899214</span></span>
-<span><span class="co">## SKCM..InitSE55       0.8771929      0.8956717     1.26235329      1.7074194</span></span>
-<span><span class="co">## SKCM..InitSE13       0.2016129      0.8884719     1.52038318      1.5516376</span></span>
-<span><span class="co">## SKCM..InitSE50       1.1197435      0.8532590     0.01234026      1.1904895</span></span>
-<span><span class="co">##                 SKCM..InitSE95 SKCM..InitSE39 SKCM..InitSE69 SKCM..InitSE155</span></span>
-<span><span class="co">## SKCM..InitSE6        0.3624619     0.52778079      0.2160835       1.4528197</span></span>
-<span><span class="co">## SKCM..InitSE111      1.4201895    -0.96359388      0.9060149      -0.6386942</span></span>
-<span><span class="co">## SKCM..InitSE42       0.7713103     0.83412766      1.0285574       1.6311085</span></span>
-<span><span class="co">## SKCM..InitSE55       1.2928949     0.95729679      1.1328357       0.6168050</span></span>
-<span><span class="co">## SKCM..InitSE13       1.5602079     1.47769474      1.0087162      -0.3727056</span></span>
-<span><span class="co">## SKCM..InitSE50       0.1734748    -0.02742891      1.7565677      -0.3038605</span></span>
-<span><span class="co">##                 SKCM..InitSE112 SKCM..InitSE81 SKCM..InitSE28 SKCM..InitSE4</span></span>
-<span><span class="co">## SKCM..InitSE6        0.04130574     -0.2909562     1.79123484    1.83923685</span></span>
-<span><span class="co">## SKCM..InitSE111      1.27344912      0.5097566    -0.08445442    1.23882617</span></span>
-<span><span class="co">## SKCM..InitSE42       0.95084518      0.9728683     0.79487252    0.32509825</span></span>
-<span><span class="co">## SKCM..InitSE55       1.37609615      0.6743427     1.52604151    1.68799584</span></span>
-<span><span class="co">## SKCM..InitSE13       1.43675464      0.9721279     1.57102703    1.65530435</span></span>
-<span><span class="co">## SKCM..InitSE50       1.33287777      0.3732186    -0.33491355    0.03954437</span></span>
-<span><span class="co">##                 SKCM..InitSE94 SKCM..InitSE127 SKCM..InitSE56 SKCM..InitSE23</span></span>
-<span><span class="co">## SKCM..InitSE6       1.23305919      -0.3555864      0.6381302      1.4409519</span></span>
-<span><span class="co">## SKCM..InitSE111     1.17698252       1.5940740      1.1769528      0.9201222</span></span>
-<span><span class="co">## SKCM..InitSE42      1.39032971       1.3181263      0.7521398      1.4395025</span></span>
-<span><span class="co">## SKCM..InitSE55      0.63713447       1.7427782      1.3211806      1.4589759</span></span>
-<span><span class="co">## SKCM..InitSE13      0.43838992       1.6086150      1.5676017      0.2402514</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.09058462       1.4895045      1.3158163      0.8223932</span></span>
-<span><span class="co">##                 SKCM..InitSE33 CRC..InitSE5 CRC..InitSE49 CRC..InitSE89</span></span>
-<span><span class="co">## SKCM..InitSE6      -0.09446831    1.0278779     1.4611700    0.49480949</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.61050566   -0.4089102    -0.3168144    1.41253888</span></span>
-<span><span class="co">## SKCM..InitSE42      1.48841850    1.4199500     1.2218816    1.59758910</span></span>
-<span><span class="co">## SKCM..InitSE55      1.57794955    1.6592150     0.5279302    0.69603678</span></span>
-<span><span class="co">## SKCM..InitSE13      0.51840867    0.3641642     0.4106555    1.08043938</span></span>
-<span><span class="co">## SKCM..InitSE50      0.89845664    0.1216877     0.5871344   -0.04282478</span></span>
-<span><span class="co">##                 CRC..InitSE25 CRC..InitSE66 CRC..InitSE13 CRC..InitSE86</span></span>
-<span><span class="co">## SKCM..InitSE6      0.10327609     1.5508198     1.2813460    1.96700482</span></span>
-<span><span class="co">## SKCM..InitSE111   -0.15575650     1.0267554     1.0433337   -0.05933203</span></span>
-<span><span class="co">## SKCM..InitSE42     0.85898365     1.6624793     0.9887095    1.33284345</span></span>
-<span><span class="co">## SKCM..InitSE55     0.75874701     1.1329224     0.8302626   -0.35063143</span></span>
-<span><span class="co">## SKCM..InitSE13     0.38738715     1.5865399     1.1377092    1.11752974</span></span>
-<span><span class="co">## SKCM..InitSE50    -0.02152954    -0.4312809    -0.6112432    0.41409014</span></span>
-<span><span class="co">##                 CRC..InitSE2 CRC..InitSE70 CRC..InitSE62 CRC..InitSE121</span></span>
-<span><span class="co">## SKCM..InitSE6      1.3083362    -0.3004062    0.97400429     -0.9570807</span></span>
-<span><span class="co">## SKCM..InitSE111    1.2888351     1.6061100    0.43786550      1.0056541</span></span>
-<span><span class="co">## SKCM..InitSE42     0.8297627     0.5307492    1.29214932      0.7457029</span></span>
-<span><span class="co">## SKCM..InitSE55     1.0605662     1.4201705    0.77086548      1.0543132</span></span>
-<span><span class="co">## SKCM..InitSE13     1.3552499     0.6201750   -0.06816334      0.6583814</span></span>
-<span><span class="co">## SKCM..InitSE50     1.2109264     1.2912590    1.39587977      1.2626405</span></span>
-<span><span class="co">##                 CRC..InitSE47 CRC..InitSE0 CRC..InitSE153 CRC..InitSE58</span></span>
-<span><span class="co">## SKCM..InitSE6      0.28661808    1.5390889     -1.1267169    1.74967123</span></span>
-<span><span class="co">## SKCM..InitSE111    1.01309941    0.3047912      1.5756936   -0.06568565</span></span>
-<span><span class="co">## SKCM..InitSE42     1.19220600    1.3971420      1.4861845    1.70457544</span></span>
-<span><span class="co">## SKCM..InitSE55     1.29984220    0.8085059      1.2048135    1.50117379</span></span>
-<span><span class="co">## SKCM..InitSE13     0.87152494    1.1757104      0.5764798    0.93360335</span></span>
-<span><span class="co">## SKCM..InitSE50     0.04591858    1.2949932      1.8810563    1.48588348</span></span>
-<span><span class="co">##                 CRC..InitSE33 SKCM..InitSE83 SKCM..InitSE76 SKCM..InitSE68</span></span>
-<span><span class="co">## SKCM..InitSE6       1.3708170     -0.2253874    -0.08640053      0.7581671</span></span>
-<span><span class="co">## SKCM..InitSE111     0.8187906      0.6595348    -0.05506245     -0.3612963</span></span>
-<span><span class="co">## SKCM..InitSE42      1.6219582      1.6967926     0.11930740      0.7087406</span></span>
-<span><span class="co">## SKCM..InitSE55      1.7957926      0.3598913    -0.19303511      0.1231302</span></span>
-<span><span class="co">## SKCM..InitSE13      1.2955889      0.2746036    -0.02160251      0.3246168</span></span>
-<span><span class="co">## SKCM..InitSE50      1.4691304     -0.4281836     0.18953631      0.1689287</span></span>
-<span><span class="co">##                 SKCM..InitSE98 SKCM..InitSE126 SKCM..InitSE75 CRC..InitSE136</span></span>
-<span><span class="co">## SKCM..InitSE6        1.6467866      -0.6337261    -0.04935467     1.03101509</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.2867218       0.3671176     0.42295200    -0.42471093</span></span>
-<span><span class="co">## SKCM..InitSE42       1.5110183       0.9977913     1.59173141     0.31609927</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.4940659       0.3561714     1.51925123     0.50813133</span></span>
-<span><span class="co">## SKCM..InitSE13       0.1682091      -0.0575114     0.12657664     0.04240356</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.2993110      -0.6872858    -0.21757716     1.33828510</span></span>
-<span><span class="co">##                 CRC..InitSE79 CRC..InitSE144 CRC..InitSE156 CRC..InitSE18</span></span>
-<span><span class="co">## SKCM..InitSE6     -0.67093384     -0.7259141    -0.28283803     1.2676758</span></span>
-<span><span class="co">## SKCM..InitSE111    0.72878000     -0.4976085     0.64645989     1.4654821</span></span>
-<span><span class="co">## SKCM..InitSE42    -0.23385028      0.4880142     0.97465126     0.8467190</span></span>
-<span><span class="co">## SKCM..InitSE55     1.26982031     -0.4202854     0.19985003     1.3063293</span></span>
-<span><span class="co">## SKCM..InitSE13    -0.08831719      0.5503742     1.45012627     0.9754857</span></span>
-<span><span class="co">## SKCM..InitSE50    -1.20428718     -0.6419426    -0.08057411     1.3831916</span></span>
-<span><span class="co">##                 CRC..InitSE44 CRC..InitSE85 CRC..InitSE84 CRC..InitSE114</span></span>
-<span><span class="co">## SKCM..InitSE6       1.1457013     1.5275167     0.5154155     -0.4056578</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.6780717     1.2307674    -0.3870914      0.8703057</span></span>
-<span><span class="co">## SKCM..InitSE42      0.8693314     1.5888156     1.1402686      1.1445055</span></span>
-<span><span class="co">## SKCM..InitSE55      1.6848516     0.4149718     0.6390621      0.5397543</span></span>
-<span><span class="co">## SKCM..InitSE13      0.8209301     1.5368168     1.1675146      0.2328207</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.4328809     1.6326440    -0.5026766     -0.4844415</span></span>
-<span><span class="co">##                 CRC..InitSE104 CRC..InitSE108 CRC..InitSE115 CRC..InitSE67</span></span>
-<span><span class="co">## SKCM..InitSE6       1.08163117     0.79106629    0.327922561     1.6077340</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.40767336    -0.85853814   -0.002258183    -0.4333030</span></span>
-<span><span class="co">## SKCM..InitSE42      0.99505261     0.17400885    0.903760071     1.0954541</span></span>
-<span><span class="co">## SKCM..InitSE55      1.52564129    -0.01542236    0.095013396     1.3768149</span></span>
-<span><span class="co">## SKCM..InitSE13     -0.02529299     1.12089402    1.141682861     1.0464375</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.88215996     0.02910095   -0.018117466     0.2848448</span></span>
-<span><span class="co">##                 CRC..InitSE10 CRC..InitSE24 CRC..InitSE55 CRC..InitSE82</span></span>
-<span><span class="co">## SKCM..InitSE6       0.8972671     0.1503097     1.0433533   -0.21040897</span></span>
-<span><span class="co">## SKCM..InitSE111     1.3080052    -0.2897155     1.4351334   -0.03573202</span></span>
-<span><span class="co">## SKCM..InitSE42      1.3375973     1.0450394     1.1054917    1.04124635</span></span>
-<span><span class="co">## SKCM..InitSE55      0.3615457    -0.1152977    -0.2581054    0.34651858</span></span>
-<span><span class="co">## SKCM..InitSE13      1.3878487     1.0473489     1.2115091    0.64550413</span></span>
-<span><span class="co">## SKCM..InitSE50      0.8122503     0.2599412     1.2345885    0.68244843</span></span>
-<span><span class="co">##                 CRC..InitSE128 CRC..InitSE101 CRC..InitSE30 CRC..InitSE32</span></span>
-<span><span class="co">## SKCM..InitSE6        1.1709308      0.7118526     1.7151287    1.54535048</span></span>
-<span><span class="co">## SKCM..InitSE111      0.3423715     -0.6124269    -0.3063832    1.02928905</span></span>
-<span><span class="co">## SKCM..InitSE42       0.8040750      0.5923373     0.1395729    0.84098199</span></span>
-<span><span class="co">## SKCM..InitSE55       1.0514556      0.3946526     0.7909068    0.55763197</span></span>
-<span><span class="co">## SKCM..InitSE13       0.3728373      0.8669314    -0.3381610    0.90992175</span></span>
-<span><span class="co">## SKCM..InitSE50       0.7429637      1.3633720     0.8599015   -0.02634277</span></span>
-<span><span class="co">##                 CRC..InitSE16 CRC..InitSE68 CRC..InitSE26 CRC..InitSE39</span></span>
-<span><span class="co">## SKCM..InitSE6      0.34310179    1.18393837     0.9621673     0.4698374</span></span>
-<span><span class="co">## SKCM..InitSE111    0.76613471    0.54729619     0.3577045    -0.7079088</span></span>
-<span><span class="co">## SKCM..InitSE42     0.80391871    1.22659039     1.2926111     1.2753878</span></span>
-<span><span class="co">## SKCM..InitSE55     0.08075999    0.02286881     0.5691725     1.3822141</span></span>
-<span><span class="co">## SKCM..InitSE13     1.15724936    1.43519759     1.2415376     0.9826128</span></span>
-<span><span class="co">## SKCM..InitSE50     1.40178798    1.75391650     1.5889043     1.3312755</span></span>
-<span><span class="co">##                 CRC..InitSE150 SKCM..InitSE3 SKCM..InitSE160 SKCM..InitSE8</span></span>
-<span><span class="co">## SKCM..InitSE6      -0.36518227     1.8738050      -0.5118961    -0.5441181</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.39695547     1.5308154      -0.6123223    -0.1537143</span></span>
-<span><span class="co">## SKCM..InitSE42      0.57788034    -0.3319223       0.7062283     0.4578466</span></span>
-<span><span class="co">## SKCM..InitSE55      1.20279777     0.8857715       0.5482197     0.7770385</span></span>
-<span><span class="co">## SKCM..InitSE13     -0.05095096     0.8013748      -0.3006858     0.3534519</span></span>
-<span><span class="co">## SKCM..InitSE50      0.50387772    -0.5234318       0.0835811    -0.3196609</span></span>
-<span><span class="co">##                 SKCM..InitSE85 CRC..InitSE40 CRC..InitSE37 CRC..InitSE29</span></span>
-<span><span class="co">## SKCM..InitSE6        1.6853410    0.13069436     1.6504824     0.6057498</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.9817945   -0.04075422     0.0182466    -0.9038123</span></span>
-<span><span class="co">## SKCM..InitSE42       1.4529638    0.22953301     1.4746828     1.2089701</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.3485159   -0.51923049     0.2503790     0.1745437</span></span>
-<span><span class="co">## SKCM..InitSE13       0.0846155    0.03951026     0.4057760     0.6853416</span></span>
-<span><span class="co">## SKCM..InitSE50       0.8257399   -0.31516150     0.2346960    -0.6907591</span></span>
-<span><span class="co">##                 CRC..InitSE131 CRC..InitSE73 CRC..InitSE11 CRC..InitSE12</span></span>
-<span><span class="co">## SKCM..InitSE6        0.7527420     1.2850382     0.5698905     0.3178576</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.3069674     1.4660881    -1.1696359    -0.6371424</span></span>
-<span><span class="co">## SKCM..InitSE42       1.5428822     0.5935241     1.3684661     1.3141242</span></span>
-<span><span class="co">## SKCM..InitSE55       0.5190039     0.8703519     0.9736545     0.8298164</span></span>
-<span><span class="co">## SKCM..InitSE13      -0.4079783    -0.5991511     1.2693697     0.7680065</span></span>
-<span><span class="co">## SKCM..InitSE50       1.6246404    -0.5650857     1.6143000     1.2564579</span></span>
-<span><span class="co">##                 SKCM..InitSE59 SKCM..InitSE135 SKCM..InitSE89 SKCM..InitSE159</span></span>
-<span><span class="co">## SKCM..InitSE6        1.5155567     -0.15378016      0.1922449      0.08523919</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.9080414      0.32798546     -0.0403301      0.08997971</span></span>
-<span><span class="co">## SKCM..InitSE42       1.4864919      0.35734810      0.1696808      0.47944776</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.1657214     -0.01972605     -0.1607731     -0.03994485</span></span>
-<span><span class="co">## SKCM..InitSE13       0.5887961     -0.30226992     -0.4048663     -0.58744739</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.1724782      1.31318536      0.1973593      0.17546026</span></span>
-<span><span class="co">##                 SKCM..InitSE58 SKCM..InitSE82 SKCM..InitSE130 SKCM..InitSE74</span></span>
-<span><span class="co">## SKCM..InitSE6     1.016931e+00      1.0625699       0.7648377      1.5749766</span></span>
-<span><span class="co">## SKCM..InitSE111   1.743804e-01      0.3520452       0.7832048     -0.5243845</span></span>
-<span><span class="co">## SKCM..InitSE42    2.326243e-01      0.8087696      -0.2253419      0.2338333</span></span>
-<span><span class="co">## SKCM..InitSE55   -1.135521e-01      0.3030530       0.4345258     -0.6747926</span></span>
-<span><span class="co">## SKCM..InitSE13    1.114253e-05      0.5531127       0.5560388      0.4500554</span></span>
-<span><span class="co">## SKCM..InitSE50    2.593172e-01     -0.4784068       0.8469359      0.8369689</span></span>
-<span><span class="co">##                 SKCM..InitSE166 SKCM..InitSE164 SKCM..InitSE86 SKCM..InitSE175</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.11552049       0.1330292      0.3585747      0.03697978</span></span>
-<span><span class="co">## SKCM..InitSE111      1.41525759       0.8956806      1.5540531     -0.40576998</span></span>
-<span><span class="co">## SKCM..InitSE42       0.07979412       0.3824129      0.3149387      0.31134399</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.26343393       0.1804451     -0.5389467     -0.09250440</span></span>
-<span><span class="co">## SKCM..InitSE13      -0.69956401      -0.4107903     -0.6680668     -0.78815374</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.40464150       1.9316753      0.2049422     -0.10645452</span></span>
-<span><span class="co">##                 SKCM..InitSE100 SKCM..InitSE122 SKCM..InitSE165 CRC..InitSE63</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.18041099     -0.51531478       0.1794617     0.8946895</span></span>
-<span><span class="co">## SKCM..InitSE111      1.08849346      0.03024727      -0.1630868     1.1678358</span></span>
-<span><span class="co">## SKCM..InitSE42       1.03656258      0.82213318       0.4537894     1.2758126</span></span>
-<span><span class="co">## SKCM..InitSE55       1.08634646     -0.63759133      -0.1335561     0.3730914</span></span>
-<span><span class="co">## SKCM..InitSE13       1.38549493     -0.47233230      -0.2113033     0.2176288</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.08076732     -0.73769464      -0.6977806     1.0192476</span></span>
-<span><span class="co">##                 CRC..InitSE7 CRC..InitSE8 CRC..InitSE140 CRC..InitSE166</span></span>
-<span><span class="co">## SKCM..InitSE6      1.7333771    1.0129030    -0.45636408    -0.06972471</span></span>
-<span><span class="co">## SKCM..InitSE111   -1.2127406   -0.6777509    -0.90470043    -0.45351338</span></span>
-<span><span class="co">## SKCM..InitSE42     0.4889103    1.2172379    -0.14622075     0.74084498</span></span>
-<span><span class="co">## SKCM..InitSE55    -0.3181893    1.2278852     0.03226205     0.95751117</span></span>
-<span><span class="co">## SKCM..InitSE13     0.1301137    1.1807707     1.07320211     0.20071301</span></span>
-<span><span class="co">## SKCM..InitSE50    -0.9881880   -0.2818371    -0.92915968    -0.76012422</span></span>
-<span><span class="co">##                 CRC..InitSE78 CRC..InitSE122 CRC..InitSE59 CRC..InitSE17</span></span>
-<span><span class="co">## SKCM..InitSE6       1.3633477      0.6287453    0.11415555     1.2130059</span></span>
-<span><span class="co">## SKCM..InitSE111     1.3384983     -1.1172248    0.85708417    -1.0563543</span></span>
-<span><span class="co">## SKCM..InitSE42      0.2499143      1.6786779    1.58683750     0.1766170</span></span>
-<span><span class="co">## SKCM..InitSE55      1.6521337      0.9399912   -0.19308835    -0.2604957</span></span>
-<span><span class="co">## SKCM..InitSE13      1.3239225     -0.9520657    1.15157243    -0.8341450</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.5277544     -1.3796505   -0.01036614    -1.1184626</span></span>
-<span><span class="co">##                 CRC..InitSE4 CRC..InitSE3 CRC..InitSE139 CRC..InitSE14</span></span>
-<span><span class="co">## SKCM..InitSE6      0.6276820    0.8162163     1.01443236     1.7685292</span></span>
-<span><span class="co">## SKCM..InitSE111    1.5212441   -1.0481140     1.26620611    -0.5098316</span></span>
-<span><span class="co">## SKCM..InitSE42     0.9283711    0.4836636     0.43798063     0.8435297</span></span>
-<span><span class="co">## SKCM..InitSE55     0.7360291    0.5951360     0.01431821     0.0425316</span></span>
-<span><span class="co">## SKCM..InitSE13     1.1854512    1.0308703    -0.79027816     0.8856072</span></span>
-<span><span class="co">## SKCM..InitSE50    -0.6619845   -0.4200774    -0.58539027    -0.7729520</span></span>
-<span><span class="co">##                 CRC..InitSE87 CRC..InitSE125 CRC..InitSE74 CRC..InitSE138</span></span>
-<span><span class="co">## SKCM..InitSE6      -0.3961433      0.9559446    0.02704459    -0.01411694</span></span>
-<span><span class="co">## SKCM..InitSE111     1.2002820     -0.9769064   -0.17476558     0.57459499</span></span>
-<span><span class="co">## SKCM..InitSE42      0.7938675      0.1451205    1.22859777     0.92658278</span></span>
-<span><span class="co">## SKCM..InitSE55     -0.1531828      0.6663249    0.15835872    -0.18580079</span></span>
-<span><span class="co">## SKCM..InitSE13     -0.4797395     -0.8199663    0.46146730     0.77015897</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.7174124     -0.9776199    1.03088404     0.45866421</span></span>
-<span><span class="co">##                 CRC..InitSE72 CRC..InitSE80 CRC..InitSE71 CRC..InitSE1</span></span>
-<span><span class="co">## SKCM..InitSE6       0.2183640    -0.3448198    0.62038464    1.0383855</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.9407487     0.0503041   -0.81282757    1.4486356</span></span>
-<span><span class="co">## SKCM..InitSE42      0.4570085     1.7501440    1.28964937    0.5666494</span></span>
-<span><span class="co">## SKCM..InitSE55      0.1487594    -0.4634449    0.09524376   -0.6824031</span></span>
-<span><span class="co">## SKCM..InitSE13      0.3946014     0.1813521    0.83087035   -0.7339782</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.5806700    -0.8300677   -0.41393645   -0.4563346</span></span>
-<span><span class="co">##                 CRC..InitSE27 CRC..InitSE129 CRC..InitSE50 CRC..InitSE41</span></span>
-<span><span class="co">## SKCM..InitSE6     -0.09832213     -0.4377222     0.4304665   -1.42626605</span></span>
-<span><span class="co">## SKCM..InitSE111    1.70394658     -0.2683553     0.7852864   -1.30120291</span></span>
-<span><span class="co">## SKCM..InitSE42     0.85902289      1.5779837     0.8845635   -0.08346365</span></span>
-<span><span class="co">## SKCM..InitSE55    -0.48417934      1.3695002    -0.3253413   -1.24050729</span></span>
-<span><span class="co">## SKCM..InitSE13     0.15210839      0.4596985    -0.1632791   -1.05930471</span></span>
-<span><span class="co">## SKCM..InitSE50    -0.70216804     -0.4997339    -0.6553959   -0.45800311</span></span>
-<span><span class="co">##                 SKCM..InitSE103 SKCM..InitSE163 SKCM..InitSE78 SKCM..InitSE153</span></span>
-<span><span class="co">## SKCM..InitSE6        1.03134517      -0.2156094    -0.09719085      0.04859573</span></span>
-<span><span class="co">## SKCM..InitSE111      0.50029445       0.1846641    -0.31771243     -0.03347692</span></span>
-<span><span class="co">## SKCM..InitSE42       0.86654510       1.5952116     0.31259232      0.11768614</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.50720764      -0.3207629     0.10548052     -0.46174681</span></span>
-<span><span class="co">## SKCM..InitSE13       0.08918935       0.3839508    -0.30870627      0.25726212</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.04357779      -0.2835862    -0.66216702     -0.54401099</span></span>
-<span><span class="co">##                 CRC..InitSE116 CRC..InitSE61 CRC..InitSE60 CRC..InitSE123</span></span>
-<span><span class="co">## SKCM..InitSE6        0.1175562    0.01991269  0.4561761685      0.2495756</span></span>
-<span><span class="co">## SKCM..InitSE111      1.0653080    1.62517537  0.7068870536     -0.8405221</span></span>
-<span><span class="co">## SKCM..InitSE42       0.1846725    0.58414177  0.0002529861      0.1922053</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.8462300   -0.43617783  1.2495187699     -0.3447401</span></span>
-<span><span class="co">## SKCM..InitSE13      -0.5954031   -0.26792701 -0.2347021160     -0.3073807</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.7714661   -0.05730740 -0.9531249464     -0.1879263</span></span>
-<span><span class="co">##                 CRC..InitSE172 CRC..InitSE117 CRC..InitSE197 CRC..InitSE110</span></span>
-<span><span class="co">## SKCM..InitSE6      -0.54077781    -0.31116881      1.3200881    -0.29578046</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.50336628     1.10569228      1.5540656    -0.99587872</span></span>
-<span><span class="co">## SKCM..InitSE42      0.30289968     0.80191188      1.1563267    -0.16901255</span></span>
-<span><span class="co">## SKCM..InitSE55     -0.02846805     0.01929525     -0.3311149     0.08793561</span></span>
-<span><span class="co">## SKCM..InitSE13      1.07355854     0.03983048     -0.3472589    -0.01180400</span></span>
-<span><span class="co">## SKCM..InitSE50      1.58508923     1.60163945     -0.2257290    -0.90271071</span></span>
-<span><span class="co">##                 CRC..InitSE175 CRC..InitSE124 CRC..InitSE190 CRC..InitSE194</span></span>
-<span><span class="co">## SKCM..InitSE6       0.55723315     -0.4354849     -0.2121236     1.04918481</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.17129889     -0.4809780      0.2254184     0.01212706</span></span>
-<span><span class="co">## SKCM..InitSE42      0.68604692      0.3591200      0.5309830     0.21136466</span></span>
-<span><span class="co">## SKCM..InitSE55      0.16410805      0.7611970      0.2005594     1.60545308</span></span>
-<span><span class="co">## SKCM..InitSE13      0.04939315     -0.1480203      0.1393320     0.28861404</span></span>
-<span><span class="co">## SKCM..InitSE50      1.54764936     -1.0910553     -0.6694946    -0.66526010</span></span>
-<span><span class="co">##                 CRC..InitSE173 CRC..InitSE159 CRC..InitSE157 CRC..InitSE198</span></span>
-<span><span class="co">## SKCM..InitSE6     -0.009267661     -0.3018593      1.0753926      0.6075391</span></span>
-<span><span class="co">## SKCM..InitSE111   -0.109085451     -0.7172929     -0.2468641      0.7240277</span></span>
-<span><span class="co">## SKCM..InitSE42     0.622085688      0.6250865      0.1752941      1.4136150</span></span>
-<span><span class="co">## SKCM..InitSE55     0.355955453      1.0161024     -0.2658502      1.3836722</span></span>
-<span><span class="co">## SKCM..InitSE13     0.549088406      0.1007952     -0.1457423      0.2292316</span></span>
-<span><span class="co">## SKCM..InitSE50    -0.539113022      1.1932559      1.0409394     -0.7206787</span></span>
-<span><span class="co">##                 CRC..InitSE174 SKCM..InitSE12 SKCM..InitSE72 SKCM..InitSE61</span></span>
-<span><span class="co">## SKCM..InitSE6    -0.0005560599    -1.22142444      1.5660405     -1.1643821</span></span>
-<span><span class="co">## SKCM..InitSE111  -0.1182138105    -0.07973662     -1.1621022      1.3675791</span></span>
-<span><span class="co">## SKCM..InitSE42    0.5011466079    -1.51511049     -1.4151363     -1.1670485</span></span>
-<span><span class="co">## SKCM..InitSE55    0.0864315333    -1.14608663     -1.2680530     -0.2403661</span></span>
-<span><span class="co">## SKCM..InitSE13    0.3023489382    -0.75208049     -1.1488314     -0.5222579</span></span>
-<span><span class="co">## SKCM..InitSE50   -0.7248306880    -1.91272369     -0.5259353     -0.7322417</span></span>
-<span><span class="co">##                 CRC..InitSE113 CRC..InitSE149 CRC..InitSE179 CRC..InitSE134</span></span>
-<span><span class="co">## SKCM..InitSE6        1.2345392      1.0523617     -0.4912201     1.24977188</span></span>
-<span><span class="co">## SKCM..InitSE111      0.3916787      0.5717186      0.2711129     0.06196540</span></span>
-<span><span class="co">## SKCM..InitSE42       1.4663145      0.4079076     -0.7803765     0.65170103</span></span>
-<span><span class="co">## SKCM..InitSE55       1.5742317      0.6225252      1.8631417     1.24760502</span></span>
-<span><span class="co">## SKCM..InitSE13       0.2364373      0.1896904     -0.4487852    -0.09896084</span></span>
-<span><span class="co">## SKCM..InitSE50      -1.5466939      0.5859474     -1.3727127    -0.85661573</span></span>
-<span><span class="co">##                 CRC..InitSE158 CRC..InitSE168 CRC..InitSE96 CRC..InitSE187</span></span>
-<span><span class="co">## SKCM..InitSE6      -0.16334445      0.3386283    -1.0341797     -1.0838670</span></span>
-<span><span class="co">## SKCM..InitSE111     1.75676364      1.4949057     1.0692080      1.2373711</span></span>
-<span><span class="co">## SKCM..InitSE42      1.51770436     -0.1180268    -0.5141669     -0.3524703</span></span>
-<span><span class="co">## SKCM..InitSE55      0.01463546     -0.0774060    -0.6511399      0.6391376</span></span>
-<span><span class="co">## SKCM..InitSE13     -0.32333400     -0.8797308     0.6647696     -1.2592942</span></span>
-<span><span class="co">## SKCM..InitSE50      0.63307018      0.1025565     1.9898992     -0.4169025</span></span>
-<span><span class="co">##                 SKCM..InitSE123 SKCM..InitSE141 SKCM..InitSE138 SKCM..InitSE137</span></span>
-<span><span class="co">## SKCM..InitSE6        0.01662698     -0.43242765     -1.00921742      -0.9344139</span></span>
-<span><span class="co">## SKCM..InitSE111      0.32324074      0.13586600     -0.09354687       1.3582133</span></span>
-<span><span class="co">## SKCM..InitSE42       0.66863745      1.64674968      1.07025339       0.3427785</span></span>
-<span><span class="co">## SKCM..InitSE55       1.53999947      0.05583107     -0.73216692       0.5523725</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.46722301     -0.13385173     -0.28724964       0.4442532</span></span>
-<span><span class="co">## SKCM..InitSE50       0.54258732      1.40939879      1.06774260      -0.3884127</span></span>
-<span><span class="co">##                 SKCM..InitSE115 CRC..InitSE142 CRC..InitSE182 CRC..InitSE162</span></span>
-<span><span class="co">## SKCM..InitSE6        0.87344971     -1.1590101     -1.6042923    -0.92153526</span></span>
-<span><span class="co">## SKCM..InitSE111      1.85935657      1.2139128      1.7414375    -1.31990510</span></span>
-<span><span class="co">## SKCM..InitSE42      -0.40558630     -0.1484062     -0.8951603    -0.50234649</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.46989192     -0.1486972     -1.0501798     0.94175344</span></span>
-<span><span class="co">## SKCM..InitSE13       0.02777658      1.3180099     -1.1559626     1.09740993</span></span>
-<span><span class="co">## SKCM..InitSE50       0.76346739      0.7934978      0.5165344     0.09370152</span></span>
-<span><span class="co">##                 CRC..InitSE181 SKCM..InitSE131 SKCM..InitSE176 SKCM..InitSE101</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.6313096     -0.58344129      -0.4154673     -0.56869732</span></span>
-<span><span class="co">## SKCM..InitSE111      1.4087032      0.03662282       1.6258911      1.71489042</span></span>
-<span><span class="co">## SKCM..InitSE42       0.2721669     -0.96967405       0.2918096      0.51219280</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.6743860     -0.37316538      -0.6167154     -0.45009383</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.2132301     -0.64945813      -0.4736511     -0.32508278</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.7673696      0.61016559       0.6924162      0.06239453</span></span>
-<span><span class="co">##                 SKCM..InitSE152 CRC..InitSE169 CRC..InitSE155 SKCM..InitSE9</span></span>
-<span><span class="co">## SKCM..InitSE6        -0.5518167     1.08601919     -1.3167720    0.09777023</span></span>
-<span><span class="co">## SKCM..InitSE111       1.0051979     0.68069648      1.5889937   -0.61265087</span></span>
-<span><span class="co">## SKCM..InitSE42        0.2677656     1.72146312     -0.6813376    0.10694760</span></span>
-<span><span class="co">## SKCM..InitSE55       -0.3159055     1.77636423     -1.5305198   -1.19223864</span></span>
-<span><span class="co">## SKCM..InitSE13       -0.7718954     0.02157755     -1.3948480   -0.42601065</span></span>
-<span><span class="co">## SKCM..InitSE50        0.6413181     1.90042441      0.1417286    1.44777363</span></span>
-<span><span class="co">##                 SKCM..InitSE63 SKCM..InitSE113 SKCM..InitSE35 SKCM..InitSE120</span></span>
-<span><span class="co">## SKCM..InitSE6       -1.2060585      -0.2995818     -0.2886875       1.6600893</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.6604486      -0.3922271     -1.1176916      -0.1368364</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.0948857      -0.9456034     -1.2041460      -1.0558145</span></span>
-<span><span class="co">## SKCM..InitSE55       0.4503588      -0.8210966     -1.0770707      -0.9866006</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.2196746      -0.3844751      1.0262776      -0.6245252</span></span>
-<span><span class="co">## SKCM..InitSE50       0.7414824       0.9678427      0.6060271      -1.0753844</span></span>
-<span><span class="co">##                 SKCM..InitSE65 SKCM..InitSE2 SKCM..InitSE52 SKCM..InitSE108</span></span>
-<span><span class="co">## SKCM..InitSE6       -1.3342146   -1.05472725   -1.126986404      -1.3131554</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.9012303   -0.57789004   -0.001127889      -1.1572765</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.4754719   -1.41100031   -1.092157897      -1.3036757</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.4423365   -0.97284805    0.446121830      -0.4265033</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.1199382   -1.44489468   -0.997548457      -0.3313104</span></span>
-<span><span class="co">## SKCM..InitSE50       0.8601122    0.09798852   -0.888817398      -1.0705564</span></span>
-<span><span class="co">##                 SKCM..InitSE47 SKCM..InitSE40 SKCM..InitSE37 SKCM..InitSE77</span></span>
-<span><span class="co">## SKCM..InitSE6        0.7803810     -1.3052366     -1.8217021     -0.7886887</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.8274087     -0.3211321     -0.8401395     -1.0018450</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.4363503     -1.4758883     -1.5765474     -1.0290747</span></span>
-<span><span class="co">## SKCM..InitSE55      -1.0955958     -1.3419337      0.4523079     -1.1678511</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.4757539     -1.0318015     -1.1533872     -1.1993210</span></span>
-<span><span class="co">## SKCM..InitSE50       1.0109333      0.5141125      0.4543292     -0.3930479</span></span>
-<span><span class="co">##                 CRC..InitSE53 CRC..InitSE189 CRC..InitSE107 CRC..InitSE105</span></span>
-<span><span class="co">## SKCM..InitSE6      -1.2677412     -1.2803100     -0.9866448      0.1288306</span></span>
-<span><span class="co">## SKCM..InitSE111     1.1062203      0.8767936     -1.1916874      1.0992217</span></span>
-<span><span class="co">## SKCM..InitSE42     -0.9401662     -1.1790146     -0.7385604      0.2731614</span></span>
-<span><span class="co">## SKCM..InitSE55     -1.0032233     -1.1418603     -0.9666750     -1.3619682</span></span>
-<span><span class="co">## SKCM..InitSE13      0.3373116     -1.6557035     -1.5489963     -1.8650280</span></span>
-<span><span class="co">## SKCM..InitSE50      1.6386858     -0.9655300     -0.4350418     -1.0317391</span></span>
-<span><span class="co">##                 CRC..InitSE195 CRC..InitSE188 CRC..InitSE52 CRC..InitSE36</span></span>
-<span><span class="co">## SKCM..InitSE6       -1.1502146     -1.3638137    -0.5572003   -0.69868196</span></span>
-<span><span class="co">## SKCM..InitSE111      1.3813323     -0.7002205    -1.4394921   -1.18875809</span></span>
-<span><span class="co">## SKCM..InitSE42      -0.6827073     -0.6001623    -0.7780049   -1.25743434</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.3210939     -1.0663834    -0.9135609   -0.64645978</span></span>
-<span><span class="co">## SKCM..InitSE13       1.2003919     -1.6063392    -0.7625485   -0.08193173</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.2407446     -0.9786368    -1.0526704   -1.34528407</span></span>
-<span><span class="co">##                 CRC..InitSE176 CRC..InitSE6 CRC..InitSE65 CRC..InitSE141</span></span>
-<span><span class="co">## SKCM..InitSE6      -1.16072012   -0.6570219    -1.4017611     -1.0698849</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.07816414   -1.3619176     1.7313614     -0.7663396</span></span>
-<span><span class="co">## SKCM..InitSE42     -1.00923831   -1.1449236    -1.0386268     -0.9811750</span></span>
-<span><span class="co">## SKCM..InitSE55     -0.78264164   -0.9628985    -1.3418239      0.3801430</span></span>
-<span><span class="co">## SKCM..InitSE13     -0.17648363   -0.8065971    -1.1892001     -1.0375512</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.76048465    1.4449694     0.7413974      0.1153896</span></span>
-<span><span class="co">##                 CRC..InitSE64 CRC..InitSE193 CRC..InitSE111 CRC..InitSE170</span></span>
-<span><span class="co">## SKCM..InitSE6      -1.8015069     -0.9827534     -1.1776884     -1.1604905</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.6991583     -1.2670730     -1.1713217     -0.8865433</span></span>
-<span><span class="co">## SKCM..InitSE42     -1.0912822     -0.6441320     -1.2024203      0.1003459</span></span>
-<span><span class="co">## SKCM..InitSE55      0.2931127     -1.0309026     -1.1340864     -1.3056255</span></span>
-<span><span class="co">## SKCM..InitSE13     -0.3311882     -1.1593841     -1.6938924     -1.8796701</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.5728255     -1.1229210     -0.5774645      1.2343513</span></span>
-<span><span class="co">##                 CRC..InitSE51 CRC..InitSE57 CRC..InitSE135 CRC..InitSE126</span></span>
-<span><span class="co">## SKCM..InitSE6       0.4806231    -1.4972373      1.5270709     -0.9060134</span></span>
-<span><span class="co">## SKCM..InitSE111    -1.0245967     0.4690435      0.7635060     -1.3471186</span></span>
-<span><span class="co">## SKCM..InitSE42     -0.9153611    -1.2768425      0.1192835     -0.9550370</span></span>
-<span><span class="co">## SKCM..InitSE55     -1.2412711    -0.9654658     -1.1434567     -1.0982216</span></span>
-<span><span class="co">## SKCM..InitSE13     -1.4448171    -0.2937429     -1.2748173     -0.9668751</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.6177503    -0.9820643     -0.3825537     -0.9377699</span></span>
-<span><span class="co">##                 CRC..InitSE183 CRC..InitSE177 CRC..InitSE146 CRC..InitSE109</span></span>
-<span><span class="co">## SKCM..InitSE6       -1.1317140     -1.3334255     -1.5738963     -1.5552613</span></span>
-<span><span class="co">## SKCM..InitSE111     -1.2169706     -0.7373935     -1.3831376      0.6409717</span></span>
-<span><span class="co">## SKCM..InitSE42      -0.8325835      0.3985846     -0.7799440     -1.0820875</span></span>
-<span><span class="co">## SKCM..InitSE55      -1.0279267     -0.9786437     -0.1908943     -1.2032381</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.5331336     -1.3391676      0.2564005     -1.6840764</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.3962183     -1.0682747      0.9351036     -0.6339036</span></span>
-<span><span class="co">##                 CRC..InitSE127 CRC..InitSE186 CRC..InitSE184 CRC..InitSE164</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.4740439     -0.9107787     -0.9773659     -1.2631433</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.7728925     -0.9522791      1.2332600     -1.2338888</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.2261250     -0.9408056     -0.6011246     -1.0809165</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.8161986     -1.0373134     -0.9325244     -1.1537811</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.0192219      0.6103141      0.5108209     -1.7079409</span></span>
-<span><span class="co">## SKCM..InitSE50       1.0590818     -0.4553063     -0.4705984     -0.1940418</span></span>
-<span><span class="co">##                 CRC..InitSE167 CRC..InitSE178 SKCM..InitSE19 SKCM..InitSE79</span></span>
-<span><span class="co">## SKCM..InitSE6        0.9033095     -1.1963239     -1.1069710     -0.6580988</span></span>
-<span><span class="co">## SKCM..InitSE111      0.3996462      0.4121468     -0.7657750     -1.2888893</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.3812684     -1.0474789     -1.4235191     -1.0723415</span></span>
-<span><span class="co">## SKCM..InitSE55      -1.0339065     -1.0533994     -1.1925068     -0.9304948</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.8251973     -1.5838933     -1.4692561     -1.2059928</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.3448249     -0.7856882     -0.3740478     -0.8972082</span></span>
-<span><span class="co">##                 SKCM..InitSE93 SKCM..InitSE60 SKCM..InitSE1 SKCM..InitSE99</span></span>
-<span><span class="co">## SKCM..InitSE6      -1.02449136     -1.2898116    -0.8243038     -1.1093327</span></span>
-<span><span class="co">## SKCM..InitSE111    -1.36459705     -0.9498075    -1.2724560     -0.2137783</span></span>
-<span><span class="co">## SKCM..InitSE42      0.08549392     -0.9720221    -1.2340963     -1.5920379</span></span>
-<span><span class="co">## SKCM..InitSE55     -1.01726538     -1.4984538    -0.5567691     -1.3083836</span></span>
-<span><span class="co">## SKCM..InitSE13     -0.83780365     -1.6637116     1.1560377     -1.0058194</span></span>
-<span><span class="co">## SKCM..InitSE50     -1.70189716     -1.4840598    -0.2976630      0.7365109</span></span>
-<span><span class="co">##                 SKCM..InitSE133 SKCM..InitSE136 SKCM..InitSE71 SKCM..InitSE170</span></span>
-<span><span class="co">## SKCM..InitSE6        -1.0251858       0.2083239     -1.1002378      -1.0401256</span></span>
-<span><span class="co">## SKCM..InitSE111      -1.1731745       0.3342129     -1.1868842      -0.6588594</span></span>
-<span><span class="co">## SKCM..InitSE42       -0.7477560      -0.4977260     -0.8467973      -0.8861280</span></span>
-<span><span class="co">## SKCM..InitSE55       -1.2185911      -0.1689797     -0.9115311      -0.9565091</span></span>
-<span><span class="co">## SKCM..InitSE13       -0.9232308      -0.3626192     -0.7794802      -0.9446904</span></span>
-<span><span class="co">## SKCM..InitSE50       -0.7969387       0.5286648     -1.0730204      -0.7577249</span></span>
-<span><span class="co">##                 SKCM..InitSE104 SKCM..InitSE44 SKCM..InitSE62 SKCM..InitSE48</span></span>
-<span><span class="co">## SKCM..InitSE6        -0.9988883     -1.1823169      -1.345656     -1.1983074</span></span>
-<span><span class="co">## SKCM..InitSE111       1.1000151     -1.1963441       1.000616     -0.2755655</span></span>
-<span><span class="co">## SKCM..InitSE42       -1.2099305     -1.0084899      -1.249541      0.6060137</span></span>
-<span><span class="co">## SKCM..InitSE55       -1.2008947     -0.7779766      -1.460487     -1.4949503</span></span>
-<span><span class="co">## SKCM..InitSE13       -1.2108152     -1.0520808      -1.095083     -1.1079052</span></span>
-<span><span class="co">## SKCM..InitSE50       -0.6365511     -1.1633634      -0.450538      0.7888712</span></span>
-<span><span class="co">##                 SKCM..InitSE139 SKCM..InitSE29 SKCM..InitSE73 SKCM..InitSE119</span></span>
-<span><span class="co">## SKCM..InitSE6        -1.2944470      -1.088952     -1.5743867      -0.6975030</span></span>
-<span><span class="co">## SKCM..InitSE111      -1.5027527      -1.256315     -0.9790317      -0.8705614</span></span>
-<span><span class="co">## SKCM..InitSE42       -1.3567156      -1.171504      0.1219097      -1.2714448</span></span>
-<span><span class="co">## SKCM..InitSE55       -0.6324069      -1.044115     -0.9923816      -0.7825391</span></span>
-<span><span class="co">## SKCM..InitSE13       -1.0651493      -1.096449     -0.9531260      -1.2176934</span></span>
-<span><span class="co">## SKCM..InitSE50       -1.3100728      -1.039573     -1.3611890      -1.3619874</span></span>
-<span><span class="co">##                 SKCM..InitSE46 SKCM..InitSE109 SKCM..InitSE105 SKCM..InitSE91</span></span>
-<span><span class="co">## SKCM..InitSE6        0.3314174       -1.057940      -1.3887918     -1.3653897</span></span>
-<span><span class="co">## SKCM..InitSE111     -1.3433139       -1.183945      -0.5035289      1.8716290</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.2776106       -1.024906      -1.2085358     -0.8951383</span></span>
-<span><span class="co">## SKCM..InitSE55      -1.0121690       -1.032387      -1.4827911     -0.9438875</span></span>
-<span><span class="co">## SKCM..InitSE13      -0.5495491       -1.148619      -1.3080833     -0.6130177</span></span>
-<span><span class="co">## SKCM..InitSE50      -1.1763574       -1.125397      -0.5180009      1.7838504</span></span>
-<span><span class="co">##                 CRC..InitSE148 CRC..InitSE137 CRC..InitSE196 CRC..InitSE106</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.9518581     -1.0196330     -1.2011392      0.5274047</span></span>
-<span><span class="co">## SKCM..InitSE111      0.9369333      1.0100065      0.3623448      0.5786149</span></span>
-<span><span class="co">## SKCM..InitSE42      -0.9875154     -0.5398650     -0.9202072      0.1560001</span></span>
-<span><span class="co">## SKCM..InitSE55      -1.0349839     -0.9604921     -1.0456444     -1.5138770</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.4790769     -1.2501133     -1.5869106     -1.5511192</span></span>
-<span><span class="co">## SKCM..InitSE50       2.1730367     -0.4161217      0.9738844     -0.7634883</span></span>
-<span><span class="co">##                 CRC..InitSE163 CRC..InitSE171 CRC..InitSE154 CRC..InitSE185</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.7849393     -1.0976326     -1.0137271     -0.9620530</span></span>
-<span><span class="co">## SKCM..InitSE111      1.6577329     -1.2303368     -0.3524135      0.6642450</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.3093655     -1.1082489     -1.1877332     -1.2516518</span></span>
-<span><span class="co">## SKCM..InitSE55      -1.0421342     -1.1278585      0.6322689     -1.0851951</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.2601719     -1.5709836     -1.7678404     -1.1498688</span></span>
-<span><span class="co">## SKCM..InitSE50       1.9379230     -0.5846584     -0.2641183      0.9298435</span></span>
-<span><span class="co">##                 SKCM..InitSE174 SKCM..InitSE64 SKCM..InitSE116 SKCM..InitSE172</span></span>
-<span><span class="co">## SKCM..InitSE6        -1.0109597     -0.9735329      -0.5732710      -1.2124331</span></span>
-<span><span class="co">## SKCM..InitSE111      -0.9620204     -1.1362012      -1.2316167      -1.2102096</span></span>
-<span><span class="co">## SKCM..InitSE42       -0.9871386     -0.8985994      -1.0511851      -1.1053421</span></span>
-<span><span class="co">## SKCM..InitSE55       -0.6594991     -0.5970872      -0.2065472      -0.9509130</span></span>
-<span><span class="co">## SKCM..InitSE13       -0.5193685     -0.4705034      -0.7553574      -1.0566573</span></span>
-<span><span class="co">## SKCM..InitSE50       -0.2186531     -1.0672134      -1.4131113      -0.3981552</span></span>
-<span><span class="co">##                 CRC..InitSE191 CRC..InitSE192 SKCM..InitSE145 SKCM..InitSE134</span></span>
-<span><span class="co">## SKCM..InitSE6       -1.0530060      0.5945148      -1.1244830      -0.6286272</span></span>
-<span><span class="co">## SKCM..InitSE111      0.7989901     -1.1914729      -0.5501268       2.0089427</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.1772016     -1.0793305      -1.0195421      -0.8155351</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.7464721     -0.7615808      -1.1450893      -0.5446225</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.1130291     -0.8980671      -1.0592742      -0.3662273</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.7867463      1.2004594      -1.0614356      -0.5799503</span></span>
-<span><span class="co">##                 SKCM..InitSE102 SKCM..InitSE168 SKCM..InitSE147 SKCM..InitSE143</span></span>
-<span><span class="co">## SKCM..InitSE6         1.0172523     -0.24517348     -0.72860854      -0.6948739</span></span>
-<span><span class="co">## SKCM..InitSE111      -0.1574102     -0.37418200     -0.12637786      -0.7055385</span></span>
-<span><span class="co">## SKCM..InitSE42       -1.2294881      0.26289223     -0.81901086      -0.6839480</span></span>
-<span><span class="co">## SKCM..InitSE55       -0.4888692      0.05401292      0.16748740      -0.6799536</span></span>
-<span><span class="co">## SKCM..InitSE13       -0.6125751      0.37307832     -0.06413286      -0.4066891</span></span>
-<span><span class="co">## SKCM..InitSE50       -0.8484452     -1.17088823     -0.60783957      -0.8761442</span></span>
-<span><span class="co">##                 SKCM..InitSE154 SKCM..InitSE171 SKCM..InitSE114 SKCM..InitSE80</span></span>
-<span><span class="co">## SKCM..InitSE6        -0.9541697      -0.8260274     -0.80878945     -0.8535423</span></span>
-<span><span class="co">## SKCM..InitSE111      -0.5390470      -0.4468182     -0.24779193     -1.0587298</span></span>
-<span><span class="co">## SKCM..InitSE42       -0.6239937      -0.6988860     -0.78547024     -1.8344832</span></span>
-<span><span class="co">## SKCM..InitSE55       -0.8180625      -0.6435733     -0.49981924     -1.7503991</span></span>
-<span><span class="co">## SKCM..InitSE13       -0.5332934      -0.0692686     -0.06500143     -1.6008979</span></span>
-<span><span class="co">## SKCM..InitSE50       -1.1998572      -0.4421985     -1.03741060     -0.3826567</span></span>
-<span><span class="co">##                 CRC..InitSE35 SKCM..InitSE144 SKCM..InitSE106 SKCM..InitSE45</span></span>
-<span><span class="co">## SKCM..InitSE6     -1.08679632     -1.02323503      -0.3397770     -0.1536124</span></span>
-<span><span class="co">## SKCM..InitSE111    0.08201659     -0.40890839      -0.9685163      1.7868432</span></span>
-<span><span class="co">## SKCM..InitSE42    -1.18150611     -1.12403574      -1.0505381     -1.1039900</span></span>
-<span><span class="co">## SKCM..InitSE55    -0.05603433     -0.94721940      -0.9244843     -0.7122406</span></span>
-<span><span class="co">## SKCM..InitSE13     0.08273975     -0.06421972      -0.7062920     -1.0604332</span></span>
-<span><span class="co">## SKCM..InitSE50    -0.94481138      0.52118306      -1.1417887      1.1513808</span></span>
-<span><span class="co">##                 SKCM..InitSE90 SKCM..InitSE148 SKCM..InitSE107 SKCM..InitSE151</span></span>
-<span><span class="co">## SKCM..InitSE6        1.0726216      -0.1735007      0.23179968      -0.7926857</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.7346393      -1.0808063      1.59752450      -0.7628558</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.6191079      -0.9594845     -1.16871462      -0.9154580</span></span>
-<span><span class="co">## SKCM..InitSE55      -1.2351387      -1.1275190     -0.61462098      -0.8628664</span></span>
-<span><span class="co">## SKCM..InitSE13      -0.7191077      -1.0122034     -0.09174012      -0.4706692</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.6793073      -1.4804430     -0.74118284      -0.8217086</span></span>
-<span><span class="co">##                 SKCM..InitSE173 SKCM..InitSE167 SKCM..InitSE36 SKCM..InitSE121</span></span>
-<span><span class="co">## SKCM..InitSE6        -0.5472107       0.9533939      1.1438542       0.8754448</span></span>
-<span><span class="co">## SKCM..InitSE111       0.2650406      -0.2563217     -0.8601707      -0.4802131</span></span>
-<span><span class="co">## SKCM..InitSE42       -0.7220310       1.1044938     -0.9693153       0.8888064</span></span>
-<span><span class="co">## SKCM..InitSE55       -0.4578689      -0.5720930     -0.8867587      -0.9989204</span></span>
-<span><span class="co">## SKCM..InitSE13        0.2967230       0.2716056     -0.5566195      -0.1388204</span></span>
-<span><span class="co">## SKCM..InitSE50       -1.3074277      -1.4268467     -1.1745489      -1.5547611</span></span>
-<span><span class="co">##                 SKCM..InitSE149 SKCM..InitSE150 SKCM..InitSE132 SKCM..InitSE92</span></span>
-<span><span class="co">## SKCM..InitSE6        -0.3743726      0.90638189     -0.09676499      0.9312713</span></span>
-<span><span class="co">## SKCM..InitSE111      -0.6405269     -0.45047963     -0.67153362     -0.9056478</span></span>
-<span><span class="co">## SKCM..InitSE42        0.3256663      1.04439921     -0.91760129      0.2366546</span></span>
-<span><span class="co">## SKCM..InitSE55       -1.1730092     -0.80808969     -0.45310852      0.2812718</span></span>
-<span><span class="co">## SKCM..InitSE13       -0.6132735      0.05445066     -0.12420404     -1.5690510</span></span>
-<span><span class="co">## SKCM..InitSE50       -1.5419503     -1.53961157      1.37058804     -1.2324096</span></span>
-<span><span class="co">##                 SKCM..InitSE21 SKCM..InitSE146 SKCM..InitSE84 SKCM..InitSE162</span></span>
-<span><span class="co">## SKCM..InitSE6       0.74404994      -0.8240154     -1.7831361      -0.6300291</span></span>
-<span><span class="co">## SKCM..InitSE111    -1.16123421      -1.1767174      1.4584605       0.3511682</span></span>
-<span><span class="co">## SKCM..InitSE42      0.39013595      -1.5056236     -1.6306542      -0.8894178</span></span>
-<span><span class="co">## SKCM..InitSE55      1.17118550      -1.3289511      0.3863245       1.2580219</span></span>
-<span><span class="co">## SKCM..InitSE13     -0.09032961      -0.8109185     -0.6807922       0.3174608</span></span>
-<span><span class="co">## SKCM..InitSE50      0.32253551       0.1499127     -0.4603369      -0.7502221</span></span>
-<span><span class="co">##                 SKCM..InitSE156 SKCM..InitSE161 SKCM..InitSE158 SKCM..InitSE128</span></span>
-<span><span class="co">## SKCM..InitSE6         0.6688697      -0.9107207       0.9778674       0.5558956</span></span>
-<span><span class="co">## SKCM..InitSE111      -0.2764559      -0.9181876       0.4581072      -0.3550337</span></span>
-<span><span class="co">## SKCM..InitSE42       -0.7610050      -1.0813915      -0.2201238      -0.6828270</span></span>
-<span><span class="co">## SKCM..InitSE55       -0.8331585      -1.1576696      -0.4319155      -1.3661544</span></span>
-<span><span class="co">## SKCM..InitSE13       -0.3346931      -0.8521441      -0.6375578      -0.6186688</span></span>
-<span><span class="co">## SKCM..InitSE50        0.2035832      -1.1358903       1.1490861      -0.4990898</span></span>
-<span><span class="co">##                 SKCM..InitSE15 SKCM..InitSE32 SKCM..InitSE24 SKCM..InitSE34</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.7438982     -0.5287349      1.5902860     -0.5877131</span></span>
-<span><span class="co">## SKCM..InitSE111     -1.2234918     -1.1323040      0.1734474     -0.6706854</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.0137527     -1.2478704     -0.1275074     -0.4168554</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.7610155     -1.2557500      1.2602940     -0.4670695</span></span>
-<span><span class="co">## SKCM..InitSE13      -0.3514653     -0.6335147     -0.0788866      0.4153760</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.9356411      1.3159774      1.8999390      2.0119719</span></span>
-<span><span class="co">##                 SKCM..InitSE97 SKCM..InitSE129 SKCM..InitSE26 SKCM..InitSE70</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.6059240       0.4418757     -0.7946361     -0.2610843</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.1113004      -0.4843523      0.7847821     -1.6164516</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.3894582      -1.2530816      0.6287186     -1.2986902</span></span>
-<span><span class="co">## SKCM..InitSE55      -1.1088631      -1.7037754     -0.8520653     -0.5445831</span></span>
-<span><span class="co">## SKCM..InitSE13      -0.9679226      -0.4872792     -0.6322448     -0.9639758</span></span>
-<span><span class="co">## SKCM..InitSE50       0.6852312       0.6923811      0.2524355      1.0675089</span></span>
-<span><span class="co">##                 SKCM..InitSE88 SKCM..InitSE67 SKCM..InitSE25 SKCM..InitSE20</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.8482241     0.97775437      0.1794266      0.1223766</span></span>
-<span><span class="co">## SKCM..InitSE111     -1.0578369     0.01310259      1.2249987     -0.9759094</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.4945375    -0.73584621     -0.3175096     -0.6691267</span></span>
-<span><span class="co">## SKCM..InitSE55      -1.8371013    -1.73217213      1.8872107      0.2014780</span></span>
-<span><span class="co">## SKCM..InitSE13      -1.1479283    -0.64157823      1.1282324      0.1539047</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.3008589     1.92087275     -0.7799442      1.2945628</span></span>
-<span><span class="co">##                 SKCM..InitSE66 SKCM..InitSE117 SKCM..InitSE27 SKCM..InitSE18</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.3100584      -0.5998790      1.6051382     -0.4385225</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.5003030       0.6599388     -0.2681754     -0.7295446</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.4906007      -1.3120213     -1.0197051     -1.4219282</span></span>
-<span><span class="co">## SKCM..InitSE55       1.0915035      -0.3777750      1.4933216     -1.1893966</span></span>
-<span><span class="co">## SKCM..InitSE13      -0.3561573      -0.7602604     -0.7591961     -0.4037106</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.8384044       1.1748705      0.4483152      0.9980737</span></span>
-<span><span class="co">##                 SKCM..InitSE30 SKCM..InitSE17 SKCM..InitSE14 SKCM..InitSE157</span></span>
-<span><span class="co">## SKCM..InitSE6       0.74771348      1.6220847     -0.1158849     -0.68765029</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.24733280      1.9628529      0.3288225     -0.04270321</span></span>
-<span><span class="co">## SKCM..InitSE42     -0.69903067      0.5309210     -0.9820293     -0.90246645</span></span>
-<span><span class="co">## SKCM..InitSE55      0.04551138     -0.1547144     -0.9272411     -0.67325687</span></span>
-<span><span class="co">## SKCM..InitSE13     -0.13020756      0.8040735      0.3375266     -0.01144022</span></span>
-<span><span class="co">## SKCM..InitSE50      0.49121370      0.2823505     -0.4510780     -1.19277448</span></span>
-<span><span class="co">##                 SKCM..InitSE169 SKCM..InitSE142 SKCM..InitSE118 SKCM..InitSE125</span></span>
-<span><span class="co">## SKCM..InitSE6       -1.23795250      0.39345341       0.1765587      0.17946614</span></span>
-<span><span class="co">## SKCM..InitSE111      0.03366603     -0.68824895      -0.9864652      0.04404261</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.45060341     -0.29365050      -1.3362879      1.00758608</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.99392961     -0.79796751       1.4167090      1.39822594</span></span>
-<span><span class="co">## SKCM..InitSE13      -0.63059679     -0.34436183      -0.5282620      0.28754308</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.39342929     -0.05984874       0.6979380      1.43801226</span></span>
-<span><span class="co">##                 SKCM..InitSE7 CRC..InitSE112 CRC..InitSE97 CRC..InitSE76</span></span>
-<span><span class="co">## SKCM..InitSE6       1.7704932      0.5405718     1.6341114    1.16858278</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.1434726      0.8972745     0.4792911    0.06562105</span></span>
-<span><span class="co">## SKCM..InitSE42      1.4107117     -0.7609801    -1.0203261    0.88238254</span></span>
-<span><span class="co">## SKCM..InitSE55      1.5633201      1.6350877    -0.9827214    1.35661607</span></span>
-<span><span class="co">## SKCM..InitSE13      0.7423967      0.7774469     0.7353356    1.50678202</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.6760507     -1.0402104    -0.2600160    1.76881634</span></span>
-<span><span class="co">##                 CRC..InitSE22 CRC..InitSE54 CRC..InitSE45 CRC..InitSE56</span></span>
-<span><span class="co">## SKCM..InitSE6       0.1579723    1.02757765    -1.0437855    -0.8862772</span></span>
-<span><span class="co">## SKCM..InitSE111     0.9644359   -0.03517767     1.0758622     0.6722423</span></span>
-<span><span class="co">## SKCM..InitSE42      0.4924661    0.30192605    -0.6496949    -0.5701063</span></span>
-<span><span class="co">## SKCM..InitSE55      1.5217641    1.66512484     1.6009971    -1.0026618</span></span>
-<span><span class="co">## SKCM..InitSE13      1.7161156    1.73367227     1.6607549    -0.8059545</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.1393863    0.16427080     0.4034148    -1.2716213</span></span>
-<span><span class="co">##                 CRC..InitSE28 CRC..InitSE90 CRC..InitSE130 CRC..InitSE119</span></span>
-<span><span class="co">## SKCM..InitSE6       1.3292015    -0.5996566     0.65600611      1.4733217</span></span>
-<span><span class="co">## SKCM..InitSE111     1.8991845    -1.2685878    -0.35343295      0.8874889</span></span>
-<span><span class="co">## SKCM..InitSE42     -0.4422604     1.2713245     0.23940821      0.5858040</span></span>
-<span><span class="co">## SKCM..InitSE55      1.5274271    -0.9708109     0.25496017      0.3526155</span></span>
-<span><span class="co">## SKCM..InitSE13      1.6849212     0.2635898     0.04619818     -1.0049036</span></span>
-<span><span class="co">## SKCM..InitSE50     -1.1032957    -0.9731823    -0.04942369      0.2737382</span></span>
-<span><span class="co">##                 CRC..InitSE77 CRC..InitSE43 CRC..InitSE23 CRC..InitSE99</span></span>
-<span><span class="co">## SKCM..InitSE6      1.47990216     1.7780941    -0.4114032     1.4829913</span></span>
-<span><span class="co">## SKCM..InitSE111    1.84962113     1.6502819     1.0468135     1.1116239</span></span>
-<span><span class="co">## SKCM..InitSE42    -0.06523778     0.2882621     1.5037563     0.5085921</span></span>
-<span><span class="co">## SKCM..InitSE55     0.95986137     1.6011407     1.6005554     0.7672623</span></span>
-<span><span class="co">## SKCM..InitSE13     1.72841646     1.7324525     1.8318336     1.4683659</span></span>
-<span><span class="co">## SKCM..InitSE50     0.47236617     0.1218603    -0.2352058     1.1737796</span></span>
-<span><span class="co">##                 CRC..InitSE81 CRC..InitSE102 CRC..InitSE92 CRC..InitSE118</span></span>
-<span><span class="co">## SKCM..InitSE6       1.6246207    -1.13740265    -1.0334629      0.4113711</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.7090678     0.47969169     1.7442188     -1.0284064</span></span>
-<span><span class="co">## SKCM..InitSE42     -0.2144197    -0.61314188     0.0567884      0.5504144</span></span>
-<span><span class="co">## SKCM..InitSE55      1.2998883     0.34848121    -0.4032031      0.2186015</span></span>
-<span><span class="co">## SKCM..InitSE13      1.7589438    -0.03283916     0.1113504      1.6740321</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.4138430     0.45402701     0.7284443      1.5109554</span></span>
-<span><span class="co">##                 CRC..InitSE133 CRC..InitSE145 CRC..InitSE143 CRC..InitSE100</span></span>
-<span><span class="co">## SKCM..InitSE6      -0.52529956     -0.3614520     -0.2334457     -0.7000264</span></span>
-<span><span class="co">## SKCM..InitSE111     1.53593796     -0.0819865     -1.0245118     -1.4787490</span></span>
-<span><span class="co">## SKCM..InitSE42     -0.01455198     -1.0163482     -0.8248221     -0.9738451</span></span>
-<span><span class="co">## SKCM..InitSE55      0.93094159     -0.8795537     -0.1389460     -0.7008715</span></span>
-<span><span class="co">## SKCM..InitSE13      1.59504411      0.9790140     -1.1946702      0.1507149</span></span>
-<span><span class="co">## SKCM..InitSE50      1.12661413      0.2212467      0.5584212     -0.4038500</span></span>
-<span><span class="co">##                 CRC..InitSE95 CRC..InitSE161 CRC..InitSE103 CRC..InitSE75</span></span>
-<span><span class="co">## SKCM..InitSE6       1.2228747     -0.0113384     -0.4035286    0.03678404</span></span>
-<span><span class="co">## SKCM..InitSE111     1.1586499     -1.4388241      0.6914089   -0.27188540</span></span>
-<span><span class="co">## SKCM..InitSE42     -0.7899362     -1.0558609      1.3719842   -0.65370327</span></span>
-<span><span class="co">## SKCM..InitSE55      0.1338459      0.6766212     -0.7627695   -0.98300179</span></span>
-<span><span class="co">## SKCM..InitSE13      0.8944808      1.3604726      0.8575774    0.73739450</span></span>
-<span><span class="co">## SKCM..InitSE50      1.8174725      0.4079105      0.3949362   -0.07703495</span></span>
-<span><span class="co">##                 CRC..InitSE132 CRC..InitSE88 CRC..InitSE147 CRC..InitSE15</span></span>
-<span><span class="co">## SKCM..InitSE6        2.0298358    -0.2100296     -0.4775776   -0.44508417</span></span>
-<span><span class="co">## SKCM..InitSE111      2.0021416    -0.1974191      0.4718300    1.77068275</span></span>
-<span><span class="co">## SKCM..InitSE42       0.7542206     1.2342939      1.3628398    0.02718526</span></span>
-<span><span class="co">## SKCM..InitSE55       1.1757142    -1.4559123     -0.4878267    0.33120304</span></span>
-<span><span class="co">## SKCM..InitSE13       1.5770952    -0.3286021      0.8632365    1.31028504</span></span>
-<span><span class="co">## SKCM..InitSE50       2.0035193    -0.9041283      1.0266531   -1.43578335</span></span>
-<span><span class="co">##                 CRC..InitSE120 CRC..InitSE180 CRC..InitSE152 CRC..InitSE91</span></span>
-<span><span class="co">## SKCM..InitSE6        0.9552575      1.9031667    -0.56422799    -0.3299821</span></span>
-<span><span class="co">## SKCM..InitSE111     -1.8414386     -1.7722592    -1.28907934    -1.1250068</span></span>
-<span><span class="co">## SKCM..InitSE42       0.7924913     -0.9230527    -0.29293994    -1.2337628</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.2619259      1.5158595    -1.21948541     0.8819509</span></span>
-<span><span class="co">## SKCM..InitSE13       1.0274270     -1.0315398    -1.11389316     0.6649743</span></span>
-<span><span class="co">## SKCM..InitSE50      -0.6441635      0.4448421     0.07009364    -1.2426971</span></span>
-<span><span class="co">##                 CRC..InitSE48 CRC..InitSE151 SKCM..InitSE57 SKCM..InitSE140</span></span>
-<span><span class="co">## SKCM..InitSE6      -0.2305678    -0.01427542     0.88498199      1.34043458</span></span>
-<span><span class="co">## SKCM..InitSE111    -0.6028518     1.44146998    -0.58696204      1.74893200</span></span>
-<span><span class="co">## SKCM..InitSE42      0.2875936     0.27548439     0.29590331      0.01774478</span></span>
-<span><span class="co">## SKCM..InitSE55      0.2317202     0.62137374     0.04711329     -0.70188922</span></span>
-<span><span class="co">## SKCM..InitSE13      0.7442208     1.32471475    -0.12448776     -0.88391314</span></span>
-<span><span class="co">## SKCM..InitSE50     -1.0008424     0.89813393    -1.02476131     -0.01289248</span></span>
-<span><span class="co">##                 CRC..InitSE94 CRC..InitSE165 CRC..InitSE160 SKCM..InitSE5</span></span>
-<span><span class="co">## SKCM..InitSE6       0.7005903     -0.6103595     0.52828995    -1.0404637</span></span>
-<span><span class="co">## SKCM..InitSE111     1.4000867     -1.1957431     1.76782668    -0.9146794</span></span>
-<span><span class="co">## SKCM..InitSE42      1.3044383     -0.8785759     0.07588484    -1.3714422</span></span>
-<span><span class="co">## SKCM..InitSE55      0.8110563     -0.4353495     0.02437195     0.2553421</span></span>
-<span><span class="co">## SKCM..InitSE13      1.4815570     -1.0033035     1.45075713     0.1271456</span></span>
-<span><span class="co">## SKCM..InitSE50      1.4943494      0.1798807     0.88711241    -1.6276978</span></span>
-<span><span class="co">##                 SKCM..InitSE0 SKCM..InitSE41 SKCM..InitSE16 SKCM..InitSE31</span></span>
-<span><span class="co">## SKCM..InitSE6     -0.05748404     -0.7512534    -0.62285547    -0.53276485</span></span>
-<span><span class="co">## SKCM..InitSE111   -1.44920094     -0.3956996     1.84581014    -1.53135986</span></span>
-<span><span class="co">## SKCM..InitSE42    -0.06873410     -0.1527682    -0.21189088    -1.29774322</span></span>
-<span><span class="co">## SKCM..InitSE55     1.91407622      1.5196348     0.38414172    -0.05515246</span></span>
-<span><span class="co">## SKCM..InitSE13     1.84154522      0.4956730     0.78284127     0.70063352</span></span>
-<span><span class="co">## SKCM..InitSE50    -0.34557915      0.2491688    -0.04473815     1.15606791</span></span>
-<span><span class="co">##                 SKCM..InitSE49 SKCM..InitSE22 SKCM..InitSE54 SKCM..InitSE53</span></span>
-<span><span class="co">## SKCM..InitSE6       -0.6068110    -0.67084541    -1.00645585      0.6364928</span></span>
-<span><span class="co">## SKCM..InitSE111     -0.9072623    -1.17112746    -1.37592494      1.2376847</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.6789829     0.14381051     0.08602409      0.1349272</span></span>
-<span><span class="co">## SKCM..InitSE55       1.0038325     0.07187115     1.86600231      0.6216183</span></span>
-<span><span class="co">## SKCM..InitSE13       0.5791696     0.01270376     0.03289714      1.5452141</span></span>
-<span><span class="co">## SKCM..InitSE50       0.1131708    -0.33207463    -0.14231636     -0.1546712</span></span>
-<span><span class="co">##                 SKCM..InitSE11 SKCM..InitSE51 SKCM..InitSE96 CRC..InitSE83</span></span>
-<span><span class="co">## SKCM..InitSE6       -1.1809481     -1.6240792      0.3804887    -0.7648936</span></span>
-<span><span class="co">## SKCM..InitSE111     -1.3456206      1.7829630     -0.6034540     0.7343336</span></span>
-<span><span class="co">## SKCM..InitSE42      -1.2595977     -1.2080836     -1.2649712     1.7244896</span></span>
-<span><span class="co">## SKCM..InitSE55      -0.6874372     -0.2021736      1.1315811     1.8748200</span></span>
-<span><span class="co">## SKCM..InitSE13      -0.1916414     -0.4718295      0.1348526     1.7575020</span></span>
-<span><span class="co">## SKCM..InitSE50      -1.5136319     -0.1866645      0.5029295     0.2275740</span></span>
-<span><span class="co">##                 CRC..InitSE69 CRC..InitSE46 CRC..InitSE9 CRC..InitSE93</span></span>
-<span><span class="co">## SKCM..InitSE6      -0.6253070   -0.17741811    1.0154125     1.4832507</span></span>
-<span><span class="co">## SKCM..InitSE111    -1.1107808    0.29044294   -0.8199439    -0.6840866</span></span>
-<span><span class="co">## SKCM..InitSE42     -0.9326156    0.04908392    1.1937602     1.0782601</span></span>
-<span><span class="co">## SKCM..InitSE55      0.7017605    1.90091458    0.9950463     0.3181246</span></span>
-<span><span class="co">## SKCM..InitSE13      1.2623079    1.79341193    1.2132592     0.9800696</span></span>
-<span><span class="co">## SKCM..InitSE50      0.3627648   -0.62198909    0.7294035     2.0121202</span></span>
-<span><span class="co">##                 CRC..InitSE20 CRC..InitSE34 CRC..InitSE42 CRC..InitSE21</span></span>
-<span><span class="co">## SKCM..InitSE6      -0.2234670     0.9522619    -0.2291289    -1.0098062</span></span>
-<span><span class="co">## SKCM..InitSE111    -1.7884254    -1.0317372    -0.7166193    -1.6328162</span></span>
-<span><span class="co">## SKCM..InitSE42     -0.3210422     1.4607561    -0.5175942    -0.9665546</span></span>
-<span><span class="co">## SKCM..InitSE55      1.7031299     1.7371697    -0.5749786    -0.8074171</span></span>
-<span><span class="co">## SKCM..InitSE13      1.7065935     1.7770975     0.3617433    -0.5391691</span></span>
-<span><span class="co">## SKCM..InitSE50     -0.2227824    -0.8045344    -0.5599135    -1.0060519</span></span>
-<span><span class="co">##                 CRC..InitSE19 CRC..InitSE31 CRC..InitSE98 CRC..InitSE38</span></span>
-<span><span class="co">## SKCM..InitSE6     -1.38999739   -0.02889885     0.9431493    -1.2739167</span></span>
-<span><span class="co">## SKCM..InitSE111   -1.91109474   -1.29083924    -1.4077261    -1.3625824</span></span>
-<span><span class="co">## SKCM..InitSE42    -1.06483901   -0.12686458     1.8787271    -0.9832575</span></span>
-<span><span class="co">## SKCM..InitSE55    -0.20483948    1.61341649     1.5604058     0.5883847</span></span>
-<span><span class="co">## SKCM..InitSE13     0.00899914    1.71766297     1.8270052     0.3673387</span></span>
-<span><span class="co">## SKCM..InitSE50    -1.10570790   -0.35075183    -1.1905639    -1.0471702</span></span></code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Single-cell metadata with an `SE` column annotating the discovered SEs</span></span>
 <span><span class="va">finalmeta</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"MultiSE_metadata_final.rds"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">finalmeta</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sample"</span>, <span class="st">"X"</span>, <span class="st">"Y"</span>, <span class="st">"CellType"</span>, <span class="st">"Region"</span>, <span class="st">"InitSE"</span>, <span class="st">"SE"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
@@ -1152,7 +498,7 @@ running time for this step depends on the data size, number of ranks to
 test, the number of runs per rank, and the number of cores for parallel
 analysis. For demonstration, here we test ranks from 4 to 15 with 5 runs
 per rank using four cores.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nmf_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nmfClustering.html">nmfClustering</a></span><span class="op">(</span><span class="va">integrated</span>, ranks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">15</span>,<span class="fl">2</span><span class="op">)</span>,</span>
 <span>                         nrun.per.rank <span class="op">=</span> <span class="fl">5</span>, <span class="co"># Recommend 30 or higher</span></span>
 <span>                         min.coph <span class="op">=</span> <span class="fl">0.95</span>, <span class="co"># minimum cophenetic coefficient threshold</span></span>
@@ -1162,12 +508,12 @@ per rank using four cores.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"The selected rank is "</span>, <span class="va">nmf_res</span><span class="op">$</span><span class="va">bestK</span><span class="op">)</span></span></code></pre></div>
 <p>To better understand how the cophenetic coefficient changes with
 different ranks, you can visualize the results.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">nmf_res</span><span class="op">$</span><span class="va">p</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Integration_files/figure-html/coph-1.png" width="700"></p>
 <p>Once the optimal rank is determined, you can use it to generate the
 final SE annotations.</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nmf_res</span><span class="op">$</span><span class="va">bestK</span> <span class="op">=</span> <span class="fl">12</span>  <span class="co"># specify the number of clusters</span></span>
 <span><span class="va">ses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">nmf_res</span><span class="op">$</span><span class="va">NMFfits</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"K."</span>, <span class="va">nmf_res</span><span class="op">$</span><span class="va">bestK</span><span class="op">)</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ses</span><span class="op">)</span></span></code></pre></div>
@@ -1184,11 +530,11 @@ final SE annotations.</p>
 the <code>nmfClustering</code> function. When a single rank is
 specified, it directly returns an NMFfit object for predicting SE
 grouping, as shown below:</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nmf_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nmfClustering.html">nmfClustering</a></span><span class="op">(</span><span class="va">integrated</span>, ranks <span class="op">=</span> <span class="fl">6</span>, nrun.per.rank <span class="op">=</span> <span class="fl">30</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">ses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">nmf_res</span><span class="op">)</span></span></code></pre></div>
 <p>You can add the newly defined SEs into the meta data</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">finalmeta</span><span class="op">$</span><span class="va">SE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"SE"</span>, <span class="va">ses</span><span class="op">[</span><span class="va">finalmeta</span><span class="op">$</span><span class="va">InitSE</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">finalmeta</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                                                            CellID        X</span></span>
@@ -1223,7 +569,7 @@ grouping, as shown below:</p>
 <p>After reordering spatial clusters based on the newly identified SEs,
 you can re-draw the heatmap to show the fused similarity matrix of
 spatial clusters across samples.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ords</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ses</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">ses</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">integrated</span> <span class="op">=</span> <span class="va">integrated</span><span class="op">[</span><span class="va">ords</span>, <span class="va">ords</span><span class="op">]</span> <span class="co"># reorder the cells</span></span>
 <span><span class="va">ann</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Sample <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"\\.\\..*"</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">integrated</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -1246,7 +592,7 @@ spatial clusters across samples.</p>
 <p>To examine the spatial distribution of the identified SEs, you can
 use the <code>SpatialView</code> function visualize the SEs in the
 tissues.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/SpatialView.html">SpatialView</a></span><span class="op">(</span><span class="va">finalmeta</span>, by <span class="op">=</span> <span class="st">"SE"</span><span class="op">)</span>  <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sample</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Integration_files/figure-html/spatialmapse-1.png" width="700"></p>
 </div>
@@ -1255,7 +601,7 @@ tissues.</p>
 </h3>
 <p>To examine the enrichment of SEs in pre-annotated regions, you can
 visualize the cell fractions from each region, for each SE.</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">Region</span>, <span class="va">Sample</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Sample</span>, <span class="va">SE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Frac <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co">## cell type fractions within each sample</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">Region</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Frac <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Frac</span><span class="op">)</span><span class="op">)</span> <span class="co">## average cell type fractions across all samples</span></span>
@@ -1271,7 +617,7 @@ visualize the cell fractions from each region, for each SE.</p>
 </h3>
 <p>The distance of SEs to tumor/stroma interface can be visualized in a
 box plot.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Sample</span>, <span class="va">SE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Dist2Interface <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Dist2Interface</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">Dist2Interface</span><span class="op">)</span></span>
 <span><span class="va">gg</span><span class="op">$</span><span class="va">SE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">gg</span><span class="op">$</span><span class="va">SE</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">gg</span><span class="op">$</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span></span>
@@ -1287,7 +633,7 @@ box plot.</p>
 type composition.</p>
 <p><strong>Average cell type composition of SEs across all
 samples</strong></p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">CellType</span>, <span class="va">Sample</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Sample</span>, <span class="va">SE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Frac <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co">## cell type fractions within each sample</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">CellType</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Frac <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Frac</span><span class="op">)</span><span class="op">)</span> <span class="co">## average cell type fractions across all samples</span></span>
@@ -1299,7 +645,7 @@ samples</strong></p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Cell type abundance"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Integration_files/figure-html/bar_ct2-1.png" width="700"></p>
 <details><summary><strong>Cell type composition of SEs within each sample</strong>
-</summary><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">CellType</span>, <span class="va">Sample</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">gg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">n</span>, fill <span class="op">=</span> <span class="va">CellType</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -1320,7 +666,7 @@ package</a>.</p>
 <div class="section level3">
 <h3 id="de-analysis-within-each-sample">DE analysis within each sample<a class="anchor" aria-label="anchor" href="#de-analysis-within-each-sample"></a>
 </h3>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"presto"</span><span class="op">)</span></span>
 <span><span class="co">## DE analysis within the first sample</span></span>
 <span><span class="va">tmpmeta1</span> <span class="op">=</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">CellType</span><span class="op">==</span><span class="st">"CD8T"</span> <span class="op">&amp;</span> <span class="va">Sample</span><span class="op">==</span><span class="st">"SKCM"</span> <span class="op">&amp;</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -1346,7 +692,7 @@ package</a>.</p>
 <span><span class="co">## 4 1.000000000  0.000000  0.000000</span></span>
 <span><span class="co">## 5 0.002314983 15.802469 24.713959</span></span>
 <span><span class="co">## 6 0.938002347  1.975309  3.020595</span></span></code></pre>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">degs2</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    feature group   avgExpr        logFC statistic       auc      pval      padj</span></span>
 <span><span class="co">## 1     PDK4   SE1 0.0000000  0.000000000  565528.0 0.5000000 1.0000000 1.0000000</span></span>
@@ -1369,7 +715,7 @@ package</a>.</p>
 <p>To identify markers conserved across different samples, we conduct a
 meta-analysis by averaging the log2 fold changes (log2FC) from the DE
 analyses.</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="va">degs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">degs1</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span>, <span class="va">degs2</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"feature"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">degs</span><span class="op">$</span><span class="va">AvgLogFC</span> <span class="op">=</span> <span class="op">(</span><span class="va">degs</span><span class="op">$</span><span class="va">logFC.x</span> <span class="op">+</span> <span class="va">degs</span><span class="op">$</span><span class="va">logFC.y</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
@@ -1395,7 +741,7 @@ analyses.</p>
 <p>To identify markers that are specific to each SE-associated cell
 state, we calculate the difference between the maximum log2FC for each
 gene and the second-highest log2FC:</p>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">secondmax</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">lfcs</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">delta</span> <span class="op">=</span> <span class="va">lfcs</span> <span class="op">-</span> <span class="va">secondmax</span></span>
 <span><span class="co">## Markers are considered specific if they have a positive delta and a log2FC greater than 0.05:</span></span>
@@ -1437,7 +783,7 @@ gene and the second-highest log2FC:</p>
 <div class="section level3">
 <h3 id="visualizing-top-se-cell-state-markers">Visualizing top SE cell state markers<a class="anchor" aria-label="anchor" href="#visualizing-top-se-cell-state-markers"></a>
 </h3>
-<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">lfcs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">top5</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/HeatmapView.html">HeatmapView</a></span><span class="op">(</span><span class="va">gg</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Integration_files/figure-html/hmaptop-1.png" width="700"></p>
@@ -1450,7 +796,7 @@ gene and the second-highest log2FC:</p>
 it allows them to replicate the exact environment and identify potential
 discrepancies in package versions or configurations that might be
 causing problems.</p>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.2.0 (2022-04-22)</span></span>
 <span><span class="co">## Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
@@ -1469,7 +815,7 @@ causing problems.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
 <span><span class="co">##  [1] tidyr_1.3.0           presto_1.0.0          Rcpp_1.0.10          </span></span>
-<span><span class="co">##  [4] pals_1.7              SpatialEcoTyper_0.0.3 RANN_2.6.1           </span></span>
+<span><span class="co">##  [4] pals_1.7              SpatialEcoTyper_0.0.4 RANN_2.6.1           </span></span>
 <span><span class="co">##  [7] Matrix_1.5-3          ComplexHeatmap_2.12.1 NMF_0.27             </span></span>
 <span><span class="co">## [10] Biobase_2.56.0        BiocGenerics_0.42.0   cluster_2.1.4        </span></span>
 <span><span class="co">## [13] rngtools_1.5.2        registry_0.5-1        googledrive_2.1.1    </span></span>
