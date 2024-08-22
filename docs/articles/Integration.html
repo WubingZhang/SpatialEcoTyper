@@ -40,7 +40,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-vignettes">
     <a class="dropdown-item" href="../articles/SingleSample.html">Discovery of Spatial Ecotypes from a Single Sample</a>
     <a class="dropdown-item" href="../articles/Integration.html">Discovery of Spatial Ecotypes from Multiple Samples</a>
-    <a class="dropdown-item" href="../articles/TrainRecoveryModels.html">Development of Spatial Ecotype Recovery Models</a>
+    <a class="dropdown-item" href="../articles/TrainRecoveryModels.html">Development of NMF Models for Spatial Ecotype Recovery</a>
     <a class="dropdown-item" href="../articles/Recovery_Spatial.html">Recovery of Spatial Ecotypes from Spatial Transcriptomics Data</a>
     <a class="dropdown-item" href="../articles/Recovery_scRNA.html">Recovery of Spatial Ecotypes from Single-Cell Gene Expression Data</a>
     <a class="dropdown-item" href="../articles/Recovery_Bulk.html">Recovery of Spatial Ecotypes from Bulk Gene Expression Data</a>
@@ -505,34 +505,23 @@ per rank using four cores.</p>
 <span>                         ncores <span class="op">=</span> <span class="fl">4</span>,</span>
 <span>                         seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">## This process takes ~3 minutes on a macOS with an Apple M1 Pro chip and 16 GB of memory</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">message</a></span><span class="op">(</span><span class="st">"The selected rank is "</span>, <span class="va">nmf_res</span><span class="op">$</span><span class="va">bestK</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"The selected rank is "</span>, <span class="va">nmf_res</span><span class="op">$</span><span class="va">bestK</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "The selected rank is 8"</span></span></code></pre>
 <p>To better understand how the cophenetic coefficient changes with
 different ranks, you can visualize the results.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">nmf_res</span><span class="op">$</span><span class="va">p</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Integration_files/figure-html/coph-1.png" width="700"></p>
 <p>Once the optimal rank is determined, you can use it to generate the
 final SE annotations.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">nmf_res</span><span class="op">$</span><span class="va">bestK</span> <span class="op">=</span> <span class="fl">12</span>  <span class="co"># specify the number of clusters</span></span>
-<span><span class="va">ses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">nmf_res</span><span class="op">$</span><span class="va">NMFfits</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"K."</span>, <span class="va">nmf_res</span><span class="op">$</span><span class="va">bestK</span><span class="op">)</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">nmf_res</span><span class="op">$</span><span class="va">NMFfits</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"K."</span>, <span class="va">nmf_res</span><span class="op">$</span><span class="va">bestK</span><span class="op">)</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ses</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   SKCM..InitSE6 SKCM..InitSE111  SKCM..InitSE42  SKCM..InitSE55  SKCM..InitSE13 </span></span>
-<span><span class="co">##               8               4              12               8               8 </span></span>
+<span><span class="co">##               1               1               1               1               1 </span></span>
 <span><span class="co">##  SKCM..InitSE50 </span></span>
-<span><span class="co">##               8 </span></span>
-<span><span class="co">## Levels: 1 2 3 4 5 6 7 8 9 10 11 12</span></span></code></pre>
-</div>
-<div class="section level3">
-<h3 id="using-a-different-rank">Using a different rank<a class="anchor" aria-label="anchor" href="#using-a-different-rank"></a>
-</h3>
-<p>If you simply want to experiment with a different rank, you can use
-the <code>nmfClustering</code> function. When a single rank is
-specified, it directly returns an NMFfit object for predicting SE
-grouping, as shown below:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">nmf_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nmfClustering.html">nmfClustering</a></span><span class="op">(</span><span class="va">integrated</span>, ranks <span class="op">=</span> <span class="fl">6</span>, nrun.per.rank <span class="op">=</span> <span class="fl">30</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">ses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">nmf_res</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">##               5 </span></span>
+<span><span class="co">## Levels: 1 2 3 4 5 6 7 8</span></span></code></pre>
 <p>You can add the newly defined SEs into the meta data</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">finalmeta</span><span class="op">$</span><span class="va">SE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"SE"</span>, <span class="va">ses</span><span class="op">[</span><span class="va">finalmeta</span><span class="op">$</span><span class="va">InitSE</span><span class="op">]</span><span class="op">)</span></span>
@@ -551,13 +540,50 @@ grouping, as shown below:</p>
 <span><span class="co">## HumanMelanomaPatient1__cell_3661 -6374.851 Fibroblast  Fibroblasts Stroma</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3664 -6383.428 Fibroblast  Fibroblasts Stroma</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3665 -6385.541 Fibroblast  Fibroblasts Stroma</span></span>
-<span><span class="co">##                                  Dist2Interface          InitSE Sample   SE</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3657      -894.8463 SKCM..InitSE173   SKCM  SE2</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3658      -904.1115 SKCM..InitSE173   SKCM  SE2</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3660      -907.8909 SKCM..InitSE173   SKCM  SE2</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3661      -874.2712 SKCM..InitSE145   SKCM SE10</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3664      -880.4758  SKCM..InitSE19   SKCM SE10</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3665      -916.7790 SKCM..InitSE173   SKCM  SE2</span></span></code></pre>
+<span><span class="co">##                                  Dist2Interface          InitSE Sample  SE</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3657      -894.8463 SKCM..InitSE173   SKCM SE4</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3658      -904.1115 SKCM..InitSE173   SKCM SE4</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3660      -907.8909 SKCM..InitSE173   SKCM SE4</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3661      -874.2712 SKCM..InitSE145   SKCM SE8</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3664      -880.4758  SKCM..InitSE19   SKCM SE8</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3665      -916.7790 SKCM..InitSE173   SKCM SE4</span></span></code></pre>
+</div>
+<div class="section level3">
+<h3 id="using-a-different-rank">Using a different rank<a class="anchor" aria-label="anchor" href="#using-a-different-rank"></a>
+</h3>
+<p>If you simply want to experiment with a different rank, you can use
+the <code>nmfClustering</code> function. When a single rank is
+specified, it directly returns an NMFfit object for predicting SE
+grouping, as shown below:</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">nmf_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nmfClustering.html">nmfClustering</a></span><span class="op">(</span><span class="va">integrated</span>, ranks <span class="op">=</span> <span class="fl">6</span>, nrun.per.rank <span class="op">=</span> <span class="fl">30</span>, seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">ses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">nmf_res</span><span class="op">)</span></span>
+<span><span class="co">## This process takes ~6 minutes on a macOS with an Apple M1 Pro chip and 16 GB of memory</span></span></code></pre></div>
+<p>You can add the newly defined SEs into the meta data</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">finalmeta</span><span class="op">$</span><span class="va">SE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"SE"</span>, <span class="va">ses</span><span class="op">[</span><span class="va">finalmeta</span><span class="op">$</span><span class="va">InitSE</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">finalmeta</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                                                            CellID        X</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3657 HumanMelanomaPatient1__cell_3657 1942.480</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3658 HumanMelanomaPatient1__cell_3658 1963.007</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3660 HumanMelanomaPatient1__cell_3660 1981.600</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3661 HumanMelanomaPatient1__cell_3661 1742.939</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3664 HumanMelanomaPatient1__cell_3664 1706.253</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3665 HumanMelanomaPatient1__cell_3665 1968.926</span></span>
+<span><span class="co">##                                          Y   CellType CellTypeName Region</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3657 -6369.602 Fibroblast  Fibroblasts Stroma</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3658 -6374.026 Fibroblast  Fibroblasts Stroma</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3660 -6372.266 Fibroblast  Fibroblasts Stroma</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3661 -6374.851 Fibroblast  Fibroblasts Stroma</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3664 -6383.428 Fibroblast  Fibroblasts Stroma</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3665 -6385.541 Fibroblast  Fibroblasts Stroma</span></span>
+<span><span class="co">##                                  Dist2Interface          InitSE Sample  SE</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3657      -894.8463 SKCM..InitSE173   SKCM SE2</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3658      -904.1115 SKCM..InitSE173   SKCM SE2</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3660      -907.8909 SKCM..InitSE173   SKCM SE2</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3661      -874.2712 SKCM..InitSE145   SKCM SE3</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3664      -880.4758  SKCM..InitSE19   SKCM SE3</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3665      -916.7790 SKCM..InitSE173   SKCM SE2</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -569,7 +595,7 @@ grouping, as shown below:</p>
 <p>After reordering spatial clusters based on the newly identified SEs,
 you can re-draw the heatmap to show the fused similarity matrix of
 spatial clusters across samples.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ords</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">ses</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">ses</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="va">integrated</span> <span class="op">=</span> <span class="va">integrated</span><span class="op">[</span><span class="va">ords</span>, <span class="va">ords</span><span class="op">]</span> <span class="co"># reorder the cells</span></span>
 <span><span class="va">ann</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>Sample <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"\\.\\..*"</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">integrated</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -592,7 +618,7 @@ spatial clusters across samples.</p>
 <p>To examine the spatial distribution of the identified SEs, you can
 use the <code>SpatialView</code> function visualize the SEs in the
 tissues.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/SpatialView.html">SpatialView</a></span><span class="op">(</span><span class="va">finalmeta</span>, by <span class="op">=</span> <span class="st">"SE"</span><span class="op">)</span>  <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sample</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Integration_files/figure-html/spatialmapse-1.png" width="700"></p>
 </div>
@@ -601,7 +627,7 @@ tissues.</p>
 </h3>
 <p>To examine the enrichment of SEs in pre-annotated regions, you can
 visualize the cell fractions from each region, for each SE.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">Region</span>, <span class="va">Sample</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Sample</span>, <span class="va">SE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Frac <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co">## cell type fractions within each sample</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">Region</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Frac <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Frac</span><span class="op">)</span><span class="op">)</span> <span class="co">## average cell type fractions across all samples</span></span>
@@ -611,13 +637,25 @@ visualize the cell fractions from each region, for each SE.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Fraction"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Integration_files/figure-html/bar_region1-1.png" width="700"></p>
+<details><summary><strong>Association between SEs and pre-annotated regions within each
+sample</strong>
+</summary><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">Region</span>, <span class="va">Sample</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">gg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">n</span>, fill <span class="op">=</span> <span class="va">Region</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_fill_brewer</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>, palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Sample</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Fraction of regions"</span><span class="op">)</span></span></code></pre></div>
+<img src="Integration_files/figure-html/bar_region2-1.png" width="700"></details>
 </div>
 <div class="section level3">
 <h3 id="distance-of-ses-to-tumorstroma-interface">Distance of SEs to tumor/stroma interface<a class="anchor" aria-label="anchor" href="#distance-of-ses-to-tumorstroma-interface"></a>
 </h3>
 <p>The distance of SEs to tumor/stroma interface can be visualized in a
 box plot.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Sample</span>, <span class="va">SE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Dist2Interface <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Dist2Interface</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">Dist2Interface</span><span class="op">)</span></span>
 <span><span class="va">gg</span><span class="op">$</span><span class="va">SE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">gg</span><span class="op">$</span><span class="va">SE</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">gg</span><span class="op">$</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span></span>
@@ -633,7 +671,7 @@ box plot.</p>
 type composition.</p>
 <p><strong>Average cell type composition of SEs across all
 samples</strong></p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">CellType</span>, <span class="va">Sample</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Sample</span>, <span class="va">SE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Frac <span class="op">=</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="co">## cell type fractions within each sample</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">CellType</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Frac <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">Frac</span><span class="op">)</span><span class="op">)</span> <span class="co">## average cell type fractions across all samples</span></span>
@@ -645,7 +683,7 @@ samples</strong></p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Cell type abundance"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Integration_files/figure-html/bar_ct2-1.png" width="700"></p>
 <details><summary><strong>Cell type composition of SEs within each sample</strong>
-</summary><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+</summary><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">CellType</span>, <span class="va">Sample</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">gg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">n</span>, fill <span class="op">=</span> <span class="va">CellType</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -666,7 +704,7 @@ package</a>.</p>
 <div class="section level3">
 <h3 id="de-analysis-within-each-sample">DE analysis within each sample<a class="anchor" aria-label="anchor" href="#de-analysis-within-each-sample"></a>
 </h3>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"presto"</span><span class="op">)</span></span>
 <span><span class="co">## DE analysis within the first sample</span></span>
 <span><span class="va">tmpmeta1</span> <span class="op">=</span> <span class="va">finalmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">CellType</span><span class="op">==</span><span class="st">"CD8T"</span> <span class="op">&amp;</span> <span class="va">Sample</span><span class="op">==</span><span class="st">"SKCM"</span> <span class="op">&amp;</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -678,36 +716,36 @@ package</a>.</p>
 <span><span class="va">degs2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/presto/man/wilcoxauc.html" class="external-link">wilcoxauc</a></span><span class="op">(</span><span class="va">tmpdata2</span>, <span class="va">tmpmeta2</span><span class="op">$</span><span class="va">SE</span><span class="op">)</span> <span class="co"># DE analysis</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">degs1</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    feature group   avgExpr       logFC statistic       auc         pval</span></span>
-<span><span class="co">## 1     PDK4   SE1 0.0000000  0.00000000  442462.5 0.5000000 1.0000000000</span></span>
-<span><span class="co">## 2 TNFRSF17   SE1 0.0000000  0.00000000  442462.5 0.5000000 1.0000000000</span></span>
-<span><span class="co">## 3    ICAM3   SE1 0.5482763  0.07719204  476346.0 0.5382897 0.0081783956</span></span>
-<span><span class="co">## 4      FAP   SE1 0.0000000  0.00000000  442462.5 0.5000000 1.0000000000</span></span>
-<span><span class="co">## 5     GZMB   SE1 0.1595976 -0.07983723  403784.0 0.4562918 0.0001529801</span></span>
-<span><span class="co">## 6     TSC2   SE1 0.0136918 -0.00743094  437833.5 0.4947690 0.2458841103</span></span>
-<span><span class="co">##          padj    pct_in   pct_out</span></span>
-<span><span class="co">## 1 1.000000000  0.000000  0.000000</span></span>
-<span><span class="co">## 2 1.000000000  0.000000  0.000000</span></span>
-<span><span class="co">## 3 0.075889699 56.049383 50.709382</span></span>
-<span><span class="co">## 4 1.000000000  0.000000  0.000000</span></span>
-<span><span class="co">## 5 0.002314983 15.802469 24.713959</span></span>
-<span><span class="co">## 6 0.938002347  1.975309  3.020595</span></span></code></pre>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">##    feature group    avgExpr        logFC statistic       auc      pval padj</span></span>
+<span><span class="co">## 1     PDK4   SE1 0.00000000  0.000000000  162228.0 0.5000000 1.0000000    1</span></span>
+<span><span class="co">## 2 TNFRSF17   SE1 0.00000000  0.000000000  162228.0 0.5000000 1.0000000    1</span></span>
+<span><span class="co">## 3    ICAM3   SE1 0.51370888  0.032194821  166290.0 0.5125194 0.6006048    1</span></span>
+<span><span class="co">## 4      FAP   SE1 0.00000000  0.000000000  162228.0 0.5000000 1.0000000    1</span></span>
+<span><span class="co">## 5     GZMB   SE1 0.19865862 -0.029811340  159553.5 0.4917570 0.6655314    1</span></span>
+<span><span class="co">## 6     TSC2   SE1 0.01575335 -0.004433358  161227.5 0.4969164 0.6788433    1</span></span>
+<span><span class="co">##      pct_in   pct_out</span></span>
+<span><span class="co">## 1  0.000000  0.000000</span></span>
+<span><span class="co">## 2  0.000000  0.000000</span></span>
+<span><span class="co">## 3 50.757576 51.586656</span></span>
+<span><span class="co">## 4  0.000000  0.000000</span></span>
+<span><span class="co">## 5 21.969697 23.393002</span></span>
+<span><span class="co">## 6  2.272727  2.888527</span></span></code></pre>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">degs2</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    feature group   avgExpr        logFC statistic       auc      pval      padj</span></span>
-<span><span class="co">## 1     PDK4   SE1 0.0000000  0.000000000  565528.0 0.5000000 1.0000000 1.0000000</span></span>
-<span><span class="co">## 2   CX3CL1   SE1 0.0000000  0.000000000  565528.0 0.5000000 1.0000000 1.0000000</span></span>
-<span><span class="co">## 3      CD4   SE1 0.2827123 -0.005929329  562965.0 0.4977340 0.8486109 1.0000000</span></span>
-<span><span class="co">## 4    SNAI2   SE1 0.0000000  0.000000000  565528.0 0.5000000 1.0000000 1.0000000</span></span>
-<span><span class="co">## 5 TNFRSF17   SE1 0.0000000  0.000000000  565528.0 0.5000000 1.0000000 1.0000000</span></span>
-<span><span class="co">## 6    ICAM3   SE1 0.5075567  0.042675461  589784.5 0.5214459 0.1163652 0.5448006</span></span>
+<pre><code><span><span class="co">##    feature group   avgExpr       logFC statistic       auc       pval      padj</span></span>
+<span><span class="co">## 1     PDK4   SE1 0.0000000  0.00000000  646892.5 0.5000000 1.00000000 1.0000000</span></span>
+<span><span class="co">## 2   CX3CL1   SE1 0.0000000  0.00000000  646892.5 0.5000000 1.00000000 1.0000000</span></span>
+<span><span class="co">## 3      CD4   SE1 0.2757405 -0.01459332  638083.5 0.4931913 0.53952676 1.0000000</span></span>
+<span><span class="co">## 4    SNAI2   SE1 0.0000000  0.00000000  646892.5 0.5000000 1.00000000 1.0000000</span></span>
+<span><span class="co">## 5 TNFRSF17   SE1 0.0000000  0.00000000  646892.5 0.5000000 1.00000000 1.0000000</span></span>
+<span><span class="co">## 6    ICAM3   SE1 0.5182874  0.05711767  683122.0 0.5280027 0.02831882 0.1944559</span></span>
 <span><span class="co">##     pct_in  pct_out</span></span>
 <span><span class="co">## 1  0.00000  0.00000</span></span>
 <span><span class="co">## 2  0.00000  0.00000</span></span>
-<span><span class="co">## 3 28.92377 29.21924</span></span>
+<span><span class="co">## 3 28.27324 29.36864</span></span>
 <span><span class="co">## 4  0.00000  0.00000</span></span>
 <span><span class="co">## 5  0.00000  0.00000</span></span>
-<span><span class="co">## 6 52.46637 48.42271</span></span></code></pre>
+<span><span class="co">## 6 53.32068 48.10591</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="identifying-conserved-markers-across-samples">Identifying conserved markers across samples<a class="anchor" aria-label="anchor" href="#identifying-conserved-markers-across-samples"></a>
@@ -715,7 +753,7 @@ package</a>.</p>
 <p>To identify markers conserved across different samples, we conduct a
 meta-analysis by averaging the log2 fold changes (log2FC) from the DE
 analyses.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyr.tidyverse.org" class="external-link">tidyr</a></span><span class="op">)</span></span>
 <span><span class="va">degs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/merge.html" class="external-link">merge</a></span><span class="op">(</span><span class="va">degs1</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span>, <span class="va">degs2</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span>, by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"feature"</span>, <span class="st">"group"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">degs</span><span class="op">$</span><span class="va">AvgLogFC</span> <span class="op">=</span> <span class="op">(</span><span class="va">degs</span><span class="op">$</span><span class="va">logFC.x</span> <span class="op">+</span> <span class="va">degs</span><span class="op">$</span><span class="va">logFC.y</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span></span>
@@ -724,24 +762,17 @@ analyses.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">lfcs</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">lfcs</span><span class="op">$</span><span class="va">feature</span></span>
 <span><span class="va">lfcs</span> <span class="op">&lt;-</span> <span class="va">lfcs</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lfcs</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                 SE1        SE10        SE12          SE4          SE5</span></span>
-<span><span class="co">## ACKR3    0.00000000  0.00000000  0.00000000  0.000000000  0.000000000</span></span>
-<span><span class="co">## ACTA2    0.00000000  0.00000000  0.00000000  0.000000000  0.000000000</span></span>
-<span><span class="co">## ADAMTS4  0.00000000  0.00000000  0.00000000  0.000000000  0.000000000</span></span>
-<span><span class="co">## AKT1    -0.15087468 -0.07769698  0.07383551  0.078652460 -0.167822557</span></span>
-<span><span class="co">## AKT2     0.00396034  0.01665047 -0.02071661 -0.010091572  0.006323066</span></span>
-<span><span class="co">## AKT3    -0.04795914  0.04477010 -0.02768306  0.004559125  0.054606888</span></span>
-<span><span class="co">##                  SE6        SE7          SE8           SE9</span></span>
-<span><span class="co">## ACKR3    0.000000000  0.0000000  0.000000000  0.0000000000</span></span>
-<span><span class="co">## ACTA2    0.000000000  0.0000000  0.000000000  0.0000000000</span></span>
-<span><span class="co">## ADAMTS4  0.000000000  0.0000000  0.000000000  0.0000000000</span></span>
-<span><span class="co">## AKT1     0.317263505 -0.1995801  0.012228247 -0.1770957361</span></span>
-<span><span class="co">## AKT2    -0.004081228 -0.1057172  0.007343059  0.0114153051</span></span>
-<span><span class="co">## AKT3     0.030553820 -0.1080109 -0.002716661 -0.0009330384</span></span></code></pre>
+<pre><code><span><span class="co">##                  SE1         SE3          SE4         SE5          SE6</span></span>
+<span><span class="co">## ACKR3    0.000000000  0.00000000  0.000000000  0.00000000  0.000000000</span></span>
+<span><span class="co">## ACTA2    0.000000000  0.00000000  0.000000000  0.00000000  0.000000000</span></span>
+<span><span class="co">## ADAMTS4  0.000000000  0.00000000  0.000000000  0.00000000  0.000000000</span></span>
+<span><span class="co">## AKT1    -0.092686120 -0.10035625 -0.190867965  0.03809412  0.203712806</span></span>
+<span><span class="co">## AKT2    -0.017319258  0.01809832  0.007465479 -0.01284803 -0.007846364</span></span>
+<span><span class="co">## AKT3    -0.008900001  0.03862885  0.012651430 -0.02977051 -0.007425763</span></span></code></pre>
 <p>To identify markers that are specific to each SE-associated cell
 state, we calculate the difference between the maximum log2FC for each
 gene and the second-highest log2FC:</p>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">secondmax</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">lfcs</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span> <span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/sort.html" class="external-link">sort</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">delta</span> <span class="op">=</span> <span class="va">lfcs</span> <span class="op">-</span> <span class="va">secondmax</span></span>
 <span><span class="co">## Markers are considered specific if they have a positive delta and a log2FC greater than 0.05:</span></span>
@@ -757,33 +788,24 @@ gene and the second-highest log2FC:</p>
 <span><span class="va">top5</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">markers</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">top5</span></span></code></pre></div>
 <pre><code><span><span class="co">## $SE1</span></span>
-<span><span class="co">## [1] "CCR7" "CD3E" "TRAC" "CD28"</span></span>
+<span><span class="co">## [1] "TGFBR1" "FN1"    "IFNGR1" "FOS"    "COL1A1"</span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## $SE10</span></span>
-<span><span class="co">## [1] "EGR1"   "CCL5"   "ITGB2"  "PTPRC"  "TGFBR2"</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $SE12</span></span>
-<span><span class="co">## [1] "NFKBIA"   "MKI67"    "NFKB2"    "STAT1"    "HLA-DRB1"</span></span>
+<span><span class="co">## $SE3</span></span>
+<span><span class="co">## [1] "EGR1"   "CCL5"   "ETS1"   "TGFBR2" "PTPRC" </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $SE4</span></span>
-<span><span class="co">## [1] "TIGIT" "LAG3"  "BST2"  "CD8A"  "NKG7" </span></span>
+<span><span class="co">## [1] "CXCR4" "GZMK"  "CCR7"  "ZAP70" "KLRG1"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $SE5</span></span>
-<span><span class="co">## [1] "CXCR4"  "GZMK"   "KLRG1"  "CDKN1B" "CCL4"  </span></span>
+<span><span class="co">## [1] "BST2"   "STAT1"  "TAP2"   "NFKBIA" "IL2RB" </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $SE6</span></span>
-<span><span class="co">## [1] "PKM"     "CDK2"    "TNFRSF9" "GZMB"    "AKT1"   </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $SE7</span></span>
-<span><span class="co">## [1] "CXCR6" "ETS1"  "CSF1"  "VCAM1" "GZMH" </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $SE9</span></span>
-<span><span class="co">## [1] "ITGB1"  "GATA3"  "CD5"    "RELA"   "TGFBR1"</span></span></code></pre>
+<span><span class="co">## [1] "PKM"     "CDK2"    "GZMB"    "HAVCR2"  "TNFRSF9"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="visualizing-top-se-cell-state-markers">Visualizing top SE cell state markers<a class="anchor" aria-label="anchor" href="#visualizing-top-se-cell-state-markers"></a>
 </h3>
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">lfcs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">top5</span><span class="op">)</span>, <span class="op">]</span><span class="op">)</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/HeatmapView.html">HeatmapView</a></span><span class="op">(</span><span class="va">gg</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Integration_files/figure-html/hmaptop-1.png" width="700"></p>
@@ -796,7 +818,7 @@ gene and the second-highest log2FC:</p>
 it allows them to replicate the exact environment and identify potential
 discrepancies in package versions or configurations that might be
 causing problems.</p>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.2.0 (2022-04-22)</span></span>
 <span><span class="co">## Platform: x86_64-apple-darwin17.0 (64-bit)</span></span>
