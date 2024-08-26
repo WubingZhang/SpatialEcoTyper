@@ -1,4 +1,4 @@
-pandoc: 3.1.1
+pandoc: 3.1.11
 pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
@@ -8,7 +8,7 @@ articles:
   Recovery_Spatial: Recovery_Spatial.html
   SingleSample: SingleSample.html
   TrainRecoveryModels: TrainRecoveryModels.html
-last_built: 2024-08-22T00:25Z
+last_built: 2024-08-26T21:09Z
 urls:
   reference: https://digitalcytometry.github.io/SpatialEcoTyper/reference
   article: https://digitalcytometry.github.io/SpatialEcoTyper/articles

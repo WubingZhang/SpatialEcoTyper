@@ -230,23 +230,23 @@ downsample microregions and expedite the analysis, while it might eliminate cell
 <span class="r-in"><span><span class="va">se_results</span> <span class="op">&lt;-</span> <span class="fu">SpatialEcoTyper</span><span class="op">(</span><span class="va">normdata</span>, <span class="va">scmeta</span>,</span></span>
 <span class="r-in"><span>                              outprefix <span class="op">=</span> <span class="st">"Melanoma1_subset"</span>,</span></span>
 <span class="r-in"><span>                              radius <span class="op">=</span> <span class="fl">50</span>, ncores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-21 17:27:29 Remove 88 genes expressed in fewer than 5 cells</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-21 17:27:29 Construct spatial meta cells for each cell type</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-26 14:11:17 Remove 88 genes expressed in fewer than 5 cells</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-26 14:11:17 Construct spatial meta cells for each cell type</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 		Total spatial microregions: 2315</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 		Total spatial meta cells: 6343</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 		Total single cells: 27907</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-21 17:27:30 PCA for each cell type</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-21 17:27:32 Construct cell-type-specific similarity network</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-26 14:11:17 PCA for each cell type</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-26 14:11:19 Construct cell-type-specific similarity network</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 		Remove 609 spatial microregions with fewer than 2 cell types </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-21 17:27:33 Similarity network fusion</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-21 17:27:33 Normalize networks ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-21 17:27:33 Calculate the local transition matrix ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-21 17:27:33 Perform the diffusion ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-08-21 17:27:33 Iteration: 1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-08-21 17:27:37 Iteration: 2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-08-21 17:27:48 Iteration: 3</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-08-21 17:28:01 Iteration: 4</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-08-21 17:28:13 Iteration: 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-26 14:11:20 Similarity network fusion</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-26 14:11:20 Normalize networks ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-26 14:11:20 Calculate the local transition matrix ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-08-26 14:11:21 Perform the diffusion ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-08-26 14:11:21 Iteration: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-08-26 14:11:24 Iteration: 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-08-26 14:11:34 Iteration: 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-08-26 14:11:46 Iteration: 4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-08-26 14:11:57 Iteration: 5</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> This message will be shown once per session</span>
@@ -256,6 +256,7 @@ downsample microregions and expedite the analysis, while it might eliminate cell
 <span class="r-out co"><span class="r-pr">#&gt;</span> An object of class Seurat </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1633 features across 1633 samples within 1 assay </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Active assay: RNA (1633 features, 1633 variable features)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  3 layers present: counts, data, scale.data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2 dimensional reductions calculated: pca, umap</span>
 <span class="r-in"><span><span class="va">scmeta</span> <span class="op">&lt;-</span> <span class="va">se_results</span><span class="op">$</span><span class="va">metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span> <span class="co"># Updated single-cell meta data, with SE annotation added</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">scmeta</span><span class="op">)</span></span></span>
