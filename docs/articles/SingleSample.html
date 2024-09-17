@@ -5,30 +5,24 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="SpatialEcoTyper">
 <title>Discovery of Spatial Ecotypes from a Single Sample • SpatialEcoTyper</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Discovery of Spatial Ecotypes from a Single Sample">
-<meta property="og:description" content="SpatialEcoTyper">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Discovery of Spatial Ecotypes from a Single Sample">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-default navbar-expand-lg bg-light" data-bs-theme="default"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="default" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">SpatialEcoTyper</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.4</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.0.5</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -36,31 +30,27 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-vignettes">Vignettes</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-vignettes">
-    <a class="dropdown-item" href="../articles/SingleSample.html">Discovery of Spatial Ecotypes from a Single Sample</a>
-    <a class="dropdown-item" href="../articles/Integration.html">Discovery of Spatial Ecotypes from Multiple Samples</a>
-    <a class="dropdown-item" href="../articles/TrainRecoveryModels.html">Development of NMF Models for Spatial Ecotype Recovery</a>
-    <a class="dropdown-item" href="../articles/Recovery_Spatial.html">Recovery of Spatial Ecotypes from Spatial Transcriptomics Data</a>
-    <a class="dropdown-item" href="../articles/Recovery_scRNA.html">Recovery of Spatial Ecotypes from Single-Cell Gene Expression Data</a>
-    <a class="dropdown-item" href="../articles/Recovery_Bulk.html">Recovery of Spatial Ecotypes from Bulk Gene Expression Data</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-vignettes" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Vignettes</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-vignettes">
+<li><a class="dropdown-item" href="../articles/SingleSample.html">Discovery of Spatial Ecotypes from a Single Sample</a></li>
+    <li><a class="dropdown-item" href="../articles/Integration.html">Discovery of Spatial Ecotypes from Multiple Samples</a></li>
+    <li><a class="dropdown-item" href="../articles/TrainRecoveryModels.html">Development of NMF Models for Spatial Ecotype Recovery</a></li>
+    <li><a class="dropdown-item" href="../articles/Recovery_Spatial.html">Recovery of Spatial Ecotypes from Spatial Transcriptomics Data</a></li>
+    <li><a class="dropdown-item" href="../articles/Recovery_scRNA.html">Recovery of Spatial Ecotypes from Single-Cell Gene Expression Data</a></li>
+    <li><a class="dropdown-item" href="../articles/Recovery_Bulk.html">Recovery of Spatial Ecotypes from Bulk Gene Expression Data</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">R functions</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">News</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">R functions</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav"></ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+      </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -69,10 +59,11 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>Discovery of Spatial Ecotypes from a Single Sample</h1>
+
+      <h1>Discovery of Spatial Ecotypes from a Single Sample</h1>
             
       
-      <small class="dont-index">Source: <a href="https://digitalcytometry.github/SpatialEcoTypervignettes/SingleSample.Rmd" class="external-link"><code>vignettes/SingleSample.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://digitalcytometry.github/SpatialEcoTyper/vignettes/SingleSample.Rmd" class="external-link"><code>vignettes/SingleSample.Rmd</code></a></small>
       <div class="d-none name"><code>SingleSample.Rmd</code></div>
     </div>
 
@@ -83,8 +74,41 @@
 </h2>
 <p>In this tutorial, we will illustrate how to perform de novo discovery
 of spatially distinct cellular ecosystems (SEs) from single-cell spatial
-transcriptomics dataset using the <code>SpatialEcoTyper</code>
-function.</p>
+transcriptomics dataset using <a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a>.</p>
+<p>We will be analyzing single-cell spatial transcriptomics data from a
+melanoma sample (raw data available in <a href="https://vizgen.com/data-release-program/" class="external-link">Vizgen’s MERSCOPE FFPE
+Human Immuno-oncology</a>). To quickly demonstrate how <a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a> works,
+we’ve selected a subset of the sample, which can be downloaded from <a href="https://drive.google.com/drive/folders/17K5XR7VEvxN9walV4RtaLOR2cBRG-aMh?usp=drive_link" class="external-link"><code>here</code></a>.</p>
+<p>This demo data comprises the spatial expression of 500 genes across
+27,907 cells, which are categorized into ten distinct cell types: B
+cells, CD4+ T cells, CD8+ T cells, NK cells, plasma cells, macrophages,
+dendritic cells (DC), fibroblasts, endothelial cells, and the cancer
+cell of origin (CCOs). Given the large proportion of CCOs, and in order
+to reduce running time, CCOs were excluded from this demonstration.</p>
+<p>Besides, all cells were grouped into four regions, including tumor,
+inner margin, outer margin, and stroma. The tumor and stroma regions
+were defined based on the density of CCOs. For detailed information
+about the tumor and stroma annotations, please refer to the <a href="https://www.nature.com/articles/s41587-023-01697-9" class="external-link">CytoSPACE
+paper</a>. The inner and outer margins were delineated as regions
+extending 250 μm inside and outside the tumor boundaries, respectively.
+In addition, we assessed distance of each single cell to tumor/stroma
+interface by computing the shortest Euclidean distance to tumor regions
+(or stromal regions) for cells localized in stromal region (or tumor
+regions). A positive distance is used for cells localized in tumor
+region, and a negative distance is used for cells localized in stroma
+region.</p>
+<p><a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a>
+analysis requires two input data:</p>
+<ul>
+<li>
+<strong>gene expression matrix</strong>: rows represent gene names
+and columns represent cell IDs</li>
+<li>
+<strong>meta data</strong>: a data frame with at least three
+columns, including “X” (X-coordinate), “Y” (Y-coordinate), and
+“CellType” (the cell type annotation). The row names of the meta data
+should match the column names (cell IDs) in the expression matrix.</li>
+</ul>
 <p><strong>First load required packages for this vignette</strong></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/message.html" class="external-link">suppressPackageStartupMessages</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span><span class="op">)</span></span>
@@ -100,11 +124,6 @@ function.</p>
 <div class="section level2">
 <h2 id="loading-data">Loading data<a class="anchor" aria-label="anchor" href="#loading-data"></a>
 </h2>
-<p>We will be analyzing single-cell spatial transcriptomics data from a
-melanoma sample (raw data available in <a href="https://vizgen.com/data-release-program/" class="external-link">Vizgen’s MERSCOPE FFPE
-Human Immuno-oncology</a>). To quickly demonstrate how SpatialEcoTyper
-works, we’ve selected a subset of the sample, which can be downloaded
-from <a href="https://drive.google.com/drive/folders/17K5XR7VEvxN9walV4RtaLOR2cBRG-aMh?usp=drive_link" class="external-link"><code>here</code></a>.</p>
 <details open><summary><strong>Text files as input</strong>
 </summary><p>Download the data from Google Drive</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -114,11 +133,11 @@ from <a href="https://drive.google.com/drive/folders/17K5XR7VEvxN9walV4RtaLOR2cB
 <p>Large text files can be loaded into R using the <code>fread</code>
 function from the <code>data.table</code> package.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Load single-cell gene expression matrix. Rows are genes, columns are cells.</span></span>
+<code class="sourceCode R"><span><span class="co"># Load single-cell gene expression matrix. Rows represent gene names and columns represent cell IDs</span></span>
 <span><span class="va">scdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdatatable.gitlab.io/data.table/reference/fread.html" class="external-link">fread</a></span><span class="op">(</span><span class="st">"HumanMelanomaPatient1_subset_counts.tsv.gz"</span>, </span>
 <span>                sep <span class="op">=</span> <span class="st">"\t"</span>,header <span class="op">=</span> <span class="cn">TRUE</span>, data.table <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">scdata</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">scdata</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>  <span class="co"># set genes as row names</span></span>
-<span><span class="va">scdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">scdata</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">scdata</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">scdata</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>  <span class="co"># Setting the first column as row names</span></span>
+<span><span class="va">scdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">scdata</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="co"># Dropping first column</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">scdata</span><span class="op">[</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##          HumanMelanomaPatient1__cell_3655 HumanMelanomaPatient1__cell_3657</span></span>
 <span><span class="co">## PDK4                                    0                                1</span></span>
@@ -142,42 +161,41 @@ function from the <code>data.table</code> package.</p>
 <span><span class="co">## GZMB                                    0</span></span>
 <span><span class="co">## TSC2                                    0</span></span></code></pre>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Load single-cell metadata. Three columns are required, including X, Y, and CellType. Others are optional.</span></span>
+<code class="sourceCode R"><span><span class="co"># Load single-cell metadata</span></span>
+<span><span class="co"># Three columns are required, including "X", "Y", and "CellType"</span></span>
+<span><span class="co"># The row names should match the cell ids in the expression matrix</span></span>
 <span><span class="va">scmeta</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">read.table</a></span><span class="op">(</span><span class="st">"HumanMelanomaPatient1_subset_scmeta.tsv"</span>, </span>
 <span>                      sep <span class="op">=</span> <span class="st">"\t"</span>,header <span class="op">=</span> <span class="cn">TRUE</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">scmeta</span> <span class="op">&lt;-</span> <span class="va">scmeta</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">scdata</span><span class="op">)</span>, <span class="op">]</span> <span class="co"># match the cell ids in scdata and scmeta</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">scmeta</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                                         X         Y   CellType CellTypeName</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3655 1894.706 -6367.766 Fibroblast  Fibroblasts</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3657 1942.480 -6369.602 Fibroblast  Fibroblasts</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3658 1963.007 -6374.026 Fibroblast  Fibroblasts</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3660 1981.600 -6372.266 Fibroblast  Fibroblasts</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3661 1742.939 -6374.851 Fibroblast  Fibroblasts</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3663 1921.683 -6383.309 Fibroblast  Fibroblasts</span></span>
-<span><span class="co">##                                  Region Dist2Interface</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3655 Stroma      -883.1752</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3657 Stroma      -894.8463</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3658 Stroma      -904.1115</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3660 Stroma      -907.8909</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3661 Stroma      -874.2712</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3663 Stroma      -903.6559</span></span></code></pre>
+<span><span class="va">scmeta</span> <span class="op">&lt;-</span> <span class="va">scmeta</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">scdata</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">scmeta</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span> <span class="co"># match the cell ids in scdata and scmeta</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">scmeta</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="st">"Y"</span>, <span class="st">"CellType"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##                                         X         Y   CellType</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3655 1894.706 -6367.766 Fibroblast</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3657 1942.480 -6369.602 Fibroblast</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3658 1963.007 -6374.026 Fibroblast</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3660 1981.600 -6372.266 Fibroblast</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3661 1742.939 -6374.851 Fibroblast</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3663 1921.683 -6383.309 Fibroblast</span></span></code></pre>
 </details><details><summary><strong>Sparse matrix as input</strong>
-</summary><p>SpatialEcoTyper supports sparse matrix as input. Mtx files can be
-loaded into R using the <a href="https://satijalab.org/seurat/reference/readmtx" class="external-link"><code>ReadMtx</code></a>
+</summary><p><a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a>
+supports sparse matrix as input. Mtx files can be loaded into R using
+the <a href="https://satijalab.org/seurat/reference/readmtx" class="external-link"><code>ReadMtx</code></a>
 function from the Seurat package.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_download.html" class="external-link">drive_download</a></span><span class="op">(</span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_id.html" class="external-link">as_id</a></span><span class="op">(</span><span class="st">"13M3xhRxp0xK9gf5F4DE9idSBFqVQIXDT"</span><span class="op">)</span>, <span class="st">"HumanMelanomaPatient1_subset_counts.mtx.gz"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_download.html" class="external-link">drive_download</a></span><span class="op">(</span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_id.html" class="external-link">as_id</a></span><span class="op">(</span><span class="st">"136feRaFjMtNvduLTm5xqa3WhyyoG4Xzo"</span><span class="op">)</span>, <span class="st">"HumanMelanomaPatient1_subset_cells.tsv.gz"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_download.html" class="external-link">drive_download</a></span><span class="op">(</span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_id.html" class="external-link">as_id</a></span><span class="op">(</span><span class="st">"13QprWzJhzzUy_w3XSrjlt9pjf2n-G7HV"</span><span class="op">)</span>, <span class="st">"HumanMelanomaPatient1_subset_genes.tsv.gz"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">scdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ReadMtx.html" class="external-link">ReadMtx</a></span><span class="op">(</span>mtx <span class="op">=</span> <span class="st">"HumanMelanomaPatient1_subset_counts.mtx.gz"</span>, cells <span class="op">=</span> <span class="st">"HumanMelanomaPatient1_subset_cells.tsv.gz"</span>, features <span class="op">=</span> <span class="st">"HumanMelanomaPatient1_subset_genes.tsv.gz"</span>, feature.column <span class="op">=</span> <span class="fl">1</span>, cell.column <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">scdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ReadMtx.html" class="external-link">ReadMtx</a></span><span class="op">(</span>mtx <span class="op">=</span> <span class="st">"HumanMelanomaPatient1_subset_counts.mtx.gz"</span>, </span>
+<span>                  cells <span class="op">=</span> <span class="st">"HumanMelanomaPatient1_subset_cells.tsv.gz"</span>, </span>
+<span>                  features <span class="op">=</span> <span class="st">"HumanMelanomaPatient1_subset_genes.tsv.gz"</span>,</span>
+<span>                  feature.column <span class="op">=</span> <span class="fl">1</span>, cell.column <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 </details>
 </div>
 <div class="section level2">
 <h2 id="data-normalization">Data normalization<a class="anchor" aria-label="anchor" href="#data-normalization"></a>
 </h2>
-<p>The gene expression data should be normalized before SpatialEcoTyper
-analysis. The data can be normalized using <a href="https://satijalab.org/seurat/reference/normalizedata" class="external-link">NormalizeData</a>
+<p>The gene expression data should be normalized before <a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a> analysis.
+The data can be normalized using <a href="https://satijalab.org/seurat/reference/normalizedata" class="external-link">NormalizeData</a>
 or <a href="https://satijalab.org/seurat/articles/seurat5_spatial_vignette_2" class="external-link">SCTransform</a>.</p>
 <p>Here, we are normalizing using SCTransform normalization. We
 recommend to install the glmGamPoi package for faster computation.</p>
@@ -194,34 +212,17 @@ recommend to install the glmGamPoi package for faster computation.</p>
 <span><span class="op">}</span><span class="kw">else</span><span class="op">{</span></span>
 <span>  <span class="va">normdata</span> <span class="op">&lt;-</span> <span class="va">tmpobj</span><span class="op">[[</span><span class="st">"SCT"</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">data</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<summary>
-To use <code>NormalizeData</code> for the normalization:
+<details><summary><strong>Using <code>NormalizeData</code> for the normalization:</strong>
 </summary><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">normdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html" class="external-link">NormalizeData</a></span><span class="op">(</span><span class="va">scdata</span><span class="op">)</span></span></code></pre></div>
+</details>
 </div>
 <div class="section level2">
 <h2 id="preview-of-the-sample">Preview of the sample<a class="anchor" aria-label="anchor" href="#preview-of-the-sample"></a>
 </h2>
-<p>The demo sample includes spatial expression of 500 genes across
-27,907 cells, categorized into ten cell types, namely B cells, CD4+ T
-cells, CD8+ T cells, NK cells, plasma cells, macrophages, dendritic
-cells (DC), fibroblasts, endothelial cells, as well as cancer cell of
-origin that are eliminated for the analysis.</p>
-<p>Besides, all cells were grouped into four regions, including tumor,
-inner margin, outer margin, and stroma. The tumor and stroma regions
-were defined based on the density of cancer cells. For detailed
-information about the tumor and stroma annotations, please refer to the
-<a href="https://www.nature.com/articles/s41587-023-01697-9" class="external-link">CytoSPACE
-paper</a>. The inner and outer margins were delineated as regions
-extending 250 μm inside and outside the tumor boundaries, respectively.
-In addition, we assessed distance of each single cell to tumor/stroma
-interface by computing the shortest Euclidean distance to tumor regions
-(or stromal regions) for cells localized in stromal region (or tumor
-regions). A positive distance is used for cells localized in tumor
-region, and a negative distance is used for cells localized in stroma
-region.</p>
-<p>The <code>SpatialView</code> function can be used to visualize single
-cells in spatial space, by cell type or by region.</p>
+<p>The <a href="../reference/SpatialView.html">SpatialView</a> function
+can be used to visualize single cells in spatial space, by cell type or
+by region.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Visualize the cell type annotations in the tissue</span></span>
 <span><span class="fu"><a href="../reference/SpatialView.html">SpatialView</a></span><span class="op">(</span><span class="va">scmeta</span>, by <span class="op">=</span> <span class="st">"CellType"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu">pals</span><span class="fu">::</span><span class="fu"><a href="https://kwstat.github.io/pals/reference/discrete.html" class="external-link">cols25</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -230,9 +231,11 @@ cells in spatial space, by cell type or by region.</p>
 <code class="sourceCode R"><span><span class="co"># Visualize the regions in the tissue</span></span>
 <span><span class="fu"><a href="../reference/SpatialView.html">SpatialView</a></span><span class="op">(</span><span class="va">scmeta</span>, by <span class="op">=</span> <span class="st">"Region"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>, palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SingleSample_files/figure-html/viewregion-1.png" width="700"></p>
-<p>The <code>SpatialView</code> function can also be used to visualize
-continuous characteristics, such as the minimum distance of each single
-cell to tumor/stroma margin or gene expression levels.</p>
+<p>The <a href="../reference/SpatialView.html">SpatialView</a> function
+can also be used to visualize continuous characteristics, such as the
+minimum distance of each single cell to tumor/stroma margin. Here,
+positive distances indicate cells located within the tumor region, while
+negative distances denote cells within the stroma.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Visualize the distance to tumor margin</span></span>
 <span><span class="fu"><a href="../reference/SpatialView.html">SpatialView</a></span><span class="op">(</span><span class="va">scmeta</span>, by <span class="op">=</span> <span class="st">"Dist2Interface"</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -245,19 +248,17 @@ cell to tumor/stroma margin or gene expression levels.</p>
 <h2 id="se-discovery-using-spatialecotyper">SE discovery using SpatialEcoTyper<a class="anchor" aria-label="anchor" href="#se-discovery-using-spatialecotyper"></a>
 </h2>
 <p><img src="images/SpatialEcoTyper_Workflow.png" width="100%"></p>
-<p>SpatialEcoTyper is designed to identify spatial ecotypes from
-single-cell spatial transcriptomics data. The workflow begins by
-grouping spatially co-localized single cells into microregions, where
-cell-type-specific gene expression profiles (GEPs) are constructed for
-each microregion. Following this, similarity networks of these
-microregions are constructed based on their cell type-specific GEPs. To
-integrate these networks, SpatialEcoTyper utilizes the Similarity
-Network Fusion (SNF) method, originally developed for multi-omics data
-integration (<a href="https://www.nature.com/articles/nmeth.2810" class="external-link">Wang
-et al., 2014</a>). The fused similarity network represents the spatial
-architecture of the tissue, enabling the identification of spatial
-ecotypes (SEs). Finally, SEs are detected by grouping similar spatial
-microregions using the Louvain algorithm.</p>
+<p><a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a>
+function is designed to identify spatial ecotypes (SEs) from single-cell
+spatial transcriptomics data. The workflow begins by grouping spatially
+co-localized single cells into microregions, where cell-type-specific
+gene expression profiles (GEPs) are constructed for each microregion.
+Following this, similarity networks of these microregions are
+constructed based on their cell type-specific GEPs. To integrate these
+networks, SpatialEcoTyper utilizes the Similarity Network Fusion (SNF)
+method, originally developed for multi-omics data integration (<a href="https://www.nature.com/articles/nmeth.2810" class="external-link">Wang et al.,
+2014</a>). The fused similarity network enables the identification of
+SEs by clustering.</p>
 <details open><summary><strong>Key arguments for SpatialEcoTyper</strong>
 </summary><ul>
 <li>
@@ -277,39 +278,60 @@ output file names.</li>
 for defining spatial microregion.</li>
 <li>
 <code>resolution</code> Numeric specifying the resolution for
-Louvain clustering (default: 0.8).</li>
+Louvain clustering (default: 0.5).</li>
 <li>
 <code>nfeatures</code> Integer specifying the number of top variable
-features (default: 3000) for PCA.</li>
+features for the analysis.</li>
 <li>
 <code>min.cts.per.region</code> Integer specifying the minimum
 number of cell types (default: 2) required for a microregion.</li>
 <li>
+<code>minibatch</code> Integer specifying the number of columns to
+process in each minibatch in the SNF analysis. Default is 5000. This
+option splits the matrix into smaller chunks (minibatch), thus reducing
+memory usage.</li>
+<li>
 <code>ncores</code> Integer specifying the number of CPU cores to
 use for parallel processing.</li>
+<li>
+<code>filter.region.by.celltypes</code> A character vector
+specifying the cell types to include in the analysis. Only spatial
+microregions that contain at least one of the specified cell types will
+be analyzed, while regions lacking these cell types will be excluded
+from the SE discovery process. By default, all spatial microregions will
+be included, regardless of cell type composition.</li>
 </ul>
 <p>You can type <code><a href="../reference/SpatialEcoTyper.html">?SpatialEcoTyper</a></code> to visualize the full
-manual. Here, we only show a list of important parameters including:</p>
+manual.</p>
 </details><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## This step takes ~2 minutes to complete on macOS with an Apple M1 Pro chip and 16 GB memory.</span></span>
 <span><span class="va">se_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a></span><span class="op">(</span><span class="va">normdata</span>, <span class="va">scmeta</span>,</span>
 <span>                              outprefix <span class="op">=</span> <span class="st">"Melanoma1_subset"</span>,</span>
 <span>                              radius <span class="op">=</span> <span class="fl">50</span>, ncores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p>When the <code>outprefix</code> is specified, the SpatialEcoTyper
-result will be saved as a RDS file named
-<code>outprefix</code>_SpatialEcoTyper_results.rds
-(<code>Melanoma1_subset_SpatialEcoTyper_results.rds</code> <a href="https://drive.google.com/open?id=12QUlsv3JAFu4r-R3_0FmoJp8P7FKyWzn&amp;usp=drive_fs" class="external-link">here</a>).</p>
-<details><summary><strong>The results can be loaded into R via:</strong>
-</summary><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## drive_download(as_id("12QUlsv3JAFu4r-R3_0FmoJp8P7FKyWzn"), "Melanoma1_subset_SpatialEcoTyper_results.rds", overwrite = TRUE)</span></span>
+<p>When the <code>outprefix</code> is specified, the <a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a> result will
+be saved as a RDS file named
+<code>outprefix_SpatialEcoTyper_results.rds</code>. The result can be
+loaded into R using <code>readRDS</code>.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## drive_download(as_id("18AzHCtwwXoOM9_yRCjyfzcLQaWiQo1au"), "Melanoma1_subset_SpatialEcoTyper_results.rds", overwrite = TRUE)</span></span>
 <span><span class="va">se_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"Melanoma1_subset_SpatialEcoTyper_results.rds"</span><span class="op">)</span></span></code></pre></div>
-</details><p>The SpatialEcoTyper result is a list that includes two key
-components: (1) a Seurat object constructed from the integrated
+</div>
+<div class="section level2">
+<h2 id="spatialecotyper-result">SpatialEcoTyper result<a class="anchor" aria-label="anchor" href="#spatialecotyper-result"></a>
+</h2>
+<p>The <a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a>
+result is a list that includes two key components:</p>
+<ul>
+<li>
+<strong>a Seurat object</strong> constructed from the integrated
 embedding of spatial microregions, allowing for detailed analysis and
-visualization of spatial architecture; (2) A data frame of the
-single-cell metadata, which now includes annotations for discovered
-spatial ecotypes. These annotations can be used to explore the spatial
-distribution and characteristics of SEs within the tissue.</p>
+visualization of spatial architecture;</li>
+<li>
+<strong>a data frame of the single-cell metadata</strong>, which
+includes annotations for discovered spatial ecotypes. These annotations
+can be used to explore the spatial distribution and characteristics of
+SEs within the tissue.</li>
+</ul>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extract the Seurat object and updated single-cell metadata</span></span>
 <span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="va">se_results</span><span class="op">$</span><span class="va">obj</span> <span class="co"># A Seurat object</span></span>
@@ -322,18 +344,18 @@ distribution and characteristics of SEs within the tissue.</p>
 <span><span class="co">## HumanMelanomaPatient1__cell_3660 1981.600 -6372.266 Fibroblast  Fibroblasts</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3661 1742.939 -6374.851 Fibroblast  Fibroblasts</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3663 1921.683 -6383.309 Fibroblast  Fibroblasts</span></span>
-<span><span class="co">##                                  Region Dist2Interface   SE</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3655 Stroma      -883.1752 &lt;NA&gt;</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3657 Stroma      -894.8463  SE7</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3658 Stroma      -904.1115  SE7</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3660 Stroma      -907.8909  SE7</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3661 Stroma      -874.2712  SE1</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3663 Stroma      -903.6559 &lt;NA&gt;</span></span></code></pre>
+<span><span class="co">##                                  Region Dist2Interface  SE</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3655 Stroma      -883.1752 SE0</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3657 Stroma      -894.8463 SE5</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3658 Stroma      -904.1115 SE5</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3660 Stroma      -907.8909 SE5</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3661 Stroma      -874.2712 SE0</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3663 Stroma      -903.6559 SE0</span></span></code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">scmeta</span><span class="op">$</span><span class="va">SE</span><span class="op">)</span> <span class="co">## The number of cells in each SE</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">##  SE0  SE1  SE2  SE3  SE4  SE5  SE6  SE7  SE8  SE9 </span></span>
-<span><span class="co">## 3410 2114 3152 3028 3695 1892 1169 1995 2908 2446</span></span></code></pre>
+<span><span class="co">##  SE0  SE1  SE2  SE3  SE4  SE5  SE6 </span></span>
+<span><span class="co">## 5482 7703 3582 3338 1646 2312 2917</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="embedding-of-spatial-architecture">Embedding of spatial architecture<a class="anchor" aria-label="anchor" href="#embedding-of-spatial-architecture"></a>
@@ -343,14 +365,12 @@ distribution and characteristics of SEs within the tissue.</p>
 functions</a> such as <code>DimPlot</code> and <code>FeaturePlot</code>.
 These visualizations help to explore the spatial organization and
 heterogeneity within the tissue.</p>
-<p><strong>Note</strong>: Seurat v4 and v5 leads to a bit different
-embedding and clustering results, while the clustering results are
-largely consistent (ARI = 0.7 for the demo). The embedding and
-clustering results differ slightly between Seurat v4 and v5. However,
-the overall clustering patterns remain largely consistent, with an
-Adjusted Rand Index (ARI) of 0.7 for the demonstration dataset. This
-consistency ensures that, despite minor variations, the key biological
-insights are preserved across versions.</p>
+<p><strong>Note</strong>: The embedding and clustering results differ
+slightly between Seurat v4 and v5. However, the overall clustering
+patterns remain largely consistent, with an Adjusted Rand Index (ARI) of
+0.7 for the demonstration dataset. This consistency ensures that,
+despite minor variations, the key biological insights are preserved
+across versions.</p>
 <div class="section level3">
 <h3 id="visualizing-tumorstroma-regions-in-the-embedding">Visualizing tumor/stroma regions in the embedding<a class="anchor" aria-label="anchor" href="#visualizing-tumorstroma-regions-in-the-embedding"></a>
 </h3>
@@ -363,8 +383,10 @@ insights are preserved across versions.</p>
 interface<a class="anchor" aria-label="anchor" href="#visualizing-the-distance-of-microregions-to-tumorstroma-interface"></a>
 </h3>
 <p>This plot highlights the distance of each spatial microregion to the
-tumor/stroma interface, revealing the spatial continuum learnt by
-SpatialEcoTyper.</p>
+tumor/stroma interface, revealing the spatial continuum learnt by <a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a>. Here,
+positive distances indicate microregions located within the tumor
+region, while negative distances denote microregions within the
+stroma.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">obj</span>, <span class="st">"Dist2Interface"</span>, min.cutoff <span class="op">=</span> <span class="op">-</span><span class="fl">600</span>, max.cutoff <span class="op">=</span> <span class="fl">600</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_colour_gradient2</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#5e3c99"</span>, high <span class="op">=</span> <span class="st">"#e66101"</span>, mid <span class="op">=</span> <span class="st">"#d9d9d9"</span>, midpoint <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
@@ -400,16 +422,15 @@ of different SEs.</p>
 <h3 id="visualizing-ses-in-the-tissue">Visualizing SEs in the tissue<a class="anchor" aria-label="anchor" href="#visualizing-ses-in-the-tissue"></a>
 </h3>
 <p>The spatial distribution of SEs within the tissue can be visualized
-using the <code>SpatialView</code> function. This visualization provides
-insights into the localization and spatial organization of different SEs
-across the tissue section.</p>
+using the <a href="../reference/SpatialView.html">SpatialView</a>
+function. This visualization provides insights into the localization and
+spatial organization of different SEs across the tissue section.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/SpatialView.html">SpatialView</a></span><span class="op">(</span><span class="va">scmeta</span>, by <span class="op">=</span> <span class="st">"SE"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SingleSample_files/figure-html/spatialmap-1.png" width="700"></p>
-<p><strong>Note</strong>: Cells with NA values in the SE annotations
-were excluded from this analysis. The exclusions occur due to the
-absence of neighboring cells or an insufficient number of detected
-genes.</p>
+<p><strong>Note</strong>: NA values in the SE annotations denote cells
+excluded from this analysis, due to absence of neighboring cells or an
+insufficient number of detected genes.</p>
 </div>
 <div class="section level3">
 <h3 id="visualizing-the-cell-type-composition-of-ses">Visualizing the cell type composition of SEs<a class="anchor" aria-label="anchor" href="#visualizing-the-cell-type-composition-of-ses"></a>
@@ -447,8 +468,10 @@ correspond to different tissue regions.</p>
 <h3 id="visualizing-the-distance-of-ses-to-tumorstroma-interface">Visualizing the distance of SEs to tumor/stroma interface<a class="anchor" aria-label="anchor" href="#visualizing-the-distance-of-ses-to-tumorstroma-interface"></a>
 </h3>
 <p>This box plot visualizes the distribution of distances of SEs to the
-tumor/stroma interface. SEs are ordered by their median distance,
-highlighting spatial localization of SEs.</p>
+tumor/stroma interface. Positive distances indicate cells located within
+the tumor region, while negative distances denote cells within the
+stroma. The SEs are ordered by their median distance, highlighting their
+spatial localization relative to the tumor/stroma interface.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">scmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## Order SEs by their distance to tumor/stroma interface</span></span>
@@ -486,20 +509,20 @@ markers for each SE.</p>
 <span><span class="co"># Filter for significant markers with positive log-fold change</span></span>
 <span><span class="va">degs</span> <span class="op">=</span> <span class="va">degs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">logFC</span><span class="op">&gt;</span><span class="fl">0</span> <span class="op">&amp;</span> <span class="va">pval</span><span class="op">&lt;</span><span class="fl">0.05</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">logFC</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">degs</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##   feature group  avgExpr    logFC statistic       auc          pval</span></span>
-<span><span class="co">## 1   ACTA2   SE7 2.163320 1.819781   3798740 0.7728462 3.967332e-181</span></span>
-<span><span class="co">## 2 PLA2G2A   SE1 2.026133 1.438787   5126624 0.8350462 7.288467e-307</span></span>
-<span><span class="co">## 3     PKM   SE6 2.326821 1.315568   1977362 0.8792470 8.407165e-121</span></span>
-<span><span class="co">## 4 PLA2G2A   SE3 1.881473 1.268595   4812222 0.7964803 5.779646e-237</span></span>
-<span><span class="co">## 5     FN1   SE8 2.870009 1.061753   1908270 0.7835804  4.708588e-72</span></span>
-<span><span class="co">## 6     FN1   SE2 2.776297 1.006632   3348080 0.7725112 3.486347e-117</span></span>
+<pre><code><span><span class="co">##   feature group  avgExpr     logFC statistic       auc          pval</span></span>
+<span><span class="co">## 1   ACTA2   SE5 2.142901 1.7833222   4770907 0.7544471 9.886488e-183</span></span>
+<span><span class="co">## 2 PLA2G2A   SE0 2.090088 1.6944288  11628853 0.8727697  0.000000e+00</span></span>
+<span><span class="co">## 3     PKM   SE4 2.477427 1.2543706   3159324 0.8486510 1.725550e-149</span></span>
+<span><span class="co">## 4     PKM   SE3 2.227742 1.0111531   3985482 0.8122689 6.164104e-158</span></span>
+<span><span class="co">## 5     FN1   SE3 3.042717 0.9950768   3726164 0.7594180 4.675797e-108</span></span>
+<span><span class="co">## 6 HLA-DRA   SE3 1.787789 0.9867960   3691813 0.7524170 1.904606e-116</span></span>
 <span><span class="co">##            padj   pct_in  pct_out</span></span>
-<span><span class="co">## 1 5.448469e-179 70.41499 31.61094</span></span>
-<span><span class="co">## 2 3.002848e-304 91.39896 34.67463</span></span>
-<span><span class="co">## 3 1.731876e-118 99.06542 76.07765</span></span>
-<span><span class="co">## 4 2.381214e-234 86.27244 35.59561</span></span>
-<span><span class="co">## 5  9.699691e-70 98.85387 85.45428</span></span>
-<span><span class="co">## 6 4.787917e-115 97.68875 84.96556</span></span></code></pre>
+<span><span class="co">## 1 1.357744e-180 67.43383 31.42779</span></span>
+<span><span class="co">## 2  0.000000e+00 89.32039 25.74830</span></span>
+<span><span class="co">## 3 7.109267e-147 98.14815 81.98433</span></span>
+<span><span class="co">## 4 1.269805e-155 97.55725 81.67134</span></span>
+<span><span class="co">## 5 2.408035e-106 97.70992 88.58630</span></span>
+<span><span class="co">## 6 1.961744e-114 88.85496 46.94967</span></span></code></pre>
 <p><strong>Note</strong>: The MERSCOPE data used for SE discovery
 includes a limited number of genes. To enhance the analysis, you can
 extend the differential expression analysis to the whole transcriptome
@@ -537,78 +560,112 @@ identify potential discrepancies in package versions or configurations
 that might be causing problems.</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.2.3 (2023-03-15)</span></span>
-<span><span class="co">## Platform: x86_64-apple-darwin13.4.0 (64-bit)</span></span>
-<span><span class="co">## Running under: macOS Big Sur ... 10.16</span></span>
+<pre><code><span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
+<span><span class="co">## Platform: aarch64-apple-darwin20</span></span>
+<span><span class="co">## Running under: macOS Sonoma 14.6</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## Matrix products: default</span></span>
-<span><span class="co">## BLAS/LAPACK: /Users/wzhang39/miniconda3/envs/SpatialEcoTyper/lib/libopenblasp-r0.3.27.dylib</span></span>
+<span><span class="co">## BLAS:   /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRblas.0.dylib </span></span>
+<span><span class="co">## LAPACK: /Library/Frameworks/R.framework/Versions/4.4-arm64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## locale:</span></span>
 <span><span class="co">## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## time zone: America/Los_Angeles</span></span>
+<span><span class="co">## tzcode source: internal</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## attached base packages:</span></span>
 <span><span class="co">## [1] parallel  stats     graphics  grDevices utils     datasets  methods  </span></span>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">##  [1] presto_1.0.0          Rcpp_1.0.12           SpatialEcoTyper_0.0.4</span></span>
-<span><span class="co">##  [4] NMF_0.28              Biobase_2.58.0        BiocGenerics_0.44.0  </span></span>
+<span><span class="co">##  [1] presto_1.0.0          Rcpp_1.0.13           SpatialEcoTyper_0.0.5</span></span>
+<span><span class="co">##  [4] NMF_0.28              Biobase_2.64.0        BiocGenerics_0.50.0  </span></span>
 <span><span class="co">##  [7] cluster_2.1.6         rngtools_1.5.2        registry_0.5-1       </span></span>
-<span><span class="co">## [10] RANN_2.6.2            Matrix_1.6-5          R.utils_2.12.3       </span></span>
+<span><span class="co">## [10] RANN_2.6.2            Matrix_1.7-0          R.utils_2.12.3       </span></span>
 <span><span class="co">## [13] R.oo_1.26.0           R.methodsS3_1.8.2     googledrive_2.1.1    </span></span>
-<span><span class="co">## [16] data.table_1.15.4     SeuratObject_5.0.2    Seurat_4.4.0         </span></span>
-<span><span class="co">## [19] ggplot2_3.5.1         dplyr_1.1.4          </span></span>
+<span><span class="co">## [16] data.table_1.16.0     Seurat_5.1.0          SeuratObject_5.0.2   </span></span>
+<span><span class="co">## [19] sp_2.1-4              ggplot2_3.5.1         dplyr_1.1.4          </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##   [1] circlize_0.4.16        spatstat.univar_3.0-0  spam_2.10-0           </span></span>
-<span><span class="co">##   [4] systemfonts_1.1.0      plyr_1.8.9             igraph_2.0.3          </span></span>
-<span><span class="co">##   [7] lazyeval_0.2.2         sp_2.1-4               splines_4.2.3         </span></span>
-<span><span class="co">##  [10] listenv_0.9.1          scattermore_1.2        gridBase_0.4-7        </span></span>
-<span><span class="co">##  [13] digest_0.6.36          foreach_1.5.2          htmltools_0.5.8.1     </span></span>
-<span><span class="co">##  [16] fansi_1.0.6            magrittr_2.0.3         memoise_2.0.1         </span></span>
-<span><span class="co">##  [19] tensor_1.5             doParallel_1.0.17      ROCR_1.0-11           </span></span>
-<span><span class="co">##  [22] ComplexHeatmap_2.14.0  globals_0.16.3         matrixStats_1.3.0     </span></span>
-<span><span class="co">##  [25] pkgdown_2.0.9          spatstat.sparse_3.1-0  colorspace_2.1-1      </span></span>
-<span><span class="co">##  [28] ggrepel_0.9.5          textshaping_0.4.0      xfun_0.45             </span></span>
-<span><span class="co">##  [31] crayon_1.5.3           jsonlite_1.8.8         progressr_0.14.0      </span></span>
-<span><span class="co">##  [34] spatstat.data_3.1-2    survival_3.7-0         zoo_1.8-12            </span></span>
-<span><span class="co">##  [37] iterators_1.0.14       glue_1.7.0             polyclip_1.10-7       </span></span>
-<span><span class="co">##  [40] pals_1.9               gtable_0.3.5           gargle_1.5.2          </span></span>
-<span><span class="co">##  [43] leiden_0.4.3.1         GetoptLong_1.0.5       shape_1.4.6.1         </span></span>
-<span><span class="co">##  [46] future.apply_1.11.2    maps_3.4.2             abind_1.4-5           </span></span>
-<span><span class="co">##  [49] scales_1.3.0           spatstat.random_3.3-1  miniUI_0.1.1.1        </span></span>
-<span><span class="co">##  [52] viridisLite_0.4.2      xtable_1.8-4           clue_0.3-65           </span></span>
-<span><span class="co">##  [55] reticulate_1.38.0      mapproj_1.2.11         dotCall64_1.1-1       </span></span>
-<span><span class="co">##  [58] stats4_4.2.3           htmlwidgets_1.6.4      httr_1.4.7            </span></span>
-<span><span class="co">##  [61] RColorBrewer_1.1-3     ica_1.0-3              farver_2.1.2          </span></span>
-<span><span class="co">##  [64] pkgconfig_2.0.3        sass_0.4.9             uwot_0.2.2            </span></span>
-<span><span class="co">##  [67] deldir_2.0-4           utf8_1.2.4             labeling_0.4.3        </span></span>
-<span><span class="co">##  [70] tidyselect_1.2.1       rlang_1.1.4            reshape2_1.4.4        </span></span>
-<span><span class="co">##  [73] later_1.3.2            munsell_0.5.1          tools_4.2.3           </span></span>
-<span><span class="co">##  [76] cachem_1.1.0           cli_3.6.3              generics_0.1.3        </span></span>
-<span><span class="co">##  [79] ggridges_0.5.6         evaluate_0.24.0        stringr_1.5.1         </span></span>
-<span><span class="co">##  [82] fastmap_1.2.0          yaml_2.3.8             ragg_1.3.2            </span></span>
-<span><span class="co">##  [85] goftest_1.2-3          knitr_1.47             fs_1.6.4              </span></span>
-<span><span class="co">##  [88] fitdistrplus_1.2-1     purrr_1.0.2            pbapply_1.7-2         </span></span>
-<span><span class="co">##  [91] future_1.34.0          nlme_3.1-165           mime_0.12             </span></span>
-<span><span class="co">##  [94] compiler_4.2.3         rstudioapi_0.16.0      plotly_4.10.4         </span></span>
-<span><span class="co">##  [97] curl_5.1.0             png_0.1-8              spatstat.utils_3.1-0  </span></span>
-<span><span class="co">## [100] tibble_3.2.1           bslib_0.7.0            stringi_1.8.4         </span></span>
-<span><span class="co">## [103] highr_0.11             desc_1.4.3             lattice_0.22-6        </span></span>
-<span><span class="co">## [106] vctrs_0.6.5            pillar_1.9.0           lifecycle_1.0.4       </span></span>
-<span><span class="co">## [109] BiocManager_1.30.24    GlobalOptions_0.1.2    spatstat.geom_3.3-2   </span></span>
-<span><span class="co">## [112] lmtest_0.9-40          jquerylib_0.1.4        RcppAnnoy_0.0.22      </span></span>
-<span><span class="co">## [115] cowplot_1.1.3          irlba_2.3.5.1          httpuv_1.6.15         </span></span>
-<span><span class="co">## [118] patchwork_1.2.0        R6_2.5.1               promises_1.3.0        </span></span>
-<span><span class="co">## [121] KernSmooth_2.23-24     gridExtra_2.3          IRanges_2.32.0        </span></span>
-<span><span class="co">## [124] parallelly_1.38.0      codetools_0.2-20       dichromat_2.0-0.1     </span></span>
-<span><span class="co">## [127] MASS_7.3-60.0.1        rjson_0.2.21           withr_3.0.0           </span></span>
-<span><span class="co">## [130] sctransform_0.4.1      S4Vectors_0.36.2       grid_4.2.3            </span></span>
-<span><span class="co">## [133] tidyr_1.3.1            rmarkdown_2.27         Rtsne_0.17            </span></span>
-<span><span class="co">## [136] spatstat.explore_3.3-2 shiny_1.8.1.1</span></span></code></pre>
+<span><span class="co">##   [1] RcppAnnoy_0.0.22            splines_4.4.1              </span></span>
+<span><span class="co">##   [3] later_1.3.2                 tibble_3.2.1               </span></span>
+<span><span class="co">##   [5] polyclip_1.10-7             fastDummies_1.7.4          </span></span>
+<span><span class="co">##   [7] lifecycle_1.0.4             doParallel_1.0.17          </span></span>
+<span><span class="co">##   [9] pals_1.9                    globals_0.16.3             </span></span>
+<span><span class="co">##  [11] lattice_0.22-6              MASS_7.3-60.2              </span></span>
+<span><span class="co">##  [13] magrittr_2.0.3              plotly_4.10.4              </span></span>
+<span><span class="co">##  [15] sass_0.4.9                  rmarkdown_2.28             </span></span>
+<span><span class="co">##  [17] jquerylib_0.1.4             yaml_2.3.10                </span></span>
+<span><span class="co">##  [19] httpuv_1.6.15               glmGamPoi_1.16.0           </span></span>
+<span><span class="co">##  [21] sctransform_0.4.1           spam_2.10-0                </span></span>
+<span><span class="co">##  [23] spatstat.sparse_3.1-0       reticulate_1.39.0          </span></span>
+<span><span class="co">##  [25] mapproj_1.2.11              cowplot_1.1.3              </span></span>
+<span><span class="co">##  [27] pbapply_1.7-2               RColorBrewer_1.1-3         </span></span>
+<span><span class="co">##  [29] maps_3.4.2                  zlibbioc_1.50.0            </span></span>
+<span><span class="co">##  [31] abind_1.4-5                 GenomicRanges_1.56.1       </span></span>
+<span><span class="co">##  [33] Rtsne_0.17                  purrr_1.0.2                </span></span>
+<span><span class="co">##  [35] GenomeInfoDbData_1.2.12     circlize_0.4.16            </span></span>
+<span><span class="co">##  [37] IRanges_2.38.1              S4Vectors_0.42.1           </span></span>
+<span><span class="co">##  [39] ggrepel_0.9.6               irlba_2.3.5.1              </span></span>
+<span><span class="co">##  [41] listenv_0.9.1               spatstat.utils_3.1-0       </span></span>
+<span><span class="co">##  [43] goftest_1.2-3               RSpectra_0.16-2            </span></span>
+<span><span class="co">##  [45] spatstat.random_3.3-1       fitdistrplus_1.2-1         </span></span>
+<span><span class="co">##  [47] parallelly_1.38.0           DelayedMatrixStats_1.26.0  </span></span>
+<span><span class="co">##  [49] pkgdown_2.1.0               DelayedArray_0.30.1        </span></span>
+<span><span class="co">##  [51] leiden_0.4.3.1              codetools_0.2-20           </span></span>
+<span><span class="co">##  [53] tidyselect_1.2.1            shape_1.4.6.1              </span></span>
+<span><span class="co">##  [55] farver_2.1.2                UCSC.utils_1.0.0           </span></span>
+<span><span class="co">##  [57] matrixStats_1.4.1           stats4_4.4.1               </span></span>
+<span><span class="co">##  [59] spatstat.explore_3.3-2      jsonlite_1.8.8             </span></span>
+<span><span class="co">##  [61] GetoptLong_1.0.5            progressr_0.14.0           </span></span>
+<span><span class="co">##  [63] ggridges_0.5.6              survival_3.6-4             </span></span>
+<span><span class="co">##  [65] iterators_1.0.14            systemfonts_1.1.0          </span></span>
+<span><span class="co">##  [67] foreach_1.5.2               tools_4.4.1                </span></span>
+<span><span class="co">##  [69] ragg_1.3.2                  ica_1.0-3                  </span></span>
+<span><span class="co">##  [71] glue_1.7.0                  SparseArray_1.4.8          </span></span>
+<span><span class="co">##  [73] gridExtra_2.3               xfun_0.47                  </span></span>
+<span><span class="co">##  [75] MatrixGenerics_1.16.0       GenomeInfoDb_1.40.1        </span></span>
+<span><span class="co">##  [77] withr_3.0.1                 BiocManager_1.30.25        </span></span>
+<span><span class="co">##  [79] fastmap_1.2.0               fansi_1.0.6                </span></span>
+<span><span class="co">##  [81] digest_0.6.37               R6_2.5.1                   </span></span>
+<span><span class="co">##  [83] mime_0.12                   textshaping_0.4.0          </span></span>
+<span><span class="co">##  [85] colorspace_2.1-1            scattermore_1.2            </span></span>
+<span><span class="co">##  [87] tensor_1.5                  dichromat_2.0-0.1          </span></span>
+<span><span class="co">##  [89] spatstat.data_3.1-2         utf8_1.2.4                 </span></span>
+<span><span class="co">##  [91] tidyr_1.3.1                 generics_0.1.3             </span></span>
+<span><span class="co">##  [93] S4Arrays_1.4.1              httr_1.4.7                 </span></span>
+<span><span class="co">##  [95] htmlwidgets_1.6.4           uwot_0.2.2                 </span></span>
+<span><span class="co">##  [97] pkgconfig_2.0.3             gtable_0.3.5               </span></span>
+<span><span class="co">##  [99] ComplexHeatmap_2.20.0       lmtest_0.9-40              </span></span>
+<span><span class="co">## [101] XVector_0.44.0              htmltools_0.5.8.1          </span></span>
+<span><span class="co">## [103] dotCall64_1.1-1             clue_0.3-65                </span></span>
+<span><span class="co">## [105] scales_1.3.0                png_0.1-8                  </span></span>
+<span><span class="co">## [107] spatstat.univar_3.0-1       knitr_1.48                 </span></span>
+<span><span class="co">## [109] rstudioapi_0.16.0           reshape2_1.4.4             </span></span>
+<span><span class="co">## [111] rjson_0.2.22                nlme_3.1-164               </span></span>
+<span><span class="co">## [113] curl_5.2.2                  cachem_1.1.0               </span></span>
+<span><span class="co">## [115] zoo_1.8-12                  GlobalOptions_0.1.2        </span></span>
+<span><span class="co">## [117] stringr_1.5.1               KernSmooth_2.23-24         </span></span>
+<span><span class="co">## [119] miniUI_0.1.1.1              desc_1.4.3                 </span></span>
+<span><span class="co">## [121] pillar_1.9.0                grid_4.4.1                 </span></span>
+<span><span class="co">## [123] vctrs_0.6.5                 promises_1.3.0             </span></span>
+<span><span class="co">## [125] xtable_1.8-4                evaluate_0.24.0            </span></span>
+<span><span class="co">## [127] cli_3.6.3                   compiler_4.4.1             </span></span>
+<span><span class="co">## [129] rlang_1.1.4                 crayon_1.5.3               </span></span>
+<span><span class="co">## [131] future.apply_1.11.2         labeling_0.4.3             </span></span>
+<span><span class="co">## [133] plyr_1.8.9                  fs_1.6.4                   </span></span>
+<span><span class="co">## [135] stringi_1.8.4               viridisLite_0.4.2          </span></span>
+<span><span class="co">## [137] deldir_2.0-4                gridBase_0.4-7             </span></span>
+<span><span class="co">## [139] munsell_0.5.1               lazyeval_0.2.2             </span></span>
+<span><span class="co">## [141] spatstat.geom_3.3-2         RcppHNSW_0.6.0             </span></span>
+<span><span class="co">## [143] patchwork_1.2.0             sparseMatrixStats_1.16.0   </span></span>
+<span><span class="co">## [145] future_1.34.0               shiny_1.9.1                </span></span>
+<span><span class="co">## [147] highr_0.11                  SummarizedExperiment_1.34.0</span></span>
+<span><span class="co">## [149] ROCR_1.0-11                 gargle_1.5.2               </span></span>
+<span><span class="co">## [151] igraph_2.0.3                bslib_0.8.0</span></span></code></pre>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -619,15 +676,15 @@ that might be causing problems.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
