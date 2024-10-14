@@ -62,11 +62,12 @@ and integrates the results across samples.</p>
 <span>  nrun.per.rank <span class="op">=</span> <span class="fl">30</span>,</span>
 <span>  min.coph <span class="op">=</span> <span class="fl">0.95</span>,</span>
 <span>  radius <span class="op">=</span> <span class="fl">50</span>,</span>
-<span>  min.cts.per.region <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  min.cts.per.region <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  nfeatures <span class="op">=</span> <span class="fl">3000</span>,</span>
 <span>  min.features <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  Region <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  subresolution <span class="op">=</span> <span class="fl">30</span>,</span>
+<span>  minibatch <span class="op">=</span> <span class="fl">5000</span>,</span>
 <span>  ncores <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  seed <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  filter.region.by.celltypes <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -122,7 +123,7 @@ for defining spatial neighborhoods around each cell. Default is 50.</p></dd>
 
 
 <dt id="arg-min-cts-per-region">min.cts.per.region<a class="anchor" aria-label="anchor" href="#arg-min-cts-per-region"></a></dt>
-<dd><p>Integer specifying the minimum number of cell types (default: 2) required for a microregion.</p></dd>
+<dd><p>Integer specifying the minimum number of cell types required for a microregion.</p></dd>
 
 
 <dt id="arg-nfeatures">nfeatures<a class="anchor" aria-label="anchor" href="#arg-nfeatures"></a></dt>
@@ -140,6 +141,11 @@ containing region annotations (default: NULL). Pathologist annotation is recomme
 
 <dt id="arg-subresolution">subresolution<a class="anchor" aria-label="anchor" href="#arg-subresolution"></a></dt>
 <dd><p>Numeric specifying the resolution for clustering within each sample.</p></dd>
+
+
+<dt id="arg-minibatch">minibatch<a class="anchor" aria-label="anchor" href="#arg-minibatch"></a></dt>
+<dd><p>Integer specifying the number of columns to process in each minibatch in the SNF analysis.
+Default is 5000. This option splits the matrix into smaller chunks (minibatch), thus reducing memory usage.</p></dd>
 
 
 <dt id="arg-ncores">ncores<a class="anchor" aria-label="anchor" href="#arg-ncores"></a></dt>

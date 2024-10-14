@@ -386,14 +386,13 @@ computation time.</li>
 as spatial coordinates) for defining spatial neighborhoods around each
 cell. Default is 50.</li>
 <li>
-<code>min.cts.per.region</code> Integer specifying the minimum
-number of cell types (default: 2) required for a microregion.</li>
-<li>
-<code>Region</code> Column name in metadata data frames containing
-pathologist region annotation (default: NULL).</li>
+<code>minibatch</code> Integer specifying the number of columns
+(default: 5000) to process in each minibatch in the SNF analysis. This
+option splits the matrix into smaller chunks, thus reducing memory
+usage.</li>
 <li>
 <code>ncores</code> Integer specifying the number of cores for
-parallel processing. Default is 1.</li>
+parallel processing (default: 1).</li>
 </ul>
 <p>You can type <code><a href="../reference/MultiSpatialEcoTyper.html">?MultiSpatialEcoTyper</a></code> to visualize the full
 manual.</p>
@@ -439,6 +438,7 @@ function, which could improve integration accuracy.</p>
 <span><span class="va">metadata_list</span><span class="op">$</span><span class="va">CRC</span><span class="op">$</span><span class="va">Region2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">metadata_list</span><span class="op">$</span><span class="va">CRC</span><span class="op">$</span><span class="va">Dist2Interface</span><span class="op">&lt;</span><span class="fl">0</span>, <span class="st">"Stroma"</span>, <span class="st">"Tumor"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/MultiSpatialEcoTyper.html">MultiSpatialEcoTyper</a></span><span class="op">(</span><span class="va">data_list</span>, <span class="va">metadata_list</span>, </span>
 <span>                     normalization.method <span class="op">=</span> <span class="st">"None"</span>, <span class="co"># Normalization method</span></span>
+<span>                     min.cts.per.region <span class="op">=</span> <span class="fl">2</span>, <span class="co"># At least two cell types in each microregion</span></span>
 <span>                     nmf_ranks <span class="op">=</span> <span class="fl">10</span>,  <span class="co"># Number of clusters</span></span>
 <span>                     nrun.per.rank <span class="op">=</span> <span class="fl">5</span>,  <span class="co"># Recommend 30 or higher for robust results</span></span>
 <span>                     Region <span class="op">=</span> <span class="st">"Region2"</span>, <span class="co"># Use pathologist annotations if available</span></span>
@@ -464,12 +464,7 @@ number of clusters.</p>
 <span>                     Region <span class="op">=</span> <span class="st">"Region2"</span>, <span class="co"># Use pathologist annotations</span></span>
 <span>                     ncores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">## This demo takes ~16 minutes to complete on macOS with an Apple M1 Pro chip and 16 GB memory.</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="using-pre-existing-spatialecotyper-results">Using pre-existing SpatialEcoTyper results<a class="anchor" aria-label="anchor" href="#using-pre-existing-spatialecotyper-results"></a>
-</h3>
-<details><summary><code>IntegrateSpatialEcoTyper</code> instead of
-<code>MultiSpatialEcoTyper</code>
+<details><summary><strong>Using pre-existing SpatialEcoTyper results</strong>
 </summary><p>If you’ve already run <a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a> for each
 sample, you can integrate the results directly using <a href="../reference/IntegrateSpatialEcoTyper.html">IntegrateSpatialEcoTyper</a>.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
@@ -487,6 +482,34 @@ sample, you can integrate the results directly using <a href="../reference/Integ
 <span>                         Region <span class="op">=</span> <span class="st">"Region2"</span>, <span class="co"># Use pathologist annotations if available</span></span>
 <span>                         ncores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co"># This demo takes ~3 minutes on a macOS with an Apple M1 Pro chip and 16 GB memory.</span></span></code></pre></div>
+</details><details><summary><strong>Optimizing memory usage</strong>
+</summary><p>For real-world single-cell ST datasets with over 100,000 cells, the
+analysis can be both time- and memory-intensive. To speed up the
+process, you can increase the number of cores used
+(<code>ncores</code>), but this will also increase memory
+consumption.</p>
+<p>If you have limited computational memory, there are several
+strategies to reduce usage. One approach is to decrease the
+<code>minibatch</code> size and reduce the number of cores
+(<code>ncores</code>) allocated. However, for larger datasets, the
+minimum memory requirement may remain high. Another option is to
+increase the <code>binsize</code>, which reduces the number of spatial
+microregions. This can significantly decrease memory usage by
+downsampling the ST data, potentially excluding many cells from the
+analysis though.</p>
+</details><details><summary><strong>Interested in multicellular communities associated with specific
+cell types?</strong>
+</summary><p>If you’re interested in studying multicellular communities associated
+with specific cell types, you can use the
+<code>filter.region.by.celltypes</code> argument to focus on
+microregions containing at least one cell from the specified cell types.
+An example is available in <a href="./SingleSample.html">Discovery of
+Spatial Ecotypes from a Single Sample</a>.</p>
+</details><details><summary><strong>Interested in regions with multiple cell types?</strong>
+</summary><p>If you’re interested in regions composed of multiple cell types, you
+can use the <code>min.cts.per.region</code> argument to specify the
+minimum number of distinct cell types required for each microregion to
+be included in the analysis.</p>
 </details>
 </div>
 </div>
@@ -567,7 +590,7 @@ This analysis requires the fused similarity network matrix
 step.</p>
 <p>Load the files into R:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## A matrix representing the fused similarity matrix of spatial clusters across all samples</span></span>
+<code class="sourceCode R"><span><span class="co">## Fused similarity matrix of spatial clusters across all samples</span></span>
 <span><span class="va">outdir</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"SpatialEcoTyper_results_"</span>, <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html" class="external-link">Sys.Date</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">integrated</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">outdir</span>, <span class="st">"MultiSE_integrated_final.rds"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">integrated</span><span class="op">)</span></span></code></pre></div>
@@ -600,10 +623,10 @@ from 4 to 15 with 5 runs per rank.</p>
 <span>                         nrun.per.rank <span class="op">=</span> <span class="fl">5</span>, <span class="co"># Recommend 30 or higher</span></span>
 <span>                         min.coph <span class="op">=</span> <span class="fl">0.99</span>, <span class="co"># minimum cophenetic coefficient threshold</span></span>
 <span>                         ncores <span class="op">=</span> <span class="fl">4</span>,</span>
-<span>                         seed <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>                         seed <span class="op">=</span> <span class="fl">2024</span><span class="op">)</span></span>
 <span><span class="co">## This process takes ~3 minutes on a macOS with an Apple M1 Pro chip and 16 GB of memory</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"The selected rank is "</span>, <span class="va">nmf_res</span><span class="op">$</span><span class="va">bestK</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "The selected rank is 6"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "The selected rank is 4"</span></span></code></pre>
 <p>To better understand how the cophenetic coefficient changes with
 different ranks, you can visualize the results.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
@@ -615,10 +638,10 @@ final SE annotations.</p>
 <code class="sourceCode R"><span><span class="va">ses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">nmf_res</span><span class="op">$</span><span class="va">NMFfits</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"K."</span>, <span class="va">nmf_res</span><span class="op">$</span><span class="va">bestK</span><span class="op">)</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ses</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   SKCM..InitSE1  SKCM..InitSE74 SKCM..InitSE110  SKCM..InitSE16 SKCM..InitSE111 </span></span>
-<span><span class="co">##               4               6               6               3               6 </span></span>
+<span><span class="co">##               1               2               2               2               2 </span></span>
 <span><span class="co">##  SKCM..InitSE24 </span></span>
-<span><span class="co">##               6 </span></span>
-<span><span class="co">## Levels: 1 2 3 4 5 6</span></span></code></pre>
+<span><span class="co">##               2 </span></span>
+<span><span class="co">## Levels: 1 2 3 4</span></span></code></pre>
 <p>You can add the newly defined SEs into the meta data</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">finalmeta</span><span class="op">$</span><span class="va">SE</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"SE"</span>, <span class="va">ses</span><span class="op">[</span><span class="va">finalmeta</span><span class="op">$</span><span class="va">InitSE</span><span class="op">]</span><span class="op">)</span></span>
@@ -645,12 +668,12 @@ final SE annotations.</p>
 <span><span class="co">## HumanMelanomaPatient1__cell_3661      -874.2712  Stroma SKCM..InitSE60   SKCM</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3663      -903.6559  Stroma SKCM..InitSE77   SKCM</span></span>
 <span><span class="co">##                                   SE</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3655 SE4</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3657 SE4</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3658 SE4</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3660 SE4</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3661 SE4</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3663 SE4</span></span></code></pre>
+<span><span class="co">## HumanMelanomaPatient1__cell_3655 SE1</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3657 SE1</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3658 SE1</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3660 SE1</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3661 SE1</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3663 SE1</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="using-a-different-rank">Using a different rank<a class="anchor" aria-label="anchor" href="#using-a-different-rank"></a>
@@ -660,7 +683,7 @@ the <a href="../reference/nmfClustering.html">nmfClustering</a>
 function. When a single rank is specified, it directly returns an NMFfit
 object for predicting SE grouping, as shown below:</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">nmf_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nmfClustering.html">nmfClustering</a></span><span class="op">(</span><span class="va">integrated</span>, ranks <span class="op">=</span> <span class="fl">6</span>, nrun.per.rank <span class="op">=</span> <span class="fl">30</span>, </span>
+<code class="sourceCode R"><span><span class="va">nmf_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/nmfClustering.html">nmfClustering</a></span><span class="op">(</span><span class="va">integrated</span>, ranks <span class="op">=</span> <span class="fl">10</span>, nrun.per.rank <span class="op">=</span> <span class="fl">30</span>, </span>
 <span>                         seed <span class="op">=</span> <span class="fl">1</span>, ncores <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">ses</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/predict.html" class="external-link">predict</a></span><span class="op">(</span><span class="va">nmf_res</span><span class="op">)</span></span>
 <span><span class="co">## This process takes ~6 minutes on a macOS with an Apple M1 Pro chip and 16 GB of memory</span></span></code></pre></div>
@@ -689,13 +712,13 @@ object for predicting SE grouping, as shown below:</p>
 <span><span class="co">## HumanMelanomaPatient1__cell_3660      -907.8909  Stroma SKCM..InitSE63   SKCM</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3661      -874.2712  Stroma SKCM..InitSE60   SKCM</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3663      -903.6559  Stroma SKCM..InitSE77   SKCM</span></span>
-<span><span class="co">##                                   SE</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3655 SE2</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3657 SE2</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3658 SE2</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3660 SE2</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3661 SE2</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3663 SE2</span></span></code></pre>
+<span><span class="co">##                                    SE</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3655  SE4</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3657 SE10</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3658 SE10</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3660 SE10</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3661  SE4</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3663  SE4</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
@@ -832,34 +855,34 @@ markers for each SE.</p>
 <span><span class="va">degs2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/presto/man/wilcoxauc.html" class="external-link">wilcoxauc</a></span><span class="op">(</span><span class="va">tmpdata2</span>, <span class="va">tmpmeta2</span><span class="op">$</span><span class="va">SE</span><span class="op">)</span> <span class="co"># DE analysis</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">degs1</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##    feature group     avgExpr         logFC statistic       auc         pval</span></span>
-<span><span class="co">## 1     PDK4   SE1 0.039720380 -0.0402250173   1854736 0.4745260 0.0001823441</span></span>
-<span><span class="co">## 2 TNFRSF17   SE1 0.000000000  0.0000000000   1954304 0.5000000 1.0000000000</span></span>
-<span><span class="co">## 3    ICAM3   SE1 0.000000000  0.0000000000   1954304 0.5000000 1.0000000000</span></span>
-<span><span class="co">## 4      FAP   SE1 0.159213352  0.0276106308   2028382 0.5189525 0.0292073422</span></span>
-<span><span class="co">## 5     GZMB   SE1 0.015327661  0.0011613474   1957861 0.5009100 0.7630686462</span></span>
-<span><span class="co">## 6     TSC2   SE1 0.008914743 -0.0000365135   1952164 0.4994525 0.8308681498</span></span>
-<span><span class="co">##          padj    pct_in   pct_out</span></span>
-<span><span class="co">## 1 0.002952697  5.078125 10.165051</span></span>
-<span><span class="co">## 2 1.000000000  0.000000  0.000000</span></span>
-<span><span class="co">## 3 1.000000000  0.000000  0.000000</span></span>
-<span><span class="co">## 4 0.154274679 21.093750 17.238669</span></span>
-<span><span class="co">## 5 1.000000000  1.953125  1.768405</span></span>
-<span><span class="co">## 6 1.000000000  1.171875  1.283731</span></span></code></pre>
+<pre><code><span><span class="co">##    feature group     avgExpr        logFC statistic       auc         pval</span></span>
+<span><span class="co">## 1     PDK4  SE10 0.117555097  0.047787757   4701164 0.5269201 2.300787e-09</span></span>
+<span><span class="co">## 2 TNFRSF17  SE10 0.000000000  0.000000000   4460984 0.5000000 1.000000e+00</span></span>
+<span><span class="co">## 3    ICAM3  SE10 0.000000000  0.000000000   4460984 0.5000000 1.000000e+00</span></span>
+<span><span class="co">## 4      FAP  SE10 0.102200894 -0.037071606   4241882 0.4754425 1.963176e-05</span></span>
+<span><span class="co">## 5     GZMB  SE10 0.007441764 -0.008093071   4423277 0.4957737 3.439501e-02</span></span>
+<span><span class="co">## 6     TSC2  SE10 0.006910210 -0.002427312   4446112 0.4983331 3.257778e-01</span></span>
+<span><span class="co">##           padj     pct_in   pct_out</span></span>
+<span><span class="co">## 1 1.030353e-08 14.2638037  9.003215</span></span>
+<span><span class="co">## 2 1.000000e+00  0.0000000  0.000000</span></span>
+<span><span class="co">## 3 1.000000e+00  0.0000000  0.000000</span></span>
+<span><span class="co">## 4 6.684535e-05 13.3435583 18.269512</span></span>
+<span><span class="co">## 5 8.335732e-02  1.0736196  1.914645</span></span>
+<span><span class="co">## 6 6.484080e-01  0.9969325  1.330020</span></span></code></pre>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">degs2</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    feature group    avgExpr       logFC statistic       auc         pval</span></span>
-<span><span class="co">## 1     PDK4   SE1 0.20183037  0.07771310  27320403 0.5378077 5.006057e-31</span></span>
-<span><span class="co">## 2   CX3CL1   SE1 0.02135552 -0.03272965  24464730 0.4815932 1.761758e-19</span></span>
-<span><span class="co">## 3      CD4   SE1 0.00000000  0.00000000  25399786 0.5000000 1.000000e+00</span></span>
-<span><span class="co">## 4    SNAI2   SE1 0.16013341 -0.13401794  22095190 0.4349483 1.229937e-57</span></span>
-<span><span class="co">## 5 TNFRSF17   SE1 0.00000000  0.00000000  25399786 0.5000000 1.000000e+00</span></span>
-<span><span class="co">## 6    ICAM3   SE1 0.00000000  0.00000000  25399786 0.5000000 1.000000e+00</span></span>
+<span><span class="co">## 1     PDK4   SE1 0.07290325 -0.08483371  15082423 0.4580113 3.871812e-25</span></span>
+<span><span class="co">## 2   CX3CL1   SE1 0.03282075 -0.01465999  16182732 0.4914246 7.090800e-04</span></span>
+<span><span class="co">## 3      CD4   SE1 0.00000000  0.00000000  16465120 0.5000000 1.000000e+00</span></span>
+<span><span class="co">## 4    SNAI2   SE1 0.35501044  0.11399360  18215060 0.5531408 6.627100e-26</span></span>
+<span><span class="co">## 5 TNFRSF17   SE1 0.00000000  0.00000000  16465120 0.5000000 1.000000e+00</span></span>
+<span><span class="co">## 6    ICAM3   SE1 0.00000000  0.00000000  16465120 0.5000000 1.000000e+00</span></span>
 <span><span class="co">##           padj    pct_in   pct_out</span></span>
-<span><span class="co">## 1 2.578120e-30 21.258385 13.922219</span></span>
-<span><span class="co">## 2 6.783592e-19  2.891511  6.544124</span></span>
+<span><span class="co">## 1 2.380875e-24  8.921162 17.125293</span></span>
+<span><span class="co">## 2 1.848993e-03  4.107884  5.818208</span></span>
 <span><span class="co">## 3 1.000000e+00  0.000000  0.000000</span></span>
-<span><span class="co">## 4 9.383964e-57 19.708536 31.546251</span></span>
+<span><span class="co">## 4 4.333913e-25 36.431535 26.939403</span></span>
 <span><span class="co">## 5 1.000000e+00  0.000000  0.000000</span></span>
 <span><span class="co">## 6 1.000000e+00  0.000000  0.000000</span></span></code></pre>
 </div>
@@ -878,20 +901,20 @@ analyses.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">lfcs</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">lfcs</span><span class="op">$</span><span class="va">feature</span></span>
 <span><span class="va">lfcs</span> <span class="op">&lt;-</span> <span class="va">lfcs</span><span class="op">[</span>, <span class="op">-</span><span class="fl">1</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">lfcs</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                 SE1         SE2          SE3         SE4         SE5</span></span>
-<span><span class="co">## ACKR3    0.06246662  0.21895626 -0.150997615 -0.08704517 -0.08665300</span></span>
-<span><span class="co">## ACTA2    0.20774409  0.07530969 -0.067080051 -0.10100274 -0.13927371</span></span>
-<span><span class="co">## ADAMTS4 -0.09686590 -0.10496819  0.175499598  0.04179859 -0.08632806</span></span>
-<span><span class="co">## AKT1    -0.09849723 -0.19517351  0.202874981  0.04393500 -0.16304176</span></span>
-<span><span class="co">## AKT2    -0.01508130  0.01896163  0.008548844 -0.01074734 -0.02821415</span></span>
-<span><span class="co">## AKT3    -0.03315108  0.01402252  0.018208705 -0.03836418 -0.07154572</span></span>
-<span><span class="co">##                 SE6</span></span>
-<span><span class="co">## ACKR3   -0.17280061</span></span>
-<span><span class="co">## ACTA2   -0.15605047</span></span>
-<span><span class="co">## ADAMTS4  0.12377857</span></span>
-<span><span class="co">## AKT1     0.39080918</span></span>
-<span><span class="co">## AKT2     0.01363595</span></span>
-<span><span class="co">## AKT3     0.02568186</span></span></code></pre>
+<pre><code><span><span class="co">##                SE10         SE3         SE4         SE6         SE7         SE8</span></span>
+<span><span class="co">## ACKR3    0.04539229 -0.11089193  0.22761738 -0.13915649 -0.16230522  0.05704506</span></span>
+<span><span class="co">## ACTA2    0.64868983  0.19121333 -0.28277467 -0.15495698 -0.13060735  0.26294794</span></span>
+<span><span class="co">## ADAMTS4 -0.07880286 -0.03558349 -0.10298639  0.15231638  0.14598004 -0.10437673</span></span>
+<span><span class="co">## AKT1    -0.11112575 -0.00885807 -0.19659536  0.11531490  0.32156308 -0.09316424</span></span>
+<span><span class="co">## AKT2     0.01227246 -0.01219427  0.01067868 -0.01456746  0.01794543 -0.02832473</span></span>
+<span><span class="co">## AKT3     0.05820973 -0.05104454 -0.02226315 -0.01922768  0.02741800 -0.03496944</span></span>
+<span><span class="co">##                   SE9</span></span>
+<span><span class="co">## ACKR3   -2.297758e-02</span></span>
+<span><span class="co">## ACTA2   -1.850714e-01</span></span>
+<span><span class="co">## ADAMTS4 -3.370712e-03</span></span>
+<span><span class="co">## AKT1    -3.274771e-02</span></span>
+<span><span class="co">## AKT2    -2.510557e-05</span></span>
+<span><span class="co">## AKT3    -2.496374e-02</span></span></code></pre>
 <p>To identify markers that are specific to each SE-associated cell
 state, we calculate the difference between the maximum log2FC for each
 gene and the second-highest log2FC:</p>
@@ -910,23 +933,26 @@ gene and the second-highest log2FC:</p>
 <span><span class="co">## Select the top five markers</span></span>
 <span><span class="va">top5</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">markers</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span> <span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">min</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">top5</span></span></code></pre></div>
-<pre><code><span><span class="co">## $SE1</span></span>
-<span><span class="co">## [1] "SFRP2" "SMOC2" "MFAP5" "ACTA2" "XBP1" </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $SE2</span></span>
-<span><span class="co">## [1] "FOS"     "PLA2G2A" "DUSP1"   "FBLN1"   "EGR1"   </span></span>
+<pre><code><span><span class="co">## $SE10</span></span>
+<span><span class="co">## [1] "ACTA2"  "COL4A1" "MYH11"  "TGFB3"  "TNC"   </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $SE3</span></span>
-<span><span class="co">## [1] "FN1"     "HLA-DRA" "BST2"    "STAT1"   "CXCL9"  </span></span>
+<span><span class="co">## [1] "FN1"    "CSF1"   "COL5A1"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $SE4</span></span>
-<span><span class="co">## [1] "SERPINE1" "CCL2"     "FAP"     </span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## $SE5</span></span>
-<span><span class="co">## [1] "COL1A1"  "COL11A1" "COL5A1"  "CSF1"    "CXCL2"  </span></span>
+<span><span class="co">## [1] "FOS"     "PLA2G2A" "DUSP1"   "EGR1"    "FBLN1"  </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $SE6</span></span>
-<span><span class="co">## [1] "PKM"    "MMP11"  "CTNNB1" "TGFBI"  "YAP1"</span></span></code></pre>
+<span><span class="co">## [1] "HLA-DRA" "BST2"    "CXCL9"   "STAT1"   "SOD2"   </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $SE7</span></span>
+<span><span class="co">## [1] "PKM"    "MMP11"  "CTNNB1" "TGFBI"  "YAP1"  </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $SE8</span></span>
+<span><span class="co">## [1] "SFRP2"   "COL1A1"  "SMOC2"   "COL11A1" "MFAP5"  </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $SE9</span></span>
+<span><span class="co">## [1] "XBP1"  "CXCR4" "CCL2"  "PTPRC" "STAT3"</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="visualizing-top-se-cell-state-markers">Visualizing top SE cell state markers<a class="anchor" aria-label="anchor" href="#visualizing-top-se-cell-state-markers"></a>

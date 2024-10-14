@@ -20,6 +20,7 @@
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/GetSNlist.html</loc></url>
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/GetSpatialMetacells.html</loc></url>
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/HeatmapView.html</loc></url>
+<url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/Integrate.html</loc></url>
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/IntegrateSpatialEcoTyper.html</loc></url>
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/MultiSpatialEcoTyper.html</loc></url>
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/NMFGenerateW.html</loc></url>
@@ -37,6 +38,8 @@
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/fillspots.html</loc></url>
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/getColors.html</loc></url>
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/index.html</loc></url>
+<url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/matrixMultiply.html</loc></url>
+<url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/mostFrequent.html</loc></url>
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/nmfClustering.html</loc></url>
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/rankSparse.html</loc></url>
 <url><loc>https://digitalcytometry.github.io/SpatialEcoTyper/reference/rank_sparse.html</loc></url>

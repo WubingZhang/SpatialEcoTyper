@@ -191,10 +191,8 @@ query data should be grouped into one of “B”, “CD4T”, “CD8T”, “NK�
 “Plasma”, “Macrophage”, “DC”, “Fibroblast”, and “Endothelial”, case
 sensitive. All the other cell types will be considered non-SE
 compartments.</p>
-<div class="section level4">
-<h4 id="using-default-models-1">Using default models (1)<a class="anchor" aria-label="anchor" href="#using-default-models-1"></a>
-</h4>
-<p>Before SE recovery, we recommend to perform
+<details open><summary><strong>Using default models (1)</strong>
+</summary><p>Before SE recovery, we recommend to perform
 <code>SpatialEcoTyper</code> analysis, which integrate gene expression
 and spatial information to learn a unified embedding of spatial
 microregions. The resulting embedding will help refine the SE recovery
@@ -215,18 +213,18 @@ and reliable results.</p>
 <span><span class="va">emb</span> <span class="op">=</span> <span class="fu"><a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a></span><span class="op">(</span><span class="va">normdata</span>, <span class="va">scmeta</span>, resolution <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">emb</span><span class="op">$</span><span class="va">obj</span> <span class="co">## A seurat object including the spatial embedding</span></span></code></pre></div>
 <pre><code><span><span class="co">## An object of class Seurat </span></span>
-<span><span class="co">## 1869 features across 1869 samples within 1 assay </span></span>
-<span><span class="co">## Active assay: RNA (1869 features, 1869 variable features)</span></span>
+<span><span class="co">## 2315 features across 2315 samples within 1 assay </span></span>
+<span><span class="co">## Active assay: RNA (2315 features, 2315 variable features)</span></span>
 <span><span class="co">##  3 layers present: counts, data, scale.data</span></span>
 <span><span class="co">##  2 dimensional reductions calculated: pca, umap</span></span></code></pre>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">emb</span><span class="op">$</span><span class="va">metadata</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="st">"Y"</span>, <span class="st">"CellType"</span>, <span class="st">"SE"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span>  <span class="co">## Single-cell meta data with SE annotations</span></span></code></pre></div>
 <pre><code><span><span class="co">##                                         X         Y   CellType   SE</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3655 1894.706 -6367.766 Fibroblast SE25</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3657 1942.480 -6369.602 Fibroblast SE17</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3658 1963.007 -6374.026 Fibroblast SE17</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3660 1981.600 -6372.266 Fibroblast SE17</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3661 1742.939 -6374.851 Fibroblast SE35</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3657 1942.480 -6369.602 Fibroblast SE29</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3658 1963.007 -6374.026 Fibroblast SE29</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3660 1981.600 -6372.266 Fibroblast SE29</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3661 1742.939 -6374.851 Fibroblast SE48</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3663 1921.683 -6383.309 Fibroblast SE25</span></span></code></pre>
 <p>Then specify the <code>se_results</code> in the <a href="../reference/RecoverSE.html">RecoverSE</a> function for SE
 recovery.</p>
@@ -238,12 +236,9 @@ recovery.</p>
 <span><span class="co">## HumanMelanomaPatient1__cell_3658 HumanMelanomaPatient1__cell_3660 </span></span>
 <span><span class="co">##                            "SE4"                            "SE4" </span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3661 HumanMelanomaPatient1__cell_3663 </span></span>
-<span><span class="co">##                          "nonSE"                            "SE1"</span></span></code></pre>
-</div>
-<div class="section level4">
-<h4 id="using-default-models-2">Using default models (2)<a class="anchor" aria-label="anchor" href="#using-default-models-2"></a>
-</h4>
-<p>You can also recover the SEs without using spatial embedding, which
+<span><span class="co">##                            "SE3"                            "SE1"</span></span></code></pre>
+</details><details><summary><strong>Using default models (2)</strong>
+</summary><p>You can also recover the SEs without using spatial embedding, which
 could be less accurate due to the lack of spatial information. The cell
 type annotations are required in this case. Cells should be grouped into
 one of “B”, “CD4T”, “CD8T”, “NK”, “Plasma”, “Macrophage”, “DC”,
@@ -254,11 +249,8 @@ types will be considered non-SE compartments.</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/unique.html" class="external-link">unique</a></span><span class="op">(</span><span class="va">scmeta</span><span class="op">$</span><span class="va">CellType</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">sepreds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/RecoverSE.html">RecoverSE</a></span><span class="op">(</span><span class="va">normdata</span>, celltypes <span class="op">=</span> <span class="va">scmeta</span><span class="op">$</span><span class="va">CellType</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">sepreds</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="using-custom-models">Using custom models<a class="anchor" aria-label="anchor" href="#using-custom-models"></a>
-</h4>
-<p>To use custom models, users should first develop recovery models
+</details><details><summary><strong>Using custom models</strong>
+</summary><p>To use custom models, users should first develop recovery models
 following the tutorial <a href="TrainRecoveryModels.html">Development of
 SE Recovery Models</a>. The resulting models can be used for SE
 recovery. An example model is available at <a href="https://drive.google.com/open?id=171WaAe49babYB85Cn1FcoNNE-lzYp1T_&amp;usp=drive_fs" class="external-link">SE_Recovery_W_list.rds</a>.</p>
@@ -275,7 +267,7 @@ recovery. An example model is available at <a href="https://drive.google.com/ope
 <span></span>
 <span><span class="co">## If SpatialEcoTyper result is available, we recommend:</span></span>
 <span><span class="va">sepreds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/RecoverSE.html">RecoverSE</a></span><span class="op">(</span><span class="va">normdata</span>, se_results <span class="op">=</span> <span class="va">emb</span>, Ws <span class="op">=</span> <span class="va">Ws</span><span class="op">)</span></span></code></pre></div>
-</div>
+</details>
 </div>
 <div class="section level3">
 <h3 id="visualization-of-ses-in-the-tissue">Visualization of SEs in the tissue<a class="anchor" aria-label="anchor" href="#visualization-of-ses-in-the-tissue"></a>
@@ -314,7 +306,7 @@ function from the Seurat package.</p>
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="st">"hdf5r"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"hdf5r"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
 <span><span class="co">## The downloaded binary packages are in</span></span>
-<span><span class="co">##  /var/folders/gs/7sgd9l6n03g1rvtg69m26wxh0000gq/T//RtmpeJzkWR/downloaded_packages</span></span></code></pre>
+<span><span class="co">##  /var/folders/gs/7sgd9l6n03g1rvtg69m26wxh0000gq/T//RtmpiwUKs5/downloaded_packages</span></span></code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://hhoeflin.github.io/hdf5r/" class="external-link">"hdf5r"</a></span><span class="op">)</span></span>
 <span><span class="co"># Load Visium gene expression matrix. Rows are genes, columns are spots.</span></span>
@@ -344,10 +336,8 @@ function will assume the input data is a gene-by-spot gene expression
 matrix and infer SE abundances across spots. Users have the option to
 either use the default models to recover predefined SEs or apply custom
 models to recover newly defined SEs.</p>
-<div class="section level4">
-<h4 id="using-default-models">Using default models<a class="anchor" aria-label="anchor" href="#using-default-models"></a>
-</h4>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<details open><summary><strong>Using default models</strong>
+</summary><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/RecoverSE.html">RecoverSE</a></span><span class="op">(</span><span class="va">dat</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">preds</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##                             SE1          SE2          SE3          SE4</span></span>
@@ -373,11 +363,8 @@ models to recover newly defined SEs.</p>
 <span><span class="co">## AAACATTTCCCGGATT-1 7.419167e-02 1.697931e-01</span></span></code></pre>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## This step would take ~3 minutes to complete</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="using-custom-models-1">Using custom models<a class="anchor" aria-label="anchor" href="#using-custom-models-1"></a>
-</h4>
-<p>To develop SE recovery models, users should follow the tutorial <a href="TrainRecoveryModels.html">Developing SE Recovery Models</a>. The
+</details><details><summary><strong>Using custom models</strong>
+</summary><p>To develop SE recovery models, users should follow the tutorial <a href="TrainRecoveryModels.html">Developing SE Recovery Models</a>. The
 resulting models can be used for SE recovery. An example model is
 available at <a href="https://drive.google.com/open?id=171WaAe49babYB85Cn1FcoNNE-lzYp1T_&amp;usp=drive_fs" class="external-link">SE_Recovery_W_list.rds</a>.
 By specifying the <code>Ws</code> parameter (a list of
@@ -391,7 +378,7 @@ models will be used for recovering SEs.</p>
 <span><span class="co">## Using custom models by specifying the Ws argument</span></span>
 <span><span class="va">preds</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/RecoverSE.html">RecoverSE</a></span><span class="op">(</span><span class="va">normdata</span>, Ws <span class="op">=</span> <span class="va">Ws</span><span class="op">)</span></span>
 <span><span class="co">## This step would take ~3 minutes to complete</span></span></code></pre></div>
-</div>
+</details>
 </div>
 <div class="section level3">
 <h3 id="visualization-of-ses-in-the-tissue-1">Visualization of SEs in the tissue<a class="anchor" aria-label="anchor" href="#visualization-of-ses-in-the-tissue-1"></a>
@@ -513,12 +500,12 @@ that might be causing problems.</p>
 <span><span class="co">## [141] deldir_2.0-4                gridBase_0.4-7             </span></span>
 <span><span class="co">## [143] munsell_0.5.1               lazyeval_0.2.2             </span></span>
 <span><span class="co">## [145] spatstat.geom_3.3-2         RcppHNSW_0.6.0             </span></span>
-<span><span class="co">## [147] patchwork_1.2.0             bit64_4.0.5                </span></span>
+<span><span class="co">## [147] patchwork_1.2.0             bit64_4.5.2                </span></span>
 <span><span class="co">## [149] sparseMatrixStats_1.16.0    future_1.34.0              </span></span>
 <span><span class="co">## [151] shiny_1.9.1                 highr_0.11                 </span></span>
 <span><span class="co">## [153] SummarizedExperiment_1.34.0 ROCR_1.0-11                </span></span>
 <span><span class="co">## [155] gargle_1.5.2                igraph_2.0.3               </span></span>
-<span><span class="co">## [157] bslib_0.8.0                 bit_4.0.5</span></span></code></pre>
+<span><span class="co">## [157] bslib_0.8.0                 bit_4.5.0</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

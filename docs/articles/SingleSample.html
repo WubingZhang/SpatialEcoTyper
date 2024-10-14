@@ -277,15 +277,6 @@ output file names.</li>
 <code>radius</code> Numeric specifying the radius (default: 50 µm)
 for defining spatial microregion.</li>
 <li>
-<code>resolution</code> Numeric specifying the resolution for
-Louvain clustering (default: 0.5).</li>
-<li>
-<code>nfeatures</code> Integer specifying the number of top variable
-features for the analysis.</li>
-<li>
-<code>min.cts.per.region</code> Integer specifying the minimum
-number of cell types (default: 2) required for a microregion.</li>
-<li>
 <code>minibatch</code> Integer specifying the number of columns to
 process in each minibatch in the SNF analysis. Default is 5000. This
 option splits the matrix into smaller chunks (minibatch), thus reducing
@@ -293,13 +284,6 @@ memory usage.</li>
 <li>
 <code>ncores</code> Integer specifying the number of CPU cores to
 use for parallel processing.</li>
-<li>
-<code>filter.region.by.celltypes</code> A character vector
-specifying the cell types to include in the analysis. Only spatial
-microregions that contain at least one of the specified cell types will
-be analyzed, while regions lacking these cell types will be excluded
-from the SE discovery process. By default, all spatial microregions will
-be included, regardless of cell type composition.</li>
 </ul>
 <p>You can type <code><a href="../reference/SpatialEcoTyper.html">?SpatialEcoTyper</a></code> to visualize the full
 manual.</p>
@@ -308,17 +292,56 @@ manual.</p>
 <span><span class="va">se_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a></span><span class="op">(</span><span class="va">normdata</span>, <span class="va">scmeta</span>,</span>
 <span>                              outprefix <span class="op">=</span> <span class="st">"Melanoma1_subset"</span>,</span>
 <span>                              radius <span class="op">=</span> <span class="fl">50</span>, ncores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
-<p>When the <code>outprefix</code> is specified, the <a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a> result will
-be saved as a RDS file named
-<code>outprefix_SpatialEcoTyper_results.rds</code>. The result can be
-loaded into R using <code>readRDS</code>.</p>
+<details><summary><strong>Optimizing memory usage</strong>
+</summary><p>For real-world single-cell ST datasets with over 100,000 cells, the
+analysis can be both time- and memory-intensive. To speed up the
+process, you can increase the number of cores used
+(<code>ncores</code>), but this will also increase memory
+consumption.</p>
+<p>If you have limited computational memory, there are several
+strategies to reduce usage. One approach is to decrease the
+<code>minibatch</code> size and reduce the number of cores
+(<code>ncores</code>) allocated. However, for larger datasets, the
+minimum memory requirement may remain high. Another option is to
+increase the <code>binsize</code>, which reduces the number of spatial
+microregions. This can significantly decrease memory usage by
+downsampling the ST data, potentially excluding many cells from the
+analysis though.</p>
+</details><details><summary><strong>Interested in multicellular communities associated with specific
+cell types?</strong>
+</summary><p>If you’re interested in studying multicellular communities associated
+with specific cell types, you can use the
+<code>filter.region.by.celltypes</code> argument to focus on
+microregions containing at least one cell from the specified cell types.
+For example, to identify multicellular communities related to T cells,
+you can use the following command.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## drive_download(as_id("18AzHCtwwXoOM9_yRCjyfzcLQaWiQo1au"), "Melanoma1_subset_SpatialEcoTyper_results.rds", overwrite = TRUE)</span></span>
-<span><span class="va">se_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"Melanoma1_subset_SpatialEcoTyper_results.rds"</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">se_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a></span><span class="op">(</span><span class="va">normdata</span>, <span class="va">scmeta</span>,</span>
+<span>                              outprefix <span class="op">=</span> <span class="st">"Melanoma1_subset"</span>,</span>
+<span>                              radius <span class="op">=</span> <span class="fl">50</span>, ncores <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                              filter.region.by.celltypes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD8T"</span>, <span class="st">"CD4T"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+</details><details><summary><strong>Interested in regions with multiple cell types?</strong>
+</summary><p>If you’re interested in regions composed of multiple cell types, you
+can use the <code>min.cts.per.region</code> argument to specify the
+minimum number of distinct cell types required for each microregion to
+be included in the analysis.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">se_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a></span><span class="op">(</span><span class="va">normdata</span>, <span class="va">scmeta</span>,</span>
+<span>                              outprefix <span class="op">=</span> <span class="st">"Melanoma1_subset"</span>,</span>
+<span>                              radius <span class="op">=</span> <span class="fl">50</span>, ncores <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                              min.cts.per.region <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
+</details>
 </div>
 <div class="section level2">
 <h2 id="spatialecotyper-result">SpatialEcoTyper result<a class="anchor" aria-label="anchor" href="#spatialecotyper-result"></a>
 </h2>
+<p>When the <code>outprefix</code> is specified, the <a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a> result will
+be saved as a RDS file named
+<code>outprefix_SpatialEcoTyper_results.rds</code>. The result can be
+loaded into R using <code>readRDS</code>.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">## drive_download(as_id("18AzHCtwwXoOM9_yRCjyfzcLQaWiQo1au"), "Melanoma1_subset_SpatialEcoTyper_results.rds", overwrite = TRUE)</span></span>
+<span><span class="va">se_results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"Melanoma1_subset_SpatialEcoTyper_results.rds"</span><span class="op">)</span></span></code></pre></div>
 <p>The <a href="../reference/SpatialEcoTyper.html">SpatialEcoTyper</a>
 result is a list that includes two key components:</p>
 <ul>
@@ -332,7 +355,7 @@ includes annotations for discovered spatial ecotypes. These annotations
 can be used to explore the spatial distribution and characteristics of
 SEs within the tissue.</li>
 </ul>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Extract the Seurat object and updated single-cell metadata</span></span>
 <span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="va">se_results</span><span class="op">$</span><span class="va">obj</span> <span class="co"># A Seurat object</span></span>
 <span><span class="va">scmeta</span> <span class="op">&lt;-</span> <span class="va">se_results</span><span class="op">$</span><span class="va">metadata</span> <span class="co"># Updated single-cell meta data, with SE annotation added</span></span>
@@ -345,17 +368,17 @@ SEs within the tissue.</li>
 <span><span class="co">## HumanMelanomaPatient1__cell_3661 1742.939 -6374.851 Fibroblast  Fibroblasts</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3663 1921.683 -6383.309 Fibroblast  Fibroblasts</span></span>
 <span><span class="co">##                                  Region Dist2Interface  SE</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3655 Stroma      -883.1752 SE0</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3657 Stroma      -894.8463 SE5</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3658 Stroma      -904.1115 SE5</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3660 Stroma      -907.8909 SE5</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3655 Stroma      -883.1752 SE6</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3657 Stroma      -894.8463 SE7</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3658 Stroma      -904.1115 SE7</span></span>
+<span><span class="co">## HumanMelanomaPatient1__cell_3660 Stroma      -907.8909 SE7</span></span>
 <span><span class="co">## HumanMelanomaPatient1__cell_3661 Stroma      -874.2712 SE0</span></span>
-<span><span class="co">## HumanMelanomaPatient1__cell_3663 Stroma      -903.6559 SE0</span></span></code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<span><span class="co">## HumanMelanomaPatient1__cell_3663 Stroma      -903.6559 SE6</span></span></code></pre>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">scmeta</span><span class="op">$</span><span class="va">SE</span><span class="op">)</span> <span class="co">## The number of cells in each SE</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
-<span><span class="co">##  SE0  SE1  SE2  SE3  SE4  SE5  SE6 </span></span>
-<span><span class="co">## 5482 7703 3582 3338 1646 2312 2917</span></span></code></pre>
+<span><span class="co">##  SE0  SE1  SE2  SE3  SE4  SE5  SE6  SE7 </span></span>
+<span><span class="co">## 2847 6724 2773 5324 1857 3285 2856 2124</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="embedding-of-spatial-architecture">Embedding of spatial architecture<a class="anchor" aria-label="anchor" href="#embedding-of-spatial-architecture"></a>
@@ -374,7 +397,7 @@ across versions.</p>
 <div class="section level3">
 <h3 id="visualizing-tumorstroma-regions-in-the-embedding">Visualizing tumor/stroma regions in the embedding<a class="anchor" aria-label="anchor" href="#visualizing-tumorstroma-regions-in-the-embedding"></a>
 </h3>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">obj</span>, group.by <span class="op">=</span> <span class="st">"Region"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html" class="external-link">scale_color_brewer</a></span><span class="op">(</span>type <span class="op">=</span> <span class="st">"qual"</span>, palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SingleSample_files/figure-html/umap_region-1.png" width="700"></p>
 </div>
@@ -387,7 +410,7 @@ tumor/stroma interface, revealing the spatial continuum learnt by <a href="../re
 positive distances indicate microregions located within the tumor
 region, while negative distances denote microregions within the
 stroma.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/FeaturePlot.html" class="external-link">FeaturePlot</a></span><span class="op">(</span><span class="va">obj</span>, <span class="st">"Dist2Interface"</span>, min.cutoff <span class="op">=</span> <span class="op">-</span><span class="fl">600</span>, max.cutoff <span class="op">=</span> <span class="fl">600</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_colour_gradient2</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"#5e3c99"</span>, high <span class="op">=</span> <span class="st">"#e66101"</span>, mid <span class="op">=</span> <span class="st">"#d9d9d9"</span>, midpoint <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SingleSample_files/figure-html/umap_dist-1.png" width="700"></p>
@@ -398,7 +421,7 @@ stroma.</p>
 <p>This plot visualizes the SEs within the spatial embedding. The SEs
 represent distinct spatial microenvironments, each with unique cellular
 compositions and spatial characteristics.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">obj</span>, group.by <span class="op">=</span> <span class="st">"SE"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu">pals</span><span class="fu">::</span><span class="fu"><a href="https://kwstat.github.io/pals/reference/discrete.html" class="external-link">kelly</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SingleSample_files/figure-html/umap_se-1.png" width="700"></p>
 </div>
@@ -409,7 +432,7 @@ microregion<a class="anchor" aria-label="anchor" href="#visualizing-the-most-abu
 <p>Here, we focus on visualizing the dominant cell types within each
 spatial microregion to highlight the characteristic cellular composition
 of different SEs.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://satijalab.org/seurat/reference/DimPlot.html" class="external-link">DimPlot</a></span><span class="op">(</span><span class="va">obj</span>, group.by <span class="op">=</span> <span class="st">"CellType"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu">pals</span><span class="fu">::</span><span class="fu"><a href="https://kwstat.github.io/pals/reference/discrete.html" class="external-link">cols25</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SingleSample_files/figure-html/umap_ct-1.png" width="700"></p>
@@ -425,7 +448,7 @@ of different SEs.</p>
 using the <a href="../reference/SpatialView.html">SpatialView</a>
 function. This visualization provides insights into the localization and
 spatial organization of different SEs across the tissue section.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/SpatialView.html">SpatialView</a></span><span class="op">(</span><span class="va">scmeta</span>, by <span class="op">=</span> <span class="st">"SE"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="SingleSample_files/figure-html/spatialmap-1.png" width="700"></p>
 <p><strong>Note</strong>: NA values in the SE annotations denote cells
@@ -438,7 +461,7 @@ insufficient number of detected genes.</p>
 <p>The bar plot below illustrates the cell type composition within each
 SE. This visualization helps to identify the dominant cell types in each
 SE and compare the cellular makeup across different SEs.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">scmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">CellType</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">gg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">n</span>, fill <span class="op">=</span> <span class="va">CellType</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span></span>
@@ -455,7 +478,7 @@ regions<a class="anchor" aria-label="anchor" href="#visualizing-the-association-
 regions, such as tumor and stroma. The proportion of each SE associated
 with these regions is displayed, providing insights into how SEs
 correspond to different tissue regions.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">scmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">Region</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">gg</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">SE</span>, <span class="va">n</span>, fill <span class="op">=</span> <span class="va">Region</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span>stat <span class="op">=</span> <span class="st">"identity"</span>, position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -472,7 +495,7 @@ tumor/stroma interface. Positive distances indicate cells located within
 the tumor region, while negative distances denote cells within the
 stroma. The SEs are ordered by their median distance, highlighting their
 spatial localization relative to the tumor/stroma interface.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">scmeta</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">## Order SEs by their distance to tumor/stroma interface</span></span>
 <span><span class="va">tmp</span> <span class="op">&lt;-</span>  <span class="va">gg</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarise</a></span><span class="op">(</span>Mid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">Dist2Interface</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">Mid</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">pull</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span></span>
@@ -492,7 +515,7 @@ spatial localization relative to the tumor/stroma interface.</p>
 differential expression analysis using the <a href="https://github.com/immunogenomics/presto" class="external-link"><code>presto</code>
 package</a>. Below is an example of how to identify fibroblast-specific
 markers for each SE.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span><span class="op">(</span><span class="op">!</span><span class="st">"presto"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span> </span>
 <span>  <span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span>  <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"immunogenomics/presto"</span><span class="op">)</span></span>
@@ -510,19 +533,19 @@ markers for each SE.</p>
 <span><span class="va">degs</span> <span class="op">=</span> <span class="va">degs</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">logFC</span><span class="op">&gt;</span><span class="fl">0</span> <span class="op">&amp;</span> <span class="va">pval</span><span class="op">&lt;</span><span class="fl">0.05</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">logFC</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">degs</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##   feature group  avgExpr     logFC statistic       auc          pval</span></span>
-<span><span class="co">## 1   ACTA2   SE5 2.142901 1.7833222   4770907 0.7544471 9.886488e-183</span></span>
-<span><span class="co">## 2 PLA2G2A   SE0 2.090088 1.6944288  11628853 0.8727697  0.000000e+00</span></span>
-<span><span class="co">## 3     PKM   SE4 2.477427 1.2543706   3159324 0.8486510 1.725550e-149</span></span>
-<span><span class="co">## 4     PKM   SE3 2.227742 1.0111531   3985482 0.8122689 6.164104e-158</span></span>
-<span><span class="co">## 5     FN1   SE3 3.042717 0.9950768   3726164 0.7594180 4.675797e-108</span></span>
-<span><span class="co">## 6 HLA-DRA   SE3 1.787789 0.9867960   3691813 0.7524170 1.904606e-116</span></span>
+<span><span class="co">## 1   ACTA2   SE7 2.269714 1.9200869   4826706 0.7719666 6.157041e-196</span></span>
+<span><span class="co">## 2 PLA2G2A   SE0 2.076013 1.4444331   9636530 0.8226676  0.000000e+00</span></span>
+<span><span class="co">## 3 PLA2G2A   SE6 2.177647 1.4145934   5418244 0.7996960 2.595786e-219</span></span>
+<span><span class="co">## 4     PKM   SE4 2.592488 1.3997410   3527900 0.8820820 1.875924e-178</span></span>
+<span><span class="co">## 5     FN1   SE3 3.124745 1.1463924   5771112 0.7979963 4.778744e-193</span></span>
+<span><span class="co">## 6 HLA-DRA   SE3 1.711258 0.9756877   5434388 0.7514360 8.958194e-160</span></span>
 <span><span class="co">##            padj   pct_in  pct_out</span></span>
-<span><span class="co">## 1 1.357744e-180 67.43383 31.42779</span></span>
-<span><span class="co">## 2  0.000000e+00 89.32039 25.74830</span></span>
-<span><span class="co">## 3 7.109267e-147 98.14815 81.98433</span></span>
-<span><span class="co">## 4 1.269805e-155 97.55725 81.67134</span></span>
-<span><span class="co">## 5 2.408035e-106 97.70992 88.58630</span></span>
-<span><span class="co">## 6 1.961744e-114 88.85496 46.94967</span></span></code></pre>
+<span><span class="co">## 1 8.455670e-194 69.35897 30.37675</span></span>
+<span><span class="co">## 2  0.000000e+00 90.22005 34.38547</span></span>
+<span><span class="co">## 3 1.069464e-216 88.39390 40.08561</span></span>
+<span><span class="co">## 4 3.864404e-176 98.75260 81.20265</span></span>
+<span><span class="co">## 5 4.922107e-191 98.03922 88.25844</span></span>
+<span><span class="co">## 6 6.151293e-158 86.05664 43.91978</span></span></code></pre>
 <p><strong>Note</strong>: The MERSCOPE data used for SE discovery
 includes a limited number of genes. To enhance the analysis, you can
 extend the differential expression analysis to the whole transcriptome
@@ -534,7 +557,7 @@ CytoSPACE.</p>
 </h3>
 <p>Once you’ve identified potential markers, you can visualize their
 expression across SEs. Below is an example using the ACTA2 gene.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Gene expression across all SEs</span></span>
 <span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">scmeta</span><span class="op">[</span><span class="va">idx</span>, <span class="op">]</span></span>
 <span><span class="va">gg</span><span class="op">$</span><span class="va">Expression</span> <span class="op">&lt;-</span> <span class="va">normdata</span><span class="op">[</span><span class="st">"ACTA2"</span>, <span class="va">idx</span><span class="op">]</span></span>
@@ -543,7 +566,7 @@ expression across SEs. Below is an example using the ACTA2 gene.</p>
 <p><img src="SingleSample_files/figure-html/visualizedeg-1.png" width="700"></p>
 <p>You can also visualize the expression of a marker (e.g., ACTA2) in
 the tissue.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Visualize gene expression in spatial</span></span>
 <span><span class="va">gg</span> <span class="op">&lt;-</span> <span class="va">scmeta</span></span>
 <span><span class="va">gg</span><span class="op">$</span><span class="va">Expression</span> <span class="op">&lt;-</span> <span class="va">normdata</span><span class="op">[</span><span class="st">"ACTA2"</span>, <span class="op">]</span></span>
@@ -558,7 +581,7 @@ the tissue.</p>
 <p>The session info allows users to replicate the exact environment and
 identify potential discrepancies in package versions or configurations
 that might be causing problems.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.4.1 (2024-06-14)</span></span>
 <span><span class="co">## Platform: aarch64-apple-darwin20</span></span>

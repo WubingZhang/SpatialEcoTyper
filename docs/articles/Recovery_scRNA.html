@@ -89,8 +89,8 @@
 </h2>
 <p>The recovery process requires a normalized gene expression matrix and
 a vector of cell type annotations.</p>
-<details open><summary><strong>Starting from a Seurat object<strong>
-<summary><p>A seurat object for the demo data can be accessed from <a href="https://drive.google.com/open?id=17356t3n4vY581hogyi0Gmz4Sj5v804Vz&amp;usp=drive_fs" class="external-link">WU2161_seurat_obj.rds</a>.</p>
+<details open><summary><strong>Starting from a Seurat object</strong>
+</summary><p>A seurat object for the demo data can be accessed from <a href="https://drive.google.com/open?id=17356t3n4vY581hogyi0Gmz4Sj5v804Vz&amp;usp=drive_fs" class="external-link">WU2161_seurat_obj.rds</a>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_deauth.html" class="external-link">drive_deauth</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># Disable Google sign-in requirement</span></span>
 <span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_download.html" class="external-link">drive_download</a></span><span class="op">(</span><span class="fu"><a href="https://googledrive.tidyverse.org/reference/drive_id.html" class="external-link">as_id</a></span><span class="op">(</span><span class="st">"17356t3n4vY581hogyi0Gmz4Sj5v804Vz"</span><span class="op">)</span>, <span class="st">"WU2161_seurat_obj.rds"</span>, overwrite <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
@@ -157,8 +157,8 @@ annotations from the Seurat object.</p>
 <span><span class="co">##         97        138        425        121         44        374         91 </span></span>
 <span><span class="co">##     Plasma </span></span>
 <span><span class="co">##         47</span></span></code></pre>
-</summary></strong></strong></summary></details><details><summary><strong>Starting from Sparse matrix<strong>
-<summary><p>Sparse matrix in the .mtx format can be imported using the
+</details><details><summary><strong>Starting from Sparse matrix</strong>
+</summary><p>Sparse matrix in the .mtx format can be imported using the
 <code>ReadMtx</code> function from the <code>Seurat</code> package. The
 demo data can be accessed from <a href="https://drive.google.com/open?id=178yvBUNNAAJ8TGtXmvjplVz_Ev7V0WxA&amp;usp=drive_fs" class="external-link">WU2161</a>.
 The cell type annotations are available in <a href="https://drive.google.com/open?id=17Ax4LMOClMBu6h_WUcwXtFw4HuIU8_AQ&amp;usp=drive_fs" class="external-link">WU2161_celltype_ann.tsv</a>.</p>
@@ -175,8 +175,8 @@ The cell type annotations are available in <a href="https://drive.google.com/ope
 <span>                   header <span class="op">=</span> <span class="cn">TRUE</span>, row.names <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">ctann</span> <span class="op">=</span> <span class="va">ctann</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">normdata</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">ctann</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">ctann</span><span class="op">)</span></span></code></pre></div>
-</summary></strong></strong></summary></details><details><summary><strong>Starting from tab-delimited files<strong>
-<summary><p>Tab-delimited files can be loaded into R using the <code>fread</code>
+</details><details><summary><strong>Starting from tab-delimited files</strong>
+</summary><p>Tab-delimited files can be loaded into R using the <code>fread</code>
 function from the <code>data.table</code> package. The TSV file for the
 expression matrix can be accessed from <a href="https://drive.google.com/open?id=17VAeOnz6vTt2s0ZeTrK1kITdJ3Yus4ei&amp;usp=drive_fs" class="external-link">WU2161_counts.tsv</a>
 and the cell type annotations are available in <a href="https://drive.google.com/open?id=17Ax4LMOClMBu6h_WUcwXtFw4HuIU8_AQ&amp;usp=drive_fs" class="external-link">WU2161_celltype_ann.tsv</a>.</p>
@@ -218,7 +218,7 @@ and the cell type annotations are available in <a href="https://drive.google.com
 <span><span class="co">##         97        138        425        121         44        374         47 </span></span>
 <span><span class="co">##    Unknown </span></span>
 <span><span class="co">##         91</span></span></code></pre>
-</summary></strong></strong></summary></details>
+</details>
 </div>
 <div class="section level2">
 <h2 id="se-recovery">SE recovery<a class="anchor" aria-label="anchor" href="#se-recovery"></a>
@@ -232,10 +232,8 @@ RNA-seq data, it is essential to specify the <code>celltypes</code>
 parameter. If cell type annotations are not provided, the function will
 assume that the input data corresponds to bulk spatial transcriptomics
 (e.g., Visium), and will infer SE abundances from each spot.</p>
-<div class="section level3">
-<h3 id="using-default-models">Using default models<a class="anchor" aria-label="anchor" href="#using-default-models"></a>
-</h3>
-<p>The default NMF models were trained on discovery MERSCOPE data,
+<details><summary><strong>Using default models</strong>
+</summary><p>The default NMF models were trained on discovery MERSCOPE data,
 encompassing five cancer types: melanoma, and four carcinomas. These
 models are tailored to nine distinct cell types: B cells, CD4+ T cells,
 CD8+ T cells, NK cells, plasma cells, macrophages, dendritic cells,
@@ -253,11 +251,8 @@ types will be considered non-SE compartments.</p>
 <span><span class="co">##              "SE8"            "nonSE"              "SE1"              "SE8" </span></span>
 <span><span class="co">## AAACCTGTCTAACGGT-1 AAACGGGCACTTAAGC-1 </span></span>
 <span><span class="co">##            "nonSE"            "nonSE"</span></span></code></pre>
-</div>
-<div class="section level3">
-<h3 id="using-custom-models">Using custom models<a class="anchor" aria-label="anchor" href="#using-custom-models"></a>
-</h3>
-<p>To use custom models, users should first develop recovery models
+</details><details><summary><strong>Using custom models</strong>
+</summary><p>To use custom models, users should first develop recovery models
 following the tutorial <a href="TrainRecoveryModels.html">Development of
 SE Recovery Models</a>. The resulting models can be used for SE
 recovery. An example model is available at <a href="https://drive.google.com/open?id=171WaAe49babYB85Cn1FcoNNE-lzYp1T_&amp;usp=drive_fs" class="external-link">SE_Recovery_W_list.rds</a>.</p>
@@ -295,7 +290,7 @@ argument.</p>
 <span><span class="co">##             "SE10"            "nonSE"             "SE01"             "SE10" </span></span>
 <span><span class="co">## AAACCTGTCTAACGGT-1 AAACGGGCACTTAAGC-1 </span></span>
 <span><span class="co">##            "nonSE"             "SE03"</span></span></code></pre>
-</div>
+</details>
 </div>
 <div class="section level2">
 <h2 id="session-info">Session info<a class="anchor" aria-label="anchor" href="#session-info"></a>

@@ -54,7 +54,7 @@
 <span>  radius <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>  resolution <span class="op">=</span> <span class="fl">0.5</span>,</span>
 <span>  nfeatures <span class="op">=</span> <span class="fl">3000</span>,</span>
-<span>  min.cts.per.region <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  min.cts.per.region <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  npcs <span class="op">=</span> <span class="fl">20</span>,</span>
 <span>  k.sn <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>  k <span class="op">=</span> <span class="fl">20</span>,</span>
@@ -101,7 +101,7 @@ for defining spatial neighborhoods around each cell. Default is 50.</p></dd>
 
 
 <dt id="arg-min-cts-per-region">min.cts.per.region<a class="anchor" aria-label="anchor" href="#arg-min-cts-per-region"></a></dt>
-<dd><p>Integer specifying the minimum number of cell types (default: 2) required for a microregion.</p></dd>
+<dd><p>Integer specifying the minimum number of cell types required for a microregion.</p></dd>
 
 
 <dt id="arg-npcs">npcs<a class="anchor" aria-label="anchor" href="#arg-npcs"></a></dt>
@@ -232,52 +232,51 @@ be included, regardless of cell type composition.</p>
 <span class="r-in"><span><span class="va">se_results</span> <span class="op">&lt;-</span> <span class="fu">SpatialEcoTyper</span><span class="op">(</span><span class="va">normdata</span>, <span class="va">scmeta</span>,</span></span>
 <span class="r-in"><span>                              outprefix <span class="op">=</span> <span class="st">"Melanoma1_subset"</span>,</span></span>
 <span class="r-in"><span>                              radius <span class="op">=</span> <span class="fl">50</span>, ncores <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-11 10:15:49.130002 Remove 88 genes expressed in fewer than 5 cells</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-11 10:15:49.380705 Construct spatial meta cells for each cell type</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-13 17:08:55.626464 Remove 88 genes expressed in fewer than 5 cells</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-13 17:08:55.958817 Construct spatial meta cells for each cell type</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 		Total spatial microregions: 2315</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 		Total spatial meta cells: 7711</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-11 10:15:57.609234 PCA for each cell type</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-11 10:15:58.803408 Construct cell-type-specific similarity network</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 		Remove 446 spatial microregions with fewer than 2 cell types </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-11 10:15:59.381805 Similarity network fusion</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-11 10:15:59.384096 Normalize networks ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-11 10:15:59.514942 Calculate the local transition matrix ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-11 10:15:59.826738 Perform the diffusion ...</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-09-11 10:15:59.827467 Iteration: 1</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-09-11 10:16:04.283732 Iteration: 2</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-09-11 10:16:16.503734 Iteration: 3</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-09-11 10:16:29.666022 Iteration: 4</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-09-11 10:16:41.723253 Iteration: 5</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-11 10:16:56.098217 Create Seurat object and perform clustering analysis</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-13 17:09:05.95098 PCA for each cell type</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-13 17:09:07.405664 Construct cell-type-specific similarity network</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-13 17:09:08.166558 Similarity network fusion</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-13 17:09:08.169362 Normalize networks ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-13 17:09:08.256296 Calculate the local transition matrix ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-13 17:09:08.659961 Perform the diffusion ...</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-10-13 17:09:08.660731 Iteration: 1</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-10-13 17:09:15.212279 Iteration: 2</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-10-13 17:09:36.875207 Iteration: 3</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-10-13 17:10:01.072509 Iteration: 4</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 	2024-10-13 17:10:25.907433 Iteration: 5</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-13 17:10:54.853595 Create Seurat object and perform clustering analysis</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Data is of class dgeMatrix. Coercing to dgCMatrix.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The default method for RunUMAP has changed from calling Python UMAP via reticulate to the R-native UWOT using the cosine metric</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> To use Python UMAP via reticulate, set umap.method to 'umap-learn' and metric to 'correlation'</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> This message will be shown once per session</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-09-11 10:17:03.277212 The Seurat object is saved into Melanoma1_subset_SpatialEcoTyper_results.rds</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 2024-10-13 17:11:06.207169 The Seurat object is saved into Melanoma1_subset_SpatialEcoTyper_results.rds</span>
 <span class="r-in"><span><span class="co"># Extract the Seurat object and updated single-cell metadata</span></span></span>
 <span class="r-in"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="va">se_results</span><span class="op">$</span><span class="va">obj</span> <span class="co"># A Seurat object</span></span></span>
 <span class="r-in"><span><span class="va">obj</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> An object of class Seurat </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1869 features across 1869 samples within 1 assay </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Active assay: RNA (1869 features, 1869 variable features)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2315 features across 2315 samples within 1 assay </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Active assay: RNA (2315 features, 2315 variable features)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  3 layers present: counts, data, scale.data</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  2 dimensional reductions calculated: pca, umap</span>
 <span class="r-in"><span><span class="va">scmeta</span> <span class="op">&lt;-</span> <span class="va">se_results</span><span class="op">$</span><span class="va">metadata</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">SE</span><span class="op">)</span> <span class="co"># Updated single-cell meta data, with SE annotation added</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">scmeta</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                         X         Y   CellType CellTypeName</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4675 4578.019 -6445.993 Fibroblast  Fibroblasts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4738 4529.162 -6504.117 Fibroblast  Fibroblasts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4774 4533.228 -6529.591 Fibroblast  Fibroblasts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4806 4401.938 -6567.152 Fibroblast  Fibroblasts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4808 4388.422 -6570.215 Fibroblast  Fibroblasts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4813 4415.750 -6574.703 Fibroblast  Fibroblasts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                                        Region Dist2Interface  SE</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4675 Outer margin      -197.0981 SE0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4738 Outer margin      -186.1329 SE0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4774 Outer margin      -199.6932 SE0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4806 Outer margin      -124.0160 SE0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4808 Outer margin      -119.0703 SE0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_4813 Outer margin      -138.4803 SE0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3661 1742.939 -6374.851 Fibroblast  Fibroblasts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3664 1706.253 -6383.428 Fibroblast  Fibroblasts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3666 1761.403 -6387.970 Fibroblast  Fibroblasts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3668 1841.514 -6389.663 Fibroblast  Fibroblasts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3670 1741.536 -6395.796 Fibroblast  Fibroblasts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3674 1907.099 -6411.773 Fibroblast  Fibroblasts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                                  Region Dist2Interface  SE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3661 Stroma      -874.2712 SE0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3664 Stroma      -880.4758 SE0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3666 Stroma      -888.6271 SE0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3668 Stroma      -896.8484 SE0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3670 Stroma      -895.0259 SE0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> HumanMelanomaPatient1__cell_3674 Stroma      -928.7076 SE0</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
